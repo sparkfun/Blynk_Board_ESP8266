@@ -8,34 +8,34 @@
 </settings>
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
-<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
-<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
-<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
-<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
-<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
-<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
-<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
-<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
-<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
-<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
-<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
-<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
-<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
-<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
-<layer number="21" name="tPlace" color="16" fill="1" visible="no" active="no"/>
-<layer number="22" name="bPlace" color="14" fill="1" visible="no" active="no"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="no"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="no"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="no" active="no"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="no" active="no"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="yes" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="yes" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="yes" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="yes" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="yes" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="yes" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="yes" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="yes" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="yes" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="yes" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="yes" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="yes" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="yes" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="yes" active="no"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="no"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="no"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="no"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="no"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="no"/>
+<layer number="21" name="tPlace" color="16" fill="1" visible="yes" active="no"/>
+<layer number="22" name="bPlace" color="14" fill="1" visible="yes" active="no"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="no"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="no"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="no"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="no"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="no"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="no"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="no"/>
@@ -44,8 +44,8 @@
 <layer number="34" name="bFinish" color="6" fill="6" visible="no" active="no"/>
 <layer number="35" name="tGlue" color="7" fill="4" visible="no" active="no"/>
 <layer number="36" name="bGlue" color="7" fill="5" visible="no" active="no"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="no" active="no"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="no" active="no"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="no"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="no"/>
 <layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="no"/>
 <layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="no"/>
 <layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="no"/>
@@ -53,19 +53,19 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="no"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="no"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="no"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="no"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="no" active="no"/>
-<layer number="48" name="Document" color="7" fill="1" visible="no" active="no"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="no" active="no"/>
-<layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="6" fill="1" visible="no" active="no"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="no"/>
-<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="no" active="no"/>
-<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
-<layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
-<layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
-<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
-<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="no"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="no"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="no"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="no"/>
+<layer number="50" name="dxf" color="7" fill="1" visible="yes" active="no"/>
+<layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="no"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="no"/>
+<layer number="53" name="tGND_GNDA" color="7" fill="9" visible="yes" active="no"/>
+<layer number="54" name="bGND_GNDA" color="1" fill="9" visible="yes" active="no"/>
+<layer number="56" name="wert" color="7" fill="1" visible="yes" active="no"/>
+<layer number="57" name="tCAD" color="7" fill="1" visible="yes" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="yes" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="yes" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -14533,190 +14533,6 @@ Standard 11x14 US Ledger frame</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="esp8266-development-board">
-<packages>
-<package name="QFN32">
-<wire x1="-2.5" y1="2.5" x2="-2.5" y2="-2.5" width="0.127" layer="51"/>
-<wire x1="-2.5" y1="-2.5" x2="2.5" y2="-2.5" width="0.127" layer="51"/>
-<wire x1="2.5" y1="-2.5" x2="2.5" y2="2.5" width="0.127" layer="51"/>
-<wire x1="2.5" y1="2.5" x2="-2.5" y2="2.5" width="0.127" layer="51"/>
-<wire x1="2.1" y1="2.5" x2="2.5" y2="2.5" width="0.127" layer="21"/>
-<wire x1="2.5" y1="2.5" x2="2.5" y2="2.1" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-2.1" x2="2.5" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="2.5" y1="-2.5" x2="2.1" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="-2.1" y1="-2.5" x2="-2.5" y2="-2.5" width="0.127" layer="21"/>
-<wire x1="-2.5" y1="-2.5" x2="-2.5" y2="-2.1" width="0.127" layer="21"/>
-<wire x1="-2.1" y1="2.5" x2="-2.5" y2="2.1" width="0.127" layer="21"/>
-<smd name="1" x="-2.5" y="1.75" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="2" x="-2.5" y="1.25" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="3" x="-2.5" y="0.75" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="4" x="-2.5" y="0.25" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="5" x="-2.5" y="-0.25" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="6" x="-2.5" y="-0.75" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="7" x="-2.5" y="-1.25" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="8" x="-2.5" y="-1.75" dx="0.8" dy="0.2846" layer="1"/>
-<smd name="9" x="-1.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="10" x="-1.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="11" x="-0.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="12" x="-0.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="13" x="0.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="14" x="0.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="15" x="1.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="16" x="1.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
-<smd name="17" x="2.5" y="-1.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="18" x="2.5" y="-1.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="19" x="2.5" y="-0.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="20" x="2.5" y="-0.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="21" x="2.5" y="0.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="22" x="2.5" y="0.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="23" x="2.5" y="1.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="24" x="2.5" y="1.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
-<smd name="25" x="1.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="26" x="1.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="27" x="0.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="28" x="0.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="29" x="-0.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="30" x="-0.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="31" x="-1.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="32" x="-1.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
-<smd name="EP" x="0" y="0" dx="3.15" dy="3.15" layer="1" cream="no"/>
-<text x="-2.5" y="3.1" size="0.4318" layer="25">&gt;Name</text>
-<text x="-2.5" y="-3.1" size="0.4318" layer="27" align="top-left">&gt;Value</text>
-<rectangle x1="0.05" y1="2.18" x2="0.45" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="-0.45" y1="2.18" x2="-0.05" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="-0.95" y1="2.18" x2="-0.55" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="-1.45" y1="2.18" x2="-1.05" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="-1.95" y1="2.18" x2="-1.55" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="0.55" y1="2.18" x2="0.95" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="1.05" y1="2.18" x2="1.45" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="1.55" y1="2.18" x2="1.95" y2="2.42" layer="51" rot="R270"/>
-<rectangle x1="2.1" y1="-0.37" x2="2.5" y2="-0.13" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="0.13" x2="2.5" y2="0.37" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="0.63" x2="2.5" y2="0.87" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="1.13" x2="2.5" y2="1.37" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="1.63" x2="2.5" y2="1.87" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="-0.87" x2="2.5" y2="-0.63" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="-1.37" x2="2.5" y2="-1.13" layer="51" rot="R180"/>
-<rectangle x1="2.1" y1="-1.87" x2="2.5" y2="-1.63" layer="51" rot="R180"/>
-<rectangle x1="-2.5" y1="0.13" x2="-2.1" y2="0.37" layer="51"/>
-<rectangle x1="-2.5" y1="-0.37" x2="-2.1" y2="-0.13" layer="51"/>
-<rectangle x1="-2.5" y1="-0.87" x2="-2.1" y2="-0.63" layer="51"/>
-<rectangle x1="-2.5" y1="-1.37" x2="-2.1" y2="-1.13" layer="51"/>
-<rectangle x1="-2.5" y1="-1.87" x2="-2.1" y2="-1.63" layer="51"/>
-<rectangle x1="-2.5" y1="0.63" x2="-2.1" y2="0.87" layer="51"/>
-<rectangle x1="-2.5" y1="1.13" x2="-2.1" y2="1.37" layer="51"/>
-<rectangle x1="-2.5" y1="1.63" x2="-2.1" y2="1.87" layer="51"/>
-<rectangle x1="-0.45" y1="-2.42" x2="-0.05" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="0.05" y1="-2.42" x2="0.45" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="0.55" y1="-2.42" x2="0.95" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="1.05" y1="-2.42" x2="1.45" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="1.55" y1="-2.42" x2="1.95" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="-0.95" y1="-2.42" x2="-0.55" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="-1.45" y1="-2.42" x2="-1.05" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="-1.95" y1="-2.42" x2="-1.55" y2="-2.18" layer="51" rot="R90"/>
-<rectangle x1="-1.45" y1="0.15" x2="-0.15" y2="1.45" layer="31"/>
-<rectangle x1="0.15" y1="0.15" x2="1.45" y2="1.45" layer="31" rot="R270"/>
-<rectangle x1="-1.45" y1="-1.45" x2="-0.15" y2="-0.15" layer="31" rot="R90"/>
-<rectangle x1="0.15" y1="-1.45" x2="1.45" y2="-0.15" layer="31" rot="R180"/>
-<circle x="-2.7" y="2.7" radius="0.15" width="0" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="ESP8266">
-<description>&lt;h3&gt;ESP8266 WiFi Smart Module&lt;/h3&gt;</description>
-<pin name="VDDA@1" x="-22.86" y="35.56" length="short"/>
-<pin name="LNA" x="20.32" y="27.94" length="short" rot="R180"/>
-<pin name="VDD3P3@3" x="-22.86" y="27.94" length="short"/>
-<pin name="VDD3P3@4" x="-22.86" y="25.4" length="short"/>
-<pin name="VDD_RTC" x="-22.86" y="12.7" length="short"/>
-<pin name="TOUT/ADC" x="20.32" y="-33.02" length="short" rot="R180"/>
-<pin name="CHIP_EN" x="20.32" y="35.56" length="short" rot="R180"/>
-<pin name="XPD_DCDC/GPIO16" x="20.32" y="-27.94" length="short" rot="R180"/>
-<pin name="MTMS/SPICLK/GPIO14" x="20.32" y="-20.32" length="short" rot="R180"/>
-<pin name="MTDI/SPIQ/GPIO12" x="20.32" y="-15.24" length="short" rot="R180"/>
-<pin name="VDDPST@11" x="-22.86" y="22.86" length="short"/>
-<pin name="MTCK/SPID/GPIO13" x="20.32" y="-17.78" length="short" rot="R180"/>
-<pin name="MTDO/SPICS/GPIO15" x="20.32" y="-22.86" length="short" rot="R180"/>
-<pin name="GPIO2" x="20.32" y="-5.08" length="short" rot="R180"/>
-<pin name="SPICS2/GPIO0" x="20.32" y="-2.54" length="short" rot="R180"/>
-<pin name="GPIO4" x="20.32" y="-7.62" length="short" rot="R180"/>
-<pin name="VDDPST@17" x="-22.86" y="20.32" length="short"/>
-<pin name="SPIHD/SD_DATA_2" x="20.32" y="12.7" length="short" rot="R180"/>
-<pin name="SPIWP/SD_DATA_3" x="20.32" y="10.16" length="short" rot="R180"/>
-<pin name="SPICS0/SD_CMD" x="20.32" y="22.86" length="short" rot="R180"/>
-<pin name="SPICLK/SD_CLK" x="20.32" y="20.32" length="short" rot="R180"/>
-<pin name="SPIQ/SD_DATA_0" x="20.32" y="17.78" length="short" rot="R180"/>
-<pin name="SPID/SD_DATA_1" x="20.32" y="15.24" length="short" rot="R180"/>
-<pin name="GPIO5" x="20.32" y="-10.16" length="short" rot="R180"/>
-<pin name="U0RXD" x="20.32" y="5.08" length="short" rot="R180"/>
-<pin name="U0TXD" x="20.32" y="2.54" length="short" rot="R180"/>
-<pin name="XTAL_OUT" x="-22.86" y="0" length="short"/>
-<pin name="XTAL_IN" x="-22.86" y="-5.08" length="short"/>
-<pin name="VDDD" x="-22.86" y="30.48" length="short"/>
-<pin name="VDDA@30" x="-22.86" y="33.02" length="short"/>
-<pin name="RES12K" x="-22.86" y="-15.24" length="short"/>
-<pin name="EXT_RSTB" x="20.32" y="33.02" length="short" rot="R180"/>
-<pin name="GND" x="-22.86" y="-33.02" length="short"/>
-<wire x1="-20.32" y1="38.1" x2="17.78" y2="38.1" width="0.254" layer="94"/>
-<wire x1="17.78" y1="38.1" x2="17.78" y2="-35.56" width="0.254" layer="94"/>
-<wire x1="17.78" y1="-35.56" x2="-20.32" y2="-35.56" width="0.254" layer="94"/>
-<wire x1="-20.32" y1="-35.56" x2="-20.32" y2="38.1" width="0.254" layer="94"/>
-<text x="-20.32" y="38.354" size="1.778" layer="95">&gt;Name</text>
-<text x="-20.32" y="-35.814" size="1.778" layer="96" align="top-left">&gt;Value</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="ESP8266" prefix="U">
-<description>&lt;h3&gt;Espressif ESP8266&lt;/h3&gt;
-&lt;p&gt;WiFi Smart Connectivity Platform.&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="ESP8266" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="QFN32">
-<connects>
-<connect gate="G$1" pin="CHIP_EN" pad="7"/>
-<connect gate="G$1" pin="EXT_RSTB" pad="32"/>
-<connect gate="G$1" pin="GND" pad="EP"/>
-<connect gate="G$1" pin="GPIO2" pad="14"/>
-<connect gate="G$1" pin="GPIO4" pad="16"/>
-<connect gate="G$1" pin="GPIO5" pad="24"/>
-<connect gate="G$1" pin="LNA" pad="2"/>
-<connect gate="G$1" pin="MTCK/SPID/GPIO13" pad="12"/>
-<connect gate="G$1" pin="MTDI/SPIQ/GPIO12" pad="10"/>
-<connect gate="G$1" pin="MTDO/SPICS/GPIO15" pad="13"/>
-<connect gate="G$1" pin="MTMS/SPICLK/GPIO14" pad="9"/>
-<connect gate="G$1" pin="RES12K" pad="31"/>
-<connect gate="G$1" pin="SPICLK/SD_CLK" pad="21"/>
-<connect gate="G$1" pin="SPICS0/SD_CMD" pad="20"/>
-<connect gate="G$1" pin="SPICS2/GPIO0" pad="15"/>
-<connect gate="G$1" pin="SPID/SD_DATA_1" pad="23"/>
-<connect gate="G$1" pin="SPIHD/SD_DATA_2" pad="18"/>
-<connect gate="G$1" pin="SPIQ/SD_DATA_0" pad="22"/>
-<connect gate="G$1" pin="SPIWP/SD_DATA_3" pad="19"/>
-<connect gate="G$1" pin="TOUT/ADC" pad="6"/>
-<connect gate="G$1" pin="U0RXD" pad="25"/>
-<connect gate="G$1" pin="U0TXD" pad="26"/>
-<connect gate="G$1" pin="VDD3P3@3" pad="3"/>
-<connect gate="G$1" pin="VDD3P3@4" pad="4"/>
-<connect gate="G$1" pin="VDDA@1" pad="1"/>
-<connect gate="G$1" pin="VDDA@30" pad="30"/>
-<connect gate="G$1" pin="VDDD" pad="29"/>
-<connect gate="G$1" pin="VDDPST@11" pad="11"/>
-<connect gate="G$1" pin="VDDPST@17" pad="17"/>
-<connect gate="G$1" pin="VDD_RTC" pad="5"/>
-<connect gate="G$1" pin="XPD_DCDC/GPIO16" pad="8"/>
-<connect gate="G$1" pin="XTAL_IN" pad="28"/>
-<connect gate="G$1" pin="XTAL_OUT" pad="27"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Capacitors">
 <description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
 In this library you'll find resistors, capacitors, inductors, test points, jumper pads, etc.&lt;br&gt;&lt;br&gt;
@@ -21178,7 +20994,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <smd name="GND" x="-2.5" y="-2" dx="1" dy="1" layer="1"/>
 </package>
 <package name="TRACE_ANTENNA_2.4GHZ_25.7MM">
-<polygon width="0.0254" layer="1">
+<polygon width="0.002540625" layer="1">
 <vertex x="-0.23" y="0"/>
 <vertex x="-0.23" y="2.28"/>
 <vertex x="-0.73" y="2.69"/>
@@ -21259,6 +21075,93 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-1.5" y1="-0.5" x2="-1.5" y2="-0.1" width="0.127" layer="41"/>
 <wire x1="-2.7" y1="-0.5" x2="-2.7" y2="-0.1" width="0.127" layer="41"/>
 </package>
+<package name="QFN32">
+<description>32-pin QFN package&lt;br&gt;
+Used by ESP8266.</description>
+<wire x1="-2.5" y1="2.5" x2="-2.5" y2="-2.5" width="0.127" layer="51"/>
+<wire x1="-2.5" y1="-2.5" x2="2.5" y2="-2.5" width="0.127" layer="51"/>
+<wire x1="2.5" y1="-2.5" x2="2.5" y2="2.5" width="0.127" layer="51"/>
+<wire x1="2.5" y1="2.5" x2="-2.5" y2="2.5" width="0.127" layer="51"/>
+<wire x1="2.1" y1="2.627" x2="2.627" y2="2.627" width="0.2032" layer="21"/>
+<wire x1="2.627" y1="2.627" x2="2.627" y2="2.1" width="0.2032" layer="21"/>
+<wire x1="2.627" y1="-2.1" x2="2.627" y2="-2.627" width="0.2032" layer="21"/>
+<wire x1="2.627" y1="-2.627" x2="2.1" y2="-2.627" width="0.2032" layer="21"/>
+<wire x1="-2.1" y1="-2.627" x2="-2.627" y2="-2.627" width="0.2032" layer="21"/>
+<wire x1="-2.627" y1="-2.627" x2="-2.627" y2="-2.1" width="0.2032" layer="21"/>
+<wire x1="-2.1" y1="2.754" x2="-2.754" y2="2.1" width="0.2032" layer="21"/>
+<smd name="1" x="-2.5" y="1.75" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="2" x="-2.5" y="1.25" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="3" x="-2.5" y="0.75" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="4" x="-2.5" y="0.25" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="5" x="-2.5" y="-0.25" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="6" x="-2.5" y="-0.75" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="7" x="-2.5" y="-1.25" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="8" x="-2.5" y="-1.75" dx="0.8" dy="0.2846" layer="1"/>
+<smd name="9" x="-1.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="10" x="-1.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="11" x="-0.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="12" x="-0.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="13" x="0.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="14" x="0.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="15" x="1.25" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="16" x="1.75" y="-2.5" dx="0.8" dy="0.2846" layer="1" rot="R90"/>
+<smd name="17" x="2.5" y="-1.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="18" x="2.5" y="-1.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="19" x="2.5" y="-0.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="20" x="2.5" y="-0.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="21" x="2.5" y="0.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="22" x="2.5" y="0.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="23" x="2.5" y="1.25" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="24" x="2.5" y="1.75" dx="0.8" dy="0.2846" layer="1" rot="R180"/>
+<smd name="25" x="1.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="26" x="1.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="27" x="0.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="28" x="0.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="29" x="-0.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="30" x="-0.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="31" x="-1.25" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="32" x="-1.75" y="2.5" dx="0.8" dy="0.2846" layer="1" rot="R270"/>
+<smd name="EP" x="0" y="0" dx="3.15" dy="3.15" layer="1" cream="no"/>
+<text x="-2.5" y="3.1" size="0.4318" layer="25">&gt;Name</text>
+<text x="-2.5" y="-3.1" size="0.4318" layer="27" align="top-left">&gt;Value</text>
+<rectangle x1="0.05" y1="2.18" x2="0.45" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="-0.45" y1="2.18" x2="-0.05" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="-0.95" y1="2.18" x2="-0.55" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="-1.45" y1="2.18" x2="-1.05" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="-1.95" y1="2.18" x2="-1.55" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="0.55" y1="2.18" x2="0.95" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="1.05" y1="2.18" x2="1.45" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="1.55" y1="2.18" x2="1.95" y2="2.42" layer="51" rot="R270"/>
+<rectangle x1="2.1" y1="-0.37" x2="2.5" y2="-0.13" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="0.13" x2="2.5" y2="0.37" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="0.63" x2="2.5" y2="0.87" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="1.13" x2="2.5" y2="1.37" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="1.63" x2="2.5" y2="1.87" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="-0.87" x2="2.5" y2="-0.63" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="-1.37" x2="2.5" y2="-1.13" layer="51" rot="R180"/>
+<rectangle x1="2.1" y1="-1.87" x2="2.5" y2="-1.63" layer="51" rot="R180"/>
+<rectangle x1="-2.5" y1="0.13" x2="-2.1" y2="0.37" layer="51"/>
+<rectangle x1="-2.5" y1="-0.37" x2="-2.1" y2="-0.13" layer="51"/>
+<rectangle x1="-2.5" y1="-0.87" x2="-2.1" y2="-0.63" layer="51"/>
+<rectangle x1="-2.5" y1="-1.37" x2="-2.1" y2="-1.13" layer="51"/>
+<rectangle x1="-2.5" y1="-1.87" x2="-2.1" y2="-1.63" layer="51"/>
+<rectangle x1="-2.5" y1="0.63" x2="-2.1" y2="0.87" layer="51"/>
+<rectangle x1="-2.5" y1="1.13" x2="-2.1" y2="1.37" layer="51"/>
+<rectangle x1="-2.5" y1="1.63" x2="-2.1" y2="1.87" layer="51"/>
+<rectangle x1="-0.45" y1="-2.42" x2="-0.05" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="0.05" y1="-2.42" x2="0.45" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="0.55" y1="-2.42" x2="0.95" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="1.05" y1="-2.42" x2="1.45" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="1.55" y1="-2.42" x2="1.95" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="-0.95" y1="-2.42" x2="-0.55" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="-1.45" y1="-2.42" x2="-1.05" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="-1.95" y1="-2.42" x2="-1.55" y2="-2.18" layer="51" rot="R90"/>
+<rectangle x1="-1.45" y1="0.15" x2="-0.15" y2="1.45" layer="31"/>
+<rectangle x1="0.15" y1="0.15" x2="1.45" y2="1.45" layer="31" rot="R270"/>
+<rectangle x1="-1.45" y1="-1.45" x2="-0.15" y2="-0.15" layer="31" rot="R90"/>
+<rectangle x1="0.15" y1="-1.45" x2="1.45" y2="-0.15" layer="31" rot="R180"/>
+<circle x="-2.7" y="2.7" radius="0.2032" width="0" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="ANTENNA">
@@ -21273,6 +21176,48 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="3.81" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="GND" x="2.54" y="-10.16" visible="off" length="short" rot="R90"/>
 <pin name="SIGNAL" x="0" y="-10.16" visible="off" length="short" rot="R90"/>
+</symbol>
+<symbol name="ESP8266">
+<description>&lt;h3&gt;ESP8266 WiFi Smart Module&lt;/h3&gt;</description>
+<pin name="VDDA@1" x="-22.86" y="35.56" length="short"/>
+<pin name="LNA" x="20.32" y="27.94" length="short" rot="R180"/>
+<pin name="VDD3P3@3" x="-22.86" y="27.94" length="short"/>
+<pin name="VDD3P3@4" x="-22.86" y="25.4" length="short"/>
+<pin name="VDD_RTC" x="-22.86" y="12.7" length="short"/>
+<pin name="TOUT/ADC" x="20.32" y="-33.02" length="short" rot="R180"/>
+<pin name="CHIP_EN" x="20.32" y="35.56" length="short" rot="R180"/>
+<pin name="XPD_DCDC/GPIO16" x="20.32" y="-27.94" length="short" rot="R180"/>
+<pin name="MTMS/SPICLK/GPIO14" x="20.32" y="-20.32" length="short" rot="R180"/>
+<pin name="MTDI/SPIQ/GPIO12" x="20.32" y="-15.24" length="short" rot="R180"/>
+<pin name="VDDPST@11" x="-22.86" y="22.86" length="short"/>
+<pin name="MTCK/SPID/GPIO13" x="20.32" y="-17.78" length="short" rot="R180"/>
+<pin name="MTDO/SPICS/GPIO15" x="20.32" y="-22.86" length="short" rot="R180"/>
+<pin name="GPIO2" x="20.32" y="-5.08" length="short" rot="R180"/>
+<pin name="SPICS2/GPIO0" x="20.32" y="-2.54" length="short" rot="R180"/>
+<pin name="GPIO4" x="20.32" y="-7.62" length="short" rot="R180"/>
+<pin name="VDDPST@17" x="-22.86" y="20.32" length="short"/>
+<pin name="SPIHD/SD_DATA_2" x="20.32" y="12.7" length="short" rot="R180"/>
+<pin name="SPIWP/SD_DATA_3" x="20.32" y="10.16" length="short" rot="R180"/>
+<pin name="SPICS0/SD_CMD" x="20.32" y="22.86" length="short" rot="R180"/>
+<pin name="SPICLK/SD_CLK" x="20.32" y="20.32" length="short" rot="R180"/>
+<pin name="SPIQ/SD_DATA_0" x="20.32" y="17.78" length="short" rot="R180"/>
+<pin name="SPID/SD_DATA_1" x="20.32" y="15.24" length="short" rot="R180"/>
+<pin name="GPIO5" x="20.32" y="-10.16" length="short" rot="R180"/>
+<pin name="U0RXD" x="20.32" y="5.08" length="short" rot="R180"/>
+<pin name="U0TXD" x="20.32" y="2.54" length="short" rot="R180"/>
+<pin name="XTAL_OUT" x="-22.86" y="0" length="short"/>
+<pin name="XTAL_IN" x="-22.86" y="-5.08" length="short"/>
+<pin name="VDDD" x="-22.86" y="30.48" length="short"/>
+<pin name="VDDA@30" x="-22.86" y="33.02" length="short"/>
+<pin name="RES12K" x="-22.86" y="-15.24" length="short"/>
+<pin name="EXT_RSTB" x="20.32" y="33.02" length="short" rot="R180"/>
+<pin name="GND" x="-22.86" y="-33.02" length="short"/>
+<wire x1="-20.32" y1="38.1" x2="17.78" y2="38.1" width="0.254" layer="94"/>
+<wire x1="17.78" y1="38.1" x2="17.78" y2="-35.56" width="0.254" layer="94"/>
+<wire x1="17.78" y1="-35.56" x2="-20.32" y2="-35.56" width="0.254" layer="94"/>
+<wire x1="-20.32" y1="-35.56" x2="-20.32" y2="38.1" width="0.254" layer="94"/>
+<text x="-20.32" y="38.354" size="1.778" layer="95">&gt;Name</text>
+<text x="-20.32" y="-35.814" size="1.778" layer="96" align="top-left">&gt;Value</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -21308,6 +21253,57 @@ Chip antenna with ground or secondary connection. Common with larger metal RF co
 </connects>
 <technologies>
 <technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="ESP8266" prefix="U">
+<description>&lt;h3&gt;Espressif ESP8266&lt;/h3&gt;
+&lt;p&gt;WiFi Smart Connectivity Platform.&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="ESP8266" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="QFN32">
+<connects>
+<connect gate="G$1" pin="CHIP_EN" pad="7"/>
+<connect gate="G$1" pin="EXT_RSTB" pad="32"/>
+<connect gate="G$1" pin="GND" pad="EP"/>
+<connect gate="G$1" pin="GPIO2" pad="14"/>
+<connect gate="G$1" pin="GPIO4" pad="16"/>
+<connect gate="G$1" pin="GPIO5" pad="24"/>
+<connect gate="G$1" pin="LNA" pad="2"/>
+<connect gate="G$1" pin="MTCK/SPID/GPIO13" pad="12"/>
+<connect gate="G$1" pin="MTDI/SPIQ/GPIO12" pad="10"/>
+<connect gate="G$1" pin="MTDO/SPICS/GPIO15" pad="13"/>
+<connect gate="G$1" pin="MTMS/SPICLK/GPIO14" pad="9"/>
+<connect gate="G$1" pin="RES12K" pad="31"/>
+<connect gate="G$1" pin="SPICLK/SD_CLK" pad="21"/>
+<connect gate="G$1" pin="SPICS0/SD_CMD" pad="20"/>
+<connect gate="G$1" pin="SPICS2/GPIO0" pad="15"/>
+<connect gate="G$1" pin="SPID/SD_DATA_1" pad="23"/>
+<connect gate="G$1" pin="SPIHD/SD_DATA_2" pad="18"/>
+<connect gate="G$1" pin="SPIQ/SD_DATA_0" pad="22"/>
+<connect gate="G$1" pin="SPIWP/SD_DATA_3" pad="19"/>
+<connect gate="G$1" pin="TOUT/ADC" pad="6"/>
+<connect gate="G$1" pin="U0RXD" pad="25"/>
+<connect gate="G$1" pin="U0TXD" pad="26"/>
+<connect gate="G$1" pin="VDD3P3@3" pad="3"/>
+<connect gate="G$1" pin="VDD3P3@4" pad="4"/>
+<connect gate="G$1" pin="VDDA@1" pad="1"/>
+<connect gate="G$1" pin="VDDA@30" pad="30"/>
+<connect gate="G$1" pin="VDDD" pad="29"/>
+<connect gate="G$1" pin="VDDPST@11" pad="11"/>
+<connect gate="G$1" pin="VDDPST@17" pad="17"/>
+<connect gate="G$1" pin="VDD_RTC" pad="5"/>
+<connect gate="G$1" pin="XPD_DCDC/GPIO16" pad="8"/>
+<connect gate="G$1" pin="XTAL_IN" pad="28"/>
+<connect gate="G$1" pin="XTAL_OUT" pad="27"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="IC-12452"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -22011,7 +22007,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </class>
 </classes>
 <parts>
-<part name="U2" library="esp8266-development-board" deviceset="ESP8266" device="">
+<part name="U2" library="SparkFun-RF" deviceset="ESP8266" device="">
 <attribute name="PROD_ID" value="IC-12452"/>
 </part>
 <part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
