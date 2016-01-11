@@ -21846,7 +21846,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="SI7021">
+<deviceset name="SI7021" prefix="U">
 <description>The Si7021 is an I2C Humidity and Temperature Sensor</description>
 <gates>
 <gate name="G$1" symbol="SI7021" x="0" y="0"/>
@@ -22014,10 +22014,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="U2" library="esp8266-development-board" deviceset="ESP8266" device="">
 <attribute name="PROD_ID" value="IC-12452"/>
 </part>
-<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="C1" library="SparkFun-Capacitors" deviceset="10UF-6.3V-20%(0603)" device="" value="10uF"/>
 <part name="C2" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND2" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="Y1" library="things" deviceset="CRYSTAL-GROUNDED" device="3.2X2.5" value="26MHz">
 <attribute name="PROD_ID" value="XTAL-12454"/>
@@ -22026,158 +22026,158 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND3" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="L1" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="DNP"/>
 <part name="L2" library="SparkFun-Passives" deviceset="INDUCTOR" device="0603" value="DNP"/>
-<part name="C7" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="5.6pF">
+<part name="C8" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="5.6pF">
 <attribute name="PROD_ID" value="CAP-12456"/>
 </part>
-<part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R5" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="GND16" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND17" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="R10" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="SUPPLY6" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="R2" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="R8" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="SUPPLY5" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND18" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="U3" library="blynk-thing-temp" deviceset="W25Q32FV" device="SS"/>
+<part name="SUPPLY16" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND35" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND36" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U5" library="blynk-thing-temp" deviceset="W25Q32FV" device="SS"/>
 <part name="LOGO2" library="SparkFun-Aesthetics" deviceset="OSHW-LOGO" device="S" value="OSHW-LOGOS"/>
 <part name="E1" library="SparkFun-RF" deviceset="ANTENNA" device="TRACE" value="ANTENNATRACE"/>
-<part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND19" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C3" library="SparkFun-Capacitors" deviceset="10PF-50V-5%(0603)" device="" value="10pF"/>
 <part name="C4" library="SparkFun-Capacitors" deviceset="10PF-50V-5%(0603)" device="" value="10pF"/>
 <part name="R1" library="SparkFun-Resistors" deviceset="12KOHM-1/10W-1%(0603)" device="" value="12k"/>
-<part name="R4" library="SparkFun-Resistors" deviceset="200OHM1/10W1%(0603)" device="" value="200"/>
-<part name="C10" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="R17" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
-<part name="GND27" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="R9" library="SparkFun-Resistors" deviceset="200OHM1/10W1%(0603)" device="" value="200"/>
+<part name="C17" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="R20" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="GND39" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="LOGO1" library="SparkFun-Aesthetics" deviceset="SFE_LOGO_NAME" device=".2_INCH" value="SFE_LOGO_NAME.2_INCH"/>
-<part name="C8" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="GND16" library="SparkFun" deviceset="GND" device=""/>
-<part name="GND14" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="C12" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="U4" library="SparkFun-DigitalIC" deviceset="FT231X" device="S" value="FT231XS-U"/>
-<part name="R7" library="SparkFun-Resistors" deviceset="27OHM1/10W1%(0603)" device="0603-RES" value="27"/>
-<part name="R8" library="SparkFun-Resistors" deviceset="27OHM1/10W1%(0603)" device="0603-RES" value="27"/>
-<part name="C11" library="SparkFun-Capacitors" deviceset="47PF-50V-5%(0603)" device="" value="47pF"/>
-<part name="C9" library="SparkFun-Capacitors" deviceset="47PF-50V-5%(0603)" device="" value="47pF"/>
-<part name="GND20" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND17" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="C11" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="GND27" library="SparkFun" deviceset="GND" device=""/>
+<part name="GND26" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="C14" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="GND25" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND24" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND23" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND21" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U4" library="SparkFun-DigitalIC" deviceset="FT231X" device="S" value="FT231XS-U"/>
+<part name="R13" library="SparkFun-Resistors" deviceset="27OHM1/10W1%(0603)" device="0603-RES" value="27"/>
+<part name="R14" library="SparkFun-Resistors" deviceset="27OHM1/10W1%(0603)" device="0603-RES" value="27"/>
+<part name="C13" library="SparkFun-Capacitors" deviceset="47PF-50V-5%(0603)" device="" value="47pF"/>
+<part name="C12" library="SparkFun-Capacitors" deviceset="47PF-50V-5%(0603)" device="" value="47pF"/>
+<part name="GND29" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND28" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="C16" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="GND33" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND32" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND31" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND30" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="F1" library="SparkFun-PowerIC" deviceset="PTC" device="SMD" value="500mA"/>
-<part name="JP1" library="SparkFun-Connectors" deviceset="USB_MICROB_PLUG" device="CONN-11752"/>
-<part name="R14" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
-<part name="SUPPLY13" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="JP15" library="SparkFun-Connectors" deviceset="USB_MICROB_PLUG" device="CONN-11752"/>
+<part name="R19" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="SUPPLY20" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="STANDOFF3" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF4" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
-<part name="Q1" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="MMBT2222A" value="MMBT2222A"/>
 <part name="Q2" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="MMBT2222A" value="MMBT2222A"/>
-<part name="R9" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
-<part name="R10" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="Q3" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="MMBT2222A" value="MMBT2222A"/>
+<part name="R17" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="R18" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
 <part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
-<part name="C13" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
-<part name="J1" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J2" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J3" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J4" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J5" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J6" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J7" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="J8" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP2" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT"/>
-<part name="D3" library="SparkFun-LED" deviceset="WS2812B" device=""/>
-<part name="JP3" library="SparkFun-Connectors" deviceset="M03" device="JST-PTH-VERT"/>
-<part name="U5" library="SparkFun-Sensors" deviceset="SI7021" device=""/>
-<part name="R6" library="SparkFun-Resistors" deviceset="4.7KOHM-1/10W-1%(0603)" device="" value="4.7K"/>
-<part name="R18" library="SparkFun-Resistors" deviceset="4.7KOHM-1/10W-1%(0603)" device="" value="4.7K"/>
-<part name="C15" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="C16" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
-<part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND19" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY15" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND22" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY16" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="U8" library="SparkFun-AnalogIC" deviceset="OPAMP-DUAL" device="U"/>
-<part name="R25" library="SparkFun-Resistors" deviceset="22KOHM1/10W1%(0603)" device="" value="22K"/>
-<part name="R26" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
-<part name="GND31" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND32" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY20" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="C17" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="C15" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
+<part name="JP16" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP18" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP22" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP24" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP12" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP20" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP4" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP6" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP29" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT"/>
+<part name="D4" library="SparkFun-LED" deviceset="WS2812B" device=""/>
+<part name="JP14" library="SparkFun-Connectors" deviceset="M03" device="JST-PTH-VERT"/>
+<part name="U6" library="SparkFun-Sensors" deviceset="SI7021" device=""/>
+<part name="R15" library="SparkFun-Resistors" deviceset="4.7KOHM-1/10W-1%(0603)" device="" value="4.7K"/>
+<part name="R16" library="SparkFun-Resistors" deviceset="4.7KOHM-1/10W-1%(0603)" device="" value="4.7K"/>
+<part name="C18" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
 <part name="SUPPLY17" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="GND26" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND29" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY18" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="SMD-REDUNDANT" value=""/>
-<part name="GND33" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND30" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY21" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="JP5" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP6" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP7" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP8" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP9" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP10" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP11" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP12" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="D4" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
-<part name="R16" library="SparkFun-Resistors" deviceset="330OHM1/10W1%(0603)" device="" value="330"/>
-<part name="GND34" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND35" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY22" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="C18" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="&quot;" value="1.0uF"/>
-<part name="C19" library="SparkFun-Capacitors" deviceset="2.2UF-10V-20%(0603)" device="" value="2.2uF"/>
-<part name="GND36" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND37" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="U6" library="SparkFun-PowerIC" deviceset="MCP73831" device=""/>
+<part name="C9" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="SUPPLY8" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND20" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND23" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY10" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND25" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY13" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="IC1" library="SparkFun-AnalogIC" deviceset="OPAMP-DUAL" device="U"/>
+<part name="R3" library="SparkFun-Resistors" deviceset="22KOHM1/10W1%(0603)" device="" value="22K"/>
+<part name="R4" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
+<part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="C5" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
+<part name="SUPPLY4" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND24" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="SMD-REDUNDANT" value=""/>
+<part name="GND34" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND38" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND39" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND40" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="C20" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
-<part name="D5" library="SparkFun-DiscreteSemi" deviceset="DIODE-SCHOTTKY" device="-BAT20J" value="BAT20J"/>
-<part name="R19" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
-<part name="GND41" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY23" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
-<part name="JP13" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="LiPo"/>
-<part name="GND42" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="D6" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow"/>
-<part name="R20" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>
-<part name="U7" library="SparkFun-PowerIC" deviceset="V_REG_LDO" device="SMD" value="AP2112K-3.3V">
+<part name="SUPPLY19" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="JP13" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP21" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP5" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP7" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP25" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP23" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP19" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP17" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="D3" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
+<part name="R11" library="SparkFun-Resistors" deviceset="330OHM1/10W1%(0603)" device="" value="330"/>
+<part name="GND18" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND15" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="C7" library="SparkFun-Capacitors" deviceset="1.0UF-25V-+80/-20(0805)" device="&quot;" value="1.0uF"/>
+<part name="C10" library="SparkFun-Capacitors" deviceset="2.2UF-10V-20%(0603)" device="" value="2.2uF"/>
+<part name="GND21" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND14" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="U1" library="SparkFun-PowerIC" deviceset="MCP73831" device=""/>
+<part name="GND9" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND11" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="GND12" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="C6" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
+<part name="D2" library="SparkFun-DiscreteSemi" deviceset="DIODE-SCHOTTKY" device="-BAT20J" value="BAT20J"/>
+<part name="R7" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
+<part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="LiPo"/>
+<part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="D1" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow"/>
+<part name="R2" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>
+<part name="U3" library="SparkFun-PowerIC" deviceset="V_REG_LDO" device="SMD" value="AP2112K-3.3V">
 <attribute name="PROD_ID" value="VREG-12457"/>
 </part>
-<part name="Q3" library="SparkFun-DiscreteSemi" deviceset="MOSFET-PCHANNEL" device="DMG2307L" value="2.5A/30V"/>
-<part name="R21" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>
-<part name="GND43" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="D7" library="SparkFun-LED" deviceset="LED-RED" device="0603" value="RED"/>
-<part name="R22" library="SparkFun-Resistors" deviceset="2.0KOHM1/10W5%(0603)" device="" value="2.0k"/>
-<part name="SJ3" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value="PWRLED"/>
+<part name="Q1" library="SparkFun-DiscreteSemi" deviceset="MOSFET-PCHANNEL" device="DMG2307L" value="2.5A/30V"/>
+<part name="R12" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>
+<part name="GND22" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="D5" library="SparkFun-LED" deviceset="LED-RED" device="0603" value="RED"/>
+<part name="R6" library="SparkFun-Resistors" deviceset="2.0KOHM1/10W5%(0603)" device="" value="2.0k"/>
+<part name="SJ2" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value="PWRLED"/>
 <part name="FRAME1" library="SparkFun-Aesthetics" deviceset="FRAME-LEDGER" device=""/>
-<part name="JP4" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="R3" library="SparkFun-Passives" deviceset="RESISTOR" device="PTH-1/6W" value="DNP"/>
-<part name="GND5" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="J9" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP14" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="J10" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP15" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="SJ1" library="SparkFun-Passives" deviceset="JUMPER-PAD-3-NC_BY_PASTE" device="" value=""/>
-<part name="SUPPLY2" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="SJ2" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value=""/>
-<part name="J11" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP16" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="J12" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP17" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="SUPPLY4" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
-<part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
-<part name="SUPPLY10" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
+<part name="JP28" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="R5" library="SparkFun-Passives" deviceset="RESISTOR" device="PTH-1/6W" value="DNP"/>
+<part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="JP10" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP11" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP8" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP9" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="SJ3" library="SparkFun-Passives" deviceset="JUMPER-PAD-3-NC_BY_PASTE" device="" value=""/>
+<part name="SUPPLY18" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="SJ1" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value=""/>
+<part name="JP26" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP27" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP2" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP3" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
+<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
+<part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -22189,14 +22189,14 @@ VCC Range:
 <text x="157.48" y="274.32" size="2.54" layer="94">FT231XS (USB-to-Serial Converter)</text>
 <text x="332.74" y="132.08" size="2.54" layer="94">Auto-Reset</text>
 <text x="378.46" y="132.08" size="2.54" layer="94">Run Default Pull-Ups</text>
-<text x="132.08" y="226.06" size="1.27" layer="97" align="top-right">SJ1 can be cut to 
+<text x="132.08" y="226.06" size="1.27" layer="97" align="top-right">SJ2 can be cut to 
 disable the power 
 LED. (Saving 
 lots of power.)</text>
 <text x="355.346" y="11.43" size="2.54" layer="94" rot="MR180" align="top-left">Jim Lindblom</text>
 <text x="421.64" y="10.16" size="2.54" layer="94" align="top-left">v01</text>
 <text x="332.486" y="6.35" size="2.032" layer="97" rot="MR180" align="top-left">Auto-reset circuit based on NodeMCU Dev Kit</text>
-<text x="378.46" y="76.2" size="1.27" layer="91">GPIO2 pulled up in I2C section</text>
+<text x="378.46" y="76.2" size="1.27" layer="97">GPIO2 pulled up in I2C section</text>
 <text x="5.08" y="218.44" size="2.032" layer="97" align="top-left">VBAT should be a single-
 cell LiPo battery.</text>
 <text x="30.48" y="236.22" size="1.778" layer="97">Charge current:
@@ -22235,15 +22235,26 @@ cell LiPo battery.</text>
 <text x="281.94" y="198.12" size="2.54" layer="94">Si7021 Temperature and Humidity Sensor
 &amp; I2C Header</text>
 <text x="2.54" y="274.32" size="2.54" layer="94">Voltage Regulator and Battery Charger</text>
+<text x="68.58" y="231.14" size="1.27" layer="97" align="top-left">SJ1 can be cut to 
+modify the charge-
+current programming
+resistor.</text>
+<text x="358.14" y="180.34" size="1.27" layer="97">SJ3 can be cleared
+to remove the
+pull-up resistors from
+SDA and SCL.
+(NOTE: GPIO2 _must_ be pulled
+high to run.)</text>
+<text x="322.58" y="149.86" size="1.27" layer="97">Si7021 I2C Address: 0x40</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="50.8" y="66.04">
 <attribute name="PROD_ID" x="50.8" y="66.04" size="2.54" layer="96" display="off"/>
 </instance>
-<instance part="SUPPLY1" gate="G$1" x="25.4" y="106.68"/>
+<instance part="SUPPLY2" gate="G$1" x="25.4" y="106.68"/>
 <instance part="C1" gate="G$1" x="7.62" y="93.98"/>
 <instance part="C2" gate="G$1" x="15.24" y="93.98"/>
-<instance part="GND4" gate="1" x="25.4" y="25.4"/>
+<instance part="GND5" gate="1" x="25.4" y="25.4"/>
 <instance part="GND2" gate="1" x="10.16" y="55.88"/>
 <instance part="Y1" gate="G$1" x="22.86" y="63.5" rot="R270">
 <attribute name="PROD_ID" x="22.86" y="63.5" size="2.54" layer="96" rot="R270" display="off"/>
@@ -22252,187 +22263,187 @@ cell LiPo battery.</text>
 <instance part="GND3" gate="1" x="15.24" y="86.36"/>
 <instance part="L1" gate="G$1" x="101.6" y="83.82"/>
 <instance part="L2" gate="G$1" x="114.3" y="83.82"/>
-<instance part="C7" gate="G$1" x="109.22" y="93.98" rot="R90">
+<instance part="C8" gate="G$1" x="109.22" y="93.98" rot="R90">
 <attribute name="PROD_ID" x="109.22" y="93.98" size="2.54" layer="96" rot="R90" display="off"/>
 </instance>
-<instance part="GND12" gate="1" x="101.6" y="71.12"/>
-<instance part="GND13" gate="1" x="114.3" y="71.12"/>
-<instance part="R5" gate="G$1" x="81.28" y="109.22" rot="R90"/>
+<instance part="GND16" gate="1" x="101.6" y="71.12"/>
+<instance part="GND17" gate="1" x="114.3" y="71.12"/>
+<instance part="R10" gate="G$1" x="81.28" y="109.22" rot="R90"/>
 <instance part="SUPPLY6" gate="G$1" x="81.28" y="116.84"/>
-<instance part="R2" gate="G$1" x="73.66" y="109.22" rot="R90"/>
+<instance part="R8" gate="G$1" x="73.66" y="109.22" rot="R90"/>
 <instance part="SUPPLY5" gate="G$1" x="73.66" y="116.84"/>
-<instance part="SUPPLY8" gate="G$1" x="307.34" y="93.98" rot="MR0"/>
-<instance part="GND10" gate="1" x="271.78" y="78.74" rot="MR0"/>
-<instance part="SUPPLY9" gate="G$1" x="289.56" y="114.3" rot="MR0"/>
-<instance part="GND18" gate="1" x="289.56" y="99.06" rot="MR0"/>
-<instance part="U3" gate="G$1" x="289.56" y="88.9">
+<instance part="SUPPLY16" gate="G$1" x="307.34" y="93.98" rot="MR0"/>
+<instance part="GND35" gate="1" x="271.78" y="78.74" rot="MR0"/>
+<instance part="SUPPLY15" gate="G$1" x="289.56" y="114.3" rot="MR0"/>
+<instance part="GND36" gate="1" x="289.56" y="99.06" rot="MR0"/>
+<instance part="U5" gate="G$1" x="289.56" y="88.9">
 <attribute name="PROD_ID" x="289.56" y="88.9" size="2.54" layer="96" display="off"/>
 </instance>
 <instance part="LOGO2" gate="G$1" x="289.56" y="33.02"/>
 <instance part="E1" gate="G$1" x="121.92" y="106.68"/>
-<instance part="GND15" gate="1" x="124.46" y="71.12"/>
+<instance part="GND19" gate="1" x="124.46" y="71.12"/>
 <instance part="C3" gate="G$1" x="17.78" y="66.04" rot="R90"/>
 <instance part="C4" gate="G$1" x="17.78" y="60.96" rot="MR270"/>
 <instance part="R1" gate="G$1" x="25.4" y="43.18" rot="R90"/>
-<instance part="R4" gate="G$1" x="78.74" y="86.36" smashed="yes" rot="R180">
+<instance part="R9" gate="G$1" x="78.74" y="86.36" smashed="yes" rot="R180">
 <attribute name="NAME" x="72.898" y="86.5886" size="1.778" layer="95"/>
 <attribute name="VALUE" x="81.026" y="86.614" size="1.778" layer="96"/>
 </instance>
-<instance part="C10" gate="G$1" x="289.56" y="106.68"/>
-<instance part="R17" gate="G$1" x="421.64" y="96.52" rot="R90"/>
-<instance part="GND27" gate="1" x="421.64" y="86.36"/>
+<instance part="C17" gate="G$1" x="289.56" y="106.68"/>
+<instance part="R20" gate="G$1" x="421.64" y="96.52" rot="R90"/>
+<instance part="GND39" gate="1" x="421.64" y="86.36"/>
 <instance part="LOGO1" gate="G$1" x="261.62" y="5.08"/>
-<instance part="C8" gate="G$1" x="200.66" y="243.84" rot="MR0"/>
-<instance part="GND16" gate="1" x="200.66" y="233.68"/>
-<instance part="GND14" gate="1" x="193.04" y="233.68"/>
-<instance part="C12" gate="G$1" x="233.68" y="238.76" rot="MR0"/>
+<instance part="C11" gate="G$1" x="200.66" y="243.84" rot="MR0"/>
+<instance part="GND27" gate="1" x="200.66" y="233.68"/>
+<instance part="GND26" gate="1" x="193.04" y="233.68"/>
+<instance part="C14" gate="G$1" x="233.68" y="238.76" rot="MR0"/>
 <instance part="U4" gate="U$1" x="266.7" y="248.92"/>
-<instance part="R7" gate="G$1" x="226.06" y="254" smashed="yes">
+<instance part="R13" gate="G$1" x="226.06" y="254" smashed="yes">
 <attribute name="NAME" x="223.012" y="255.2446" size="1.778" layer="95"/>
 </instance>
-<instance part="R8" gate="G$1" x="226.06" y="251.46" smashed="yes">
+<instance part="R14" gate="G$1" x="226.06" y="251.46" smashed="yes">
 <attribute name="NAME" x="226.822" y="248.3866" size="1.778" layer="95"/>
 </instance>
-<instance part="C11" gate="G$1" x="215.9" y="243.84"/>
-<instance part="C9" gate="G$1" x="208.28" y="243.84" rot="MR0"/>
-<instance part="GND20" gate="1" x="215.9" y="233.68"/>
-<instance part="GND17" gate="1" x="208.28" y="233.68"/>
-<instance part="C14" gate="G$1" x="246.38" y="238.76"/>
-<instance part="GND25" gate="1" x="251.46" y="226.06"/>
-<instance part="GND24" gate="1" x="246.38" y="226.06"/>
-<instance part="GND23" gate="1" x="241.3" y="226.06"/>
-<instance part="GND21" gate="1" x="233.68" y="226.06"/>
+<instance part="C13" gate="G$1" x="215.9" y="243.84"/>
+<instance part="C12" gate="G$1" x="208.28" y="243.84" rot="MR0"/>
+<instance part="GND29" gate="1" x="215.9" y="233.68"/>
+<instance part="GND28" gate="1" x="208.28" y="233.68"/>
+<instance part="C16" gate="G$1" x="246.38" y="238.76"/>
+<instance part="GND33" gate="1" x="251.46" y="226.06"/>
+<instance part="GND32" gate="1" x="246.38" y="226.06"/>
+<instance part="GND31" gate="1" x="241.3" y="226.06"/>
+<instance part="GND30" gate="1" x="233.68" y="226.06"/>
 <instance part="F1" gate="G$1" x="208.28" y="264.16"/>
-<instance part="JP1" gate="G$1" x="182.88" y="251.46" rot="MR0"/>
-<instance part="R14" gate="G$1" x="401.32" y="93.98" rot="R90"/>
-<instance part="SUPPLY13" gate="G$1" x="401.32" y="101.6"/>
+<instance part="JP15" gate="G$1" x="182.88" y="251.46" rot="MR0"/>
+<instance part="R19" gate="G$1" x="401.32" y="93.98" rot="R90"/>
+<instance part="SUPPLY20" gate="G$1" x="401.32" y="101.6"/>
 <instance part="STANDOFF3" gate="G$1" x="426.72" y="33.02"/>
 <instance part="STANDOFF1" gate="G$1" x="424.18" y="33.02"/>
 <instance part="STANDOFF2" gate="G$1" x="424.18" y="30.48"/>
 <instance part="STANDOFF4" gate="G$1" x="426.72" y="30.48"/>
-<instance part="Q1" gate="G$1" x="345.44" y="104.14" smashed="yes" rot="MR0">
+<instance part="Q2" gate="G$1" x="345.44" y="104.14" smashed="yes" rot="MR0">
 <attribute name="NAME" x="343.662" y="107.442" size="1.778" layer="95"/>
 <attribute name="VALUE" x="344.678" y="103.378" size="1.778" layer="96" rot="MR0"/>
 </instance>
-<instance part="Q2" gate="G$1" x="345.44" y="86.36" smashed="yes" rot="R180">
+<instance part="Q3" gate="G$1" x="345.44" y="86.36" smashed="yes" rot="R180">
 <attribute name="NAME" x="345.44" y="81.28" size="1.778" layer="95"/>
 <attribute name="VALUE" x="344.678" y="85.598" size="1.778" layer="96" rot="MR0"/>
 </instance>
-<instance part="R9" gate="G$1" x="355.6" y="104.14" rot="R180"/>
-<instance part="R10" gate="G$1" x="355.6" y="86.36" rot="R180"/>
+<instance part="R17" gate="G$1" x="355.6" y="104.14" rot="R180"/>
+<instance part="R18" gate="G$1" x="355.6" y="86.36" rot="R180"/>
 <instance part="FID2" gate="G$1" x="419.1" y="27.94"/>
 <instance part="FID1" gate="G$1" x="416.56" y="25.4"/>
-<instance part="C13" gate="G$1" x="241.3" y="238.76" rot="MR0"/>
-<instance part="J1" gate="G$1" x="198.12" y="121.92"/>
-<instance part="J2" gate="G$1" x="198.12" y="101.6"/>
-<instance part="J3" gate="G$1" x="198.12" y="58.42"/>
-<instance part="J4" gate="G$1" x="198.12" y="38.1"/>
-<instance part="J5" gate="G$1" x="165.1" y="17.78"/>
-<instance part="J6" gate="G$1" x="198.12" y="81.28"/>
-<instance part="J7" gate="G$1" x="165.1" y="101.6"/>
-<instance part="J8" gate="G$1" x="165.1" y="81.28"/>
-<instance part="JP2" gate="G$1" x="378.46" y="160.02"/>
-<instance part="D3" gate="G$1" x="119.38" y="162.56"/>
-<instance part="JP3" gate="G$1" x="170.18" y="165.1" rot="MR180"/>
-<instance part="U5" gate="G$1" x="325.12" y="160.02"/>
-<instance part="R6" gate="G$1" x="337.82" y="170.18" rot="R90"/>
-<instance part="R18" gate="G$1" x="353.06" y="170.18" rot="R90"/>
-<instance part="C15" gate="G$1" x="309.88" y="160.02" rot="MR0"/>
-<instance part="SUPPLY3" gate="G$1" x="309.88" y="170.18"/>
-<instance part="GND7" gate="1" x="309.88" y="149.86"/>
-<instance part="C16" gate="G$1" x="127" y="180.34" rot="MR0"/>
-<instance part="SUPPLY11" gate="G$1" x="111.76" y="170.18"/>
-<instance part="GND11" gate="1" x="127" y="172.72"/>
-<instance part="GND19" gate="1" x="139.7" y="152.4"/>
-<instance part="SUPPLY15" gate="G$1" x="127" y="187.96"/>
-<instance part="GND22" gate="1" x="180.34" y="157.48"/>
-<instance part="SUPPLY16" gate="G$1" x="180.34" y="170.18"/>
-<instance part="U8" gate="A" x="27.94" y="175.26" rot="MR180"/>
-<instance part="U8" gate="B" x="63.5" y="172.72"/>
-<instance part="R25" gate="G$1" x="43.18" y="167.64" rot="R90"/>
-<instance part="R26" gate="G$1" x="43.18" y="152.4" rot="R90"/>
-<instance part="GND31" gate="1" x="43.18" y="142.24"/>
-<instance part="GND32" gate="1" x="27.94" y="160.02"/>
-<instance part="SUPPLY20" gate="G$1" x="27.94" y="185.42"/>
-<instance part="C17" gate="G$1" x="48.26" y="190.5" rot="MR0"/>
-<instance part="SUPPLY17" gate="G$1" x="48.26" y="198.12"/>
-<instance part="GND26" gate="1" x="48.26" y="182.88"/>
-<instance part="GND29" gate="1" x="175.26" y="66.04"/>
-<instance part="SUPPLY18" gate="G$1" x="175.26" y="104.14"/>
+<instance part="C15" gate="G$1" x="241.3" y="238.76" rot="MR0"/>
+<instance part="JP16" gate="G$1" x="198.12" y="121.92"/>
+<instance part="JP18" gate="G$1" x="198.12" y="101.6"/>
+<instance part="JP22" gate="G$1" x="198.12" y="58.42"/>
+<instance part="JP24" gate="G$1" x="198.12" y="38.1"/>
+<instance part="JP12" gate="G$1" x="165.1" y="17.78"/>
+<instance part="JP20" gate="G$1" x="198.12" y="81.28"/>
+<instance part="JP4" gate="G$1" x="165.1" y="101.6"/>
+<instance part="JP6" gate="G$1" x="165.1" y="81.28"/>
+<instance part="JP29" gate="G$1" x="378.46" y="160.02"/>
+<instance part="D4" gate="G$1" x="119.38" y="162.56"/>
+<instance part="JP14" gate="G$1" x="170.18" y="165.1" rot="MR180"/>
+<instance part="U6" gate="G$1" x="325.12" y="160.02"/>
+<instance part="R15" gate="G$1" x="337.82" y="170.18" rot="R90"/>
+<instance part="R16" gate="G$1" x="353.06" y="170.18" rot="R90"/>
+<instance part="C18" gate="G$1" x="309.88" y="160.02" rot="MR0"/>
+<instance part="SUPPLY17" gate="G$1" x="309.88" y="170.18"/>
+<instance part="GND37" gate="1" x="309.88" y="149.86"/>
+<instance part="C9" gate="G$1" x="127" y="180.34" rot="MR0"/>
+<instance part="SUPPLY8" gate="G$1" x="111.76" y="170.18"/>
+<instance part="GND20" gate="1" x="127" y="172.72"/>
+<instance part="GND23" gate="1" x="139.7" y="152.4"/>
+<instance part="SUPPLY10" gate="G$1" x="127" y="187.96"/>
+<instance part="GND25" gate="1" x="180.34" y="157.48"/>
+<instance part="SUPPLY13" gate="G$1" x="180.34" y="170.18"/>
+<instance part="IC1" gate="A" x="27.94" y="175.26" rot="MR180"/>
+<instance part="IC1" gate="B" x="63.5" y="172.72"/>
+<instance part="R3" gate="G$1" x="43.18" y="167.64" rot="R90"/>
+<instance part="R4" gate="G$1" x="43.18" y="152.4" rot="R90"/>
+<instance part="GND7" gate="1" x="43.18" y="142.24"/>
+<instance part="GND6" gate="1" x="27.94" y="160.02"/>
+<instance part="SUPPLY3" gate="G$1" x="27.94" y="185.42"/>
+<instance part="C5" gate="G$1" x="48.26" y="190.5" rot="MR0"/>
+<instance part="SUPPLY4" gate="G$1" x="48.26" y="198.12"/>
+<instance part="GND8" gate="1" x="48.26" y="182.88"/>
+<instance part="GND24" gate="1" x="175.26" y="66.04"/>
+<instance part="SUPPLY12" gate="G$1" x="175.26" y="104.14"/>
 <instance part="S1" gate="G$1" x="251.46" y="162.56"/>
-<instance part="GND33" gate="1" x="259.08" y="157.48"/>
-<instance part="GND30" gate="1" x="386.08" y="152.4"/>
-<instance part="SUPPLY21" gate="G$1" x="386.08" y="170.18"/>
-<instance part="JP5" gate="G$1" x="165.1" y="7.62"/>
-<instance part="JP6" gate="G$1" x="198.12" y="71.12"/>
-<instance part="JP7" gate="G$1" x="165.1" y="91.44"/>
-<instance part="JP8" gate="G$1" x="165.1" y="71.12"/>
-<instance part="JP9" gate="G$1" x="198.12" y="27.94"/>
-<instance part="JP10" gate="G$1" x="198.12" y="48.26"/>
-<instance part="JP11" gate="G$1" x="198.12" y="91.44"/>
-<instance part="JP12" gate="G$1" x="198.12" y="111.76"/>
-<instance part="D4" gate="G$1" x="99.06" y="55.88" rot="R90"/>
-<instance part="R16" gate="G$1" x="111.76" y="55.88"/>
-<instance part="GND34" gate="1" x="119.38" y="50.8"/>
-<instance part="GND35" gate="1" x="101.6" y="241.3"/>
-<instance part="SUPPLY22" gate="G$1" x="124.46" y="259.08"/>
-<instance part="C18" gate="G$1" x="93.98" y="248.92" rot="MR0"/>
-<instance part="C19" gate="G$1" x="129.54" y="248.92" rot="MR0"/>
-<instance part="GND36" gate="1" x="129.54" y="241.3"/>
-<instance part="GND37" gate="1" x="93.98" y="236.22"/>
-<instance part="U6" gate="G$1" x="40.64" y="254"/>
-<instance part="GND38" gate="1" x="53.34" y="236.22"/>
-<instance part="GND39" gate="1" x="63.5" y="223.52"/>
-<instance part="GND40" gate="1" x="68.58" y="236.22"/>
-<instance part="C20" gate="G$1" x="68.58" y="246.38" smashed="yes">
+<instance part="GND34" gate="1" x="259.08" y="157.48"/>
+<instance part="GND38" gate="1" x="386.08" y="152.4"/>
+<instance part="SUPPLY19" gate="G$1" x="386.08" y="170.18"/>
+<instance part="JP13" gate="G$1" x="165.1" y="7.62"/>
+<instance part="JP21" gate="G$1" x="198.12" y="71.12"/>
+<instance part="JP5" gate="G$1" x="165.1" y="91.44"/>
+<instance part="JP7" gate="G$1" x="165.1" y="71.12"/>
+<instance part="JP25" gate="G$1" x="198.12" y="27.94"/>
+<instance part="JP23" gate="G$1" x="198.12" y="48.26"/>
+<instance part="JP19" gate="G$1" x="198.12" y="91.44"/>
+<instance part="JP17" gate="G$1" x="198.12" y="111.76"/>
+<instance part="D3" gate="G$1" x="88.9" y="48.26"/>
+<instance part="R11" gate="G$1" x="88.9" y="35.56" rot="R270"/>
+<instance part="GND18" gate="1" x="88.9" y="25.4"/>
+<instance part="GND15" gate="1" x="101.6" y="241.3"/>
+<instance part="SUPPLY9" gate="G$1" x="124.46" y="259.08"/>
+<instance part="C7" gate="G$1" x="93.98" y="248.92" rot="MR0"/>
+<instance part="C10" gate="G$1" x="129.54" y="248.92" rot="MR0"/>
+<instance part="GND21" gate="1" x="129.54" y="241.3"/>
+<instance part="GND14" gate="1" x="93.98" y="236.22"/>
+<instance part="U1" gate="G$1" x="40.64" y="254"/>
+<instance part="GND9" gate="1" x="53.34" y="223.52"/>
+<instance part="GND11" gate="1" x="63.5" y="223.52"/>
+<instance part="GND12" gate="1" x="68.58" y="236.22"/>
+<instance part="C6" gate="G$1" x="68.58" y="246.38" smashed="yes">
 <attribute name="NAME" x="68.453" y="248.666" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="68.453" y="246.634" size="1.778" layer="96" rot="MR270"/>
 </instance>
-<instance part="D5" gate="G$1" x="88.9" y="261.62" smashed="yes" rot="R270">
+<instance part="D2" gate="G$1" x="88.9" y="261.62" smashed="yes" rot="R270">
 <attribute name="NAME" x="92.4814" y="259.842" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="87.1474" y="257.048" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R19" gate="G$1" x="73.66" y="248.92" smashed="yes" rot="R90">
+<instance part="R7" gate="G$1" x="73.66" y="248.92" smashed="yes" rot="R90">
 <attribute name="NAME" x="73.4314" y="251.714" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="73.406" y="246.126" size="1.778" layer="96" rot="MR270"/>
 </instance>
-<instance part="GND41" gate="1" x="73.66" y="236.22"/>
-<instance part="SUPPLY23" gate="G$1" x="99.06" y="259.08"/>
-<instance part="JP13" gate="G$1" x="10.16" y="228.6"/>
-<instance part="GND42" gate="1" x="20.32" y="223.52"/>
-<instance part="D6" gate="G$1" x="20.32" y="248.92" rot="MR0"/>
-<instance part="R20" gate="G$1" x="27.94" y="243.84" rot="R270"/>
-<instance part="U7" gate="G$1" x="114.3" y="251.46">
+<instance part="GND13" gate="1" x="73.66" y="236.22"/>
+<instance part="SUPPLY7" gate="G$1" x="99.06" y="259.08"/>
+<instance part="JP1" gate="G$1" x="10.16" y="228.6"/>
+<instance part="GND4" gate="1" x="20.32" y="223.52"/>
+<instance part="D1" gate="G$1" x="20.32" y="248.92" rot="MR0"/>
+<instance part="R2" gate="G$1" x="27.94" y="243.84" rot="R270"/>
+<instance part="U3" gate="G$1" x="114.3" y="251.46">
 <attribute name="PROD_ID" x="114.3" y="251.46" size="1.778" layer="96" display="off"/>
 </instance>
-<instance part="Q3" gate="G$1" x="81.28" y="256.54" rot="MR270"/>
-<instance part="R21" gate="G$1" x="137.16" y="248.92" rot="R270"/>
-<instance part="GND43" gate="1" x="137.16" y="215.9"/>
-<instance part="D7" gate="G$1" x="137.16" y="238.76"/>
-<instance part="R22" gate="G$1" x="63.5" y="233.68" smashed="yes" rot="R90">
+<instance part="Q1" gate="G$1" x="81.28" y="256.54" rot="MR270"/>
+<instance part="R12" gate="G$1" x="137.16" y="248.92" rot="R270"/>
+<instance part="GND22" gate="1" x="137.16" y="215.9"/>
+<instance part="D5" gate="G$1" x="137.16" y="238.76"/>
+<instance part="R6" gate="G$1" x="63.5" y="233.68" smashed="yes" rot="R90">
 <attribute name="NAME" x="63.2714" y="236.22" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="63.246" y="230.886" size="1.778" layer="96" rot="MR270"/>
 </instance>
-<instance part="SJ3" gate="G$1" x="137.16" y="226.06" rot="R90"/>
+<instance part="SJ2" gate="G$1" x="137.16" y="226.06" rot="R90"/>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
 <instance part="FRAME1" gate="G$2" x="330.2" y="0"/>
-<instance part="JP4" gate="G$1" x="228.6" y="33.02"/>
-<instance part="R3" gate="G$1" x="58.42" y="241.3" rot="R90"/>
-<instance part="GND5" gate="1" x="58.42" y="223.52"/>
-<instance part="J9" gate="G$1" x="165.1" y="38.1"/>
-<instance part="JP14" gate="G$1" x="165.1" y="27.94"/>
-<instance part="J10" gate="G$1" x="165.1" y="58.42"/>
-<instance part="JP15" gate="G$1" x="165.1" y="48.26"/>
-<instance part="SJ1" gate="G$1" x="345.44" y="177.8" rot="R270"/>
-<instance part="SUPPLY2" gate="G$1" x="345.44" y="185.42"/>
-<instance part="SJ2" gate="G$1" x="63.5" y="246.38" rot="R90"/>
-<instance part="J11" gate="G$1" x="198.12" y="17.78"/>
-<instance part="JP16" gate="G$1" x="198.12" y="7.62"/>
-<instance part="J12" gate="G$1" x="165.1" y="121.92"/>
-<instance part="JP17" gate="G$1" x="165.1" y="111.76"/>
-<instance part="SUPPLY4" gate="G$1" x="175.26" y="124.46"/>
-<instance part="SUPPLY7" gate="G$1" x="17.78" y="259.08"/>
-<instance part="SUPPLY10" gate="G$1" x="220.98" y="266.7"/>
+<instance part="JP28" gate="G$1" x="228.6" y="33.02"/>
+<instance part="R5" gate="G$1" x="58.42" y="241.3" rot="R90"/>
+<instance part="GND10" gate="1" x="58.42" y="223.52"/>
+<instance part="JP10" gate="G$1" x="165.1" y="38.1"/>
+<instance part="JP11" gate="G$1" x="165.1" y="27.94"/>
+<instance part="JP8" gate="G$1" x="165.1" y="58.42"/>
+<instance part="JP9" gate="G$1" x="165.1" y="48.26"/>
+<instance part="SJ3" gate="G$1" x="345.44" y="177.8" rot="R270"/>
+<instance part="SUPPLY18" gate="G$1" x="345.44" y="185.42"/>
+<instance part="SJ1" gate="G$1" x="63.5" y="246.38" rot="R90"/>
+<instance part="JP26" gate="G$1" x="198.12" y="17.78"/>
+<instance part="JP27" gate="G$1" x="198.12" y="7.62"/>
+<instance part="JP2" gate="G$1" x="165.1" y="121.92"/>
+<instance part="JP3" gate="G$1" x="165.1" y="111.76"/>
+<instance part="SUPPLY11" gate="G$1" x="175.26" y="124.46"/>
+<instance part="SUPPLY1" gate="G$1" x="17.78" y="259.08"/>
+<instance part="SUPPLY14" gate="G$1" x="220.98" y="266.7"/>
 </instances>
 <busses>
 </busses>
@@ -22441,7 +22452,7 @@ cell LiPo battery.</text>
 <segment>
 <pinref part="U2" gate="G$1" pin="VDDA@1"/>
 <wire x1="27.94" y1="101.6" x2="25.4" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="SUPPLY1" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY2" gate="G$1" pin="VCC"/>
 <wire x1="25.4" y1="101.6" x2="25.4" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="U2" gate="G$1" pin="VDDA@30"/>
 <wire x1="25.4" y1="104.14" x2="25.4" y2="106.68" width="0.1524" layer="91"/>
@@ -22478,102 +22489,102 @@ cell LiPo battery.</text>
 <junction x="15.24" y="104.14"/>
 </segment>
 <segment>
-<pinref part="R5" gate="G$1" pin="2"/>
+<pinref part="R10" gate="G$1" pin="2"/>
 <pinref part="SUPPLY6" gate="G$1" pin="VCC"/>
 <wire x1="81.28" y1="116.84" x2="81.28" y2="114.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R2" gate="G$1" pin="2"/>
+<pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="SUPPLY5" gate="G$1" pin="VCC"/>
 <wire x1="73.66" y1="116.84" x2="73.66" y2="114.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="304.8" y1="91.44" x2="307.34" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="307.34" y1="91.44" x2="307.34" y2="93.98" width="0.1524" layer="91"/>
-<pinref part="SUPPLY8" gate="G$1" pin="VCC"/>
-<pinref part="U3" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY16" gate="G$1" pin="VCC"/>
+<pinref part="U5" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
-<pinref part="SUPPLY9" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY15" gate="G$1" pin="VCC"/>
 <wire x1="289.56" y1="114.3" x2="289.56" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="C10" gate="G$1" pin="1"/>
+<pinref part="C17" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="R14" gate="G$1" pin="2"/>
-<pinref part="SUPPLY13" gate="G$1" pin="VCC"/>
+<pinref part="R19" gate="G$1" pin="2"/>
+<pinref part="SUPPLY20" gate="G$1" pin="VCC"/>
 <wire x1="401.32" y1="101.6" x2="401.32" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="SUPPLY3" gate="G$1" pin="VCC"/>
-<pinref part="C15" gate="G$1" pin="1"/>
+<pinref part="SUPPLY17" gate="G$1" pin="VCC"/>
+<pinref part="C18" gate="G$1" pin="1"/>
 <wire x1="309.88" y1="170.18" x2="309.88" y2="167.64" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="167.64" x2="309.88" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="167.64" x2="312.42" y2="167.64" width="0.1524" layer="91"/>
 <wire x1="312.42" y1="167.64" x2="312.42" y2="162.56" width="0.1524" layer="91"/>
 <junction x="309.88" y="167.64"/>
-<pinref part="U5" gate="G$1" pin="VDD"/>
+<pinref part="U6" gate="G$1" pin="VDD"/>
 <wire x1="312.42" y1="162.56" x2="314.96" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="111.76" y1="170.18" x2="111.76" y2="167.64" width="0.1524" layer="91"/>
-<pinref part="D3" gate="G$1" pin="VDD"/>
+<pinref part="D4" gate="G$1" pin="VDD"/>
 <wire x1="111.76" y1="167.64" x2="114.3" y2="167.64" width="0.1524" layer="91"/>
-<pinref part="SUPPLY11" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY8" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
-<pinref part="C16" gate="G$1" pin="1"/>
-<pinref part="SUPPLY15" gate="G$1" pin="VCC"/>
+<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="SUPPLY10" gate="G$1" pin="VCC"/>
 <wire x1="127" y1="187.96" x2="127" y2="185.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="SUPPLY16" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY13" gate="G$1" pin="VCC"/>
 <wire x1="180.34" y1="167.64" x2="180.34" y2="170.18" width="0.1524" layer="91"/>
-<pinref part="JP3" gate="G$1" pin="1"/>
+<pinref part="JP14" gate="G$1" pin="1"/>
 <wire x1="177.8" y1="167.64" x2="180.34" y2="167.64" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U8" gate="A" pin="V-"/>
-<pinref part="SUPPLY20" gate="G$1" pin="VCC"/>
+<pinref part="IC1" gate="A" pin="V-"/>
+<pinref part="SUPPLY3" gate="G$1" pin="VCC"/>
 <wire x1="27.94" y1="182.88" x2="27.94" y2="185.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C17" gate="G$1" pin="1"/>
-<pinref part="SUPPLY17" gate="G$1" pin="VCC"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<pinref part="SUPPLY4" gate="G$1" pin="VCC"/>
 <wire x1="48.26" y1="198.12" x2="48.26" y2="195.58" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J7" gate="G$1" pin="1"/>
+<pinref part="JP4" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="101.6" x2="175.26" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="101.6" x2="175.26" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="SUPPLY18" gate="G$1" pin="VCC"/>
-<pinref part="JP7" gate="G$1" pin="1"/>
+<pinref part="SUPPLY12" gate="G$1" pin="VCC"/>
+<pinref part="JP5" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="91.44" x2="175.26" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="91.44" x2="175.26" y2="101.6" width="0.1524" layer="91"/>
 <junction x="175.26" y="101.6"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="2"/>
+<pinref part="JP29" gate="G$1" pin="2"/>
 <wire x1="383.54" y1="160.02" x2="386.08" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="386.08" y1="160.02" x2="386.08" y2="170.18" width="0.1524" layer="91"/>
-<pinref part="SUPPLY21" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY19" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
 <wire x1="121.92" y1="256.54" x2="124.46" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="124.46" y1="256.54" x2="124.46" y2="259.08" width="0.1524" layer="91"/>
-<pinref part="SUPPLY22" gate="G$1" pin="VCC"/>
+<pinref part="SUPPLY9" gate="G$1" pin="VCC"/>
 <junction x="124.46" y="256.54"/>
 <wire x1="124.46" y1="256.54" x2="129.54" y2="256.54" width="0.1524" layer="91"/>
-<pinref part="C19" gate="G$1" pin="1"/>
+<pinref part="C10" gate="G$1" pin="1"/>
 <wire x1="129.54" y1="256.54" x2="129.54" y2="254" width="0.1524" layer="91"/>
-<pinref part="U7" gate="G$1" pin="OUT"/>
+<pinref part="U3" gate="G$1" pin="OUT"/>
 <wire x1="129.54" y1="256.54" x2="137.16" y2="256.54" width="0.1524" layer="91"/>
 <junction x="129.54" y="256.54"/>
-<pinref part="R21" gate="G$1" pin="1"/>
+<pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="137.16" y1="254" x2="137.16" y2="256.54" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="SJ1" gate="G$1" pin="2"/>
-<pinref part="SUPPLY2" gate="G$1" pin="VCC"/>
+<pinref part="SJ3" gate="G$1" pin="2"/>
+<pinref part="SUPPLY18" gate="G$1" pin="VCC"/>
 <wire x1="345.44" y1="185.42" x2="345.44" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -22581,7 +22592,7 @@ cell LiPo battery.</text>
 <segment>
 <pinref part="U2" gate="G$1" pin="GND"/>
 <wire x1="27.94" y1="33.02" x2="25.4" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="GND4" gate="1" pin="GND"/>
+<pinref part="GND5" gate="1" pin="GND"/>
 <wire x1="25.4" y1="33.02" x2="25.4" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="33.02" x2="25.4" y2="38.1" width="0.1524" layer="91"/>
 <junction x="25.4" y="33.02"/>
@@ -22613,59 +22624,59 @@ cell LiPo battery.</text>
 </segment>
 <segment>
 <pinref part="L1" gate="G$1" pin="2"/>
-<pinref part="GND12" gate="1" pin="GND"/>
+<pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="101.6" y1="73.66" x2="101.6" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="L2" gate="G$1" pin="2"/>
-<pinref part="GND13" gate="1" pin="GND"/>
+<pinref part="GND17" gate="1" pin="GND"/>
 <wire x1="114.3" y1="76.2" x2="114.3" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="274.32" y1="83.82" x2="271.78" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="271.78" y1="83.82" x2="271.78" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="GND10" gate="1" pin="GND"/>
-<pinref part="U3" gate="G$1" pin="GND"/>
+<pinref part="GND35" gate="1" pin="GND"/>
+<pinref part="U5" gate="G$1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="GND18" gate="1" pin="GND"/>
+<pinref part="GND36" gate="1" pin="GND"/>
 <wire x1="289.56" y1="101.6" x2="289.56" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="C10" gate="G$1" pin="2"/>
+<pinref part="C17" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="E1" gate="G$1" pin="GND"/>
-<pinref part="GND15" gate="1" pin="GND"/>
+<pinref part="GND19" gate="1" pin="GND"/>
 <wire x1="124.46" y1="96.52" x2="124.46" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R17" gate="G$1" pin="1"/>
-<pinref part="GND27" gate="1" pin="GND"/>
+<pinref part="R20" gate="G$1" pin="1"/>
+<pinref part="GND39" gate="1" pin="GND"/>
 <wire x1="421.64" y1="88.9" x2="421.64" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="200.66" y1="236.22" x2="200.66" y2="241.3" width="0.1524" layer="91"/>
-<pinref part="C8" gate="G$1" pin="2"/>
-<pinref part="GND16" gate="1" pin="GND"/>
+<pinref part="C11" gate="G$1" pin="2"/>
+<pinref part="GND27" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="GND14" gate="1" pin="GND"/>
+<pinref part="GND26" gate="1" pin="GND"/>
 <wire x1="193.04" y1="246.38" x2="193.04" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="193.04" y1="246.38" x2="190.5" y2="246.38" width="0.1524" layer="91"/>
-<pinref part="JP1" gate="G$1" pin="GND"/>
+<pinref part="JP15" gate="G$1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C11" gate="G$1" pin="2"/>
-<pinref part="GND20" gate="1" pin="GND"/>
+<pinref part="C13" gate="G$1" pin="2"/>
+<pinref part="GND29" gate="1" pin="GND"/>
 <wire x1="215.9" y1="236.22" x2="215.9" y2="241.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C9" gate="G$1" pin="2"/>
-<pinref part="GND17" gate="1" pin="GND"/>
+<pinref part="C12" gate="G$1" pin="2"/>
+<pinref part="GND28" gate="1" pin="GND"/>
 <wire x1="208.28" y1="236.22" x2="208.28" y2="241.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U4" gate="U$1" pin="GND@16"/>
-<pinref part="GND25" gate="1" pin="GND"/>
+<pinref part="GND33" gate="1" pin="GND"/>
 <wire x1="254" y1="233.68" x2="251.46" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="251.46" y1="233.68" x2="251.46" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="U4" gate="U$1" pin="GND@6"/>
@@ -22674,68 +22685,68 @@ cell LiPo battery.</text>
 <junction x="251.46" y="233.68"/>
 </segment>
 <segment>
-<pinref part="C14" gate="G$1" pin="2"/>
-<pinref part="GND24" gate="1" pin="GND"/>
+<pinref part="C16" gate="G$1" pin="2"/>
+<pinref part="GND32" gate="1" pin="GND"/>
 <wire x1="246.38" y1="228.6" x2="246.38" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND23" gate="1" pin="GND"/>
+<pinref part="GND31" gate="1" pin="GND"/>
 <wire x1="241.3" y1="228.6" x2="241.3" y2="236.22" width="0.1524" layer="91"/>
-<pinref part="C13" gate="G$1" pin="2"/>
+<pinref part="C15" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="C12" gate="G$1" pin="2"/>
-<pinref part="GND21" gate="1" pin="GND"/>
+<pinref part="C14" gate="G$1" pin="2"/>
+<pinref part="GND30" gate="1" pin="GND"/>
 <wire x1="233.68" y1="228.6" x2="233.68" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C15" gate="G$1" pin="2"/>
-<pinref part="GND7" gate="1" pin="GND"/>
+<pinref part="C18" gate="G$1" pin="2"/>
+<pinref part="GND37" gate="1" pin="GND"/>
 <wire x1="309.88" y1="152.4" x2="309.88" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="154.94" x2="309.88" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="154.94" x2="312.42" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="312.42" y1="154.94" x2="312.42" y2="160.02" width="0.1524" layer="91"/>
 <junction x="309.88" y="154.94"/>
-<pinref part="U5" gate="G$1" pin="GND"/>
+<pinref part="U6" gate="G$1" pin="GND"/>
 <wire x1="312.42" y1="160.02" x2="314.96" y2="160.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="D3" gate="G$1" pin="VSS"/>
+<pinref part="D4" gate="G$1" pin="VSS"/>
 <wire x1="137.16" y1="160.02" x2="139.7" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="160.02" x2="139.7" y2="154.94" width="0.1524" layer="91"/>
-<pinref part="GND19" gate="1" pin="GND"/>
+<pinref part="GND23" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C16" gate="G$1" pin="2"/>
-<pinref part="GND11" gate="1" pin="GND"/>
+<pinref part="C9" gate="G$1" pin="2"/>
+<pinref part="GND20" gate="1" pin="GND"/>
 <wire x1="127" y1="177.8" x2="127" y2="175.26" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND22" gate="1" pin="GND"/>
+<pinref part="GND25" gate="1" pin="GND"/>
 <wire x1="180.34" y1="165.1" x2="180.34" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="JP3" gate="G$1" pin="2"/>
+<pinref part="JP14" gate="G$1" pin="2"/>
 <wire x1="177.8" y1="165.1" x2="180.34" y2="165.1" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R26" gate="G$1" pin="1"/>
-<pinref part="GND31" gate="1" pin="GND"/>
+<pinref part="R4" gate="G$1" pin="1"/>
+<pinref part="GND7" gate="1" pin="GND"/>
 <wire x1="43.18" y1="144.78" x2="43.18" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U8" gate="A" pin="V+"/>
-<pinref part="GND32" gate="1" pin="GND"/>
+<pinref part="IC1" gate="A" pin="V+"/>
+<pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="27.94" y1="167.64" x2="27.94" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C17" gate="G$1" pin="2"/>
-<pinref part="GND26" gate="1" pin="GND"/>
+<pinref part="C5" gate="G$1" pin="2"/>
+<pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="48.26" y1="185.42" x2="48.26" y2="187.96" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J8" gate="G$1" pin="1"/>
+<pinref part="JP6" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="81.28" x2="175.26" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="GND29" gate="1" pin="GND"/>
-<pinref part="JP8" gate="G$1" pin="1"/>
+<pinref part="GND24" gate="1" pin="GND"/>
+<pinref part="JP7" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="71.12" x2="175.26" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="71.12" x2="175.26" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="68.58" x2="175.26" y2="71.12" width="0.1524" layer="91"/>
@@ -22743,73 +22754,72 @@ cell LiPo battery.</text>
 </segment>
 <segment>
 <pinref part="S1" gate="G$1" pin="2"/>
-<pinref part="GND33" gate="1" pin="GND"/>
+<pinref part="GND34" gate="1" pin="GND"/>
 <wire x1="256.54" y1="162.56" x2="259.08" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="259.08" y1="162.56" x2="259.08" y2="160.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="1"/>
+<pinref part="JP29" gate="G$1" pin="1"/>
 <wire x1="383.54" y1="157.48" x2="386.08" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="386.08" y1="157.48" x2="386.08" y2="154.94" width="0.1524" layer="91"/>
-<pinref part="GND30" gate="1" pin="GND"/>
+<pinref part="GND38" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="R16" gate="G$1" pin="2"/>
-<pinref part="GND34" gate="1" pin="GND"/>
-<wire x1="116.84" y1="55.88" x2="119.38" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="119.38" y1="55.88" x2="119.38" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="R11" gate="G$1" pin="2"/>
+<pinref part="GND18" gate="1" pin="GND"/>
+<wire x1="88.9" y1="30.48" x2="88.9" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="104.14" y1="246.38" x2="101.6" y2="246.38" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="246.38" x2="101.6" y2="243.84" width="0.1524" layer="91"/>
-<pinref part="GND35" gate="1" pin="GND"/>
-<pinref part="U7" gate="G$1" pin="GND"/>
+<pinref part="GND15" gate="1" pin="GND"/>
+<pinref part="U3" gate="G$1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C19" gate="G$1" pin="2"/>
-<pinref part="GND36" gate="1" pin="GND"/>
+<pinref part="C10" gate="G$1" pin="2"/>
+<pinref part="GND21" gate="1" pin="GND"/>
 <wire x1="129.54" y1="243.84" x2="129.54" y2="246.38" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C18" gate="G$1" pin="2"/>
-<pinref part="GND37" gate="1" pin="GND"/>
+<pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="GND14" gate="1" pin="GND"/>
 <wire x1="93.98" y1="246.38" x2="93.98" y2="238.76" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U6" gate="G$1" pin="VSS"/>
+<pinref part="U1" gate="G$1" pin="VSS"/>
 <wire x1="50.8" y1="251.46" x2="53.34" y2="251.46" width="0.1524" layer="91"/>
-<pinref part="GND38" gate="1" pin="GND"/>
-<wire x1="53.34" y1="251.46" x2="53.34" y2="238.76" width="0.1524" layer="91"/>
+<pinref part="GND9" gate="1" pin="GND"/>
+<wire x1="53.34" y1="251.46" x2="53.34" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND40" gate="1" pin="GND"/>
+<pinref part="GND12" gate="1" pin="GND"/>
 <wire x1="68.58" y1="238.76" x2="68.58" y2="243.84" width="0.1524" layer="91"/>
-<pinref part="C20" gate="G$1" pin="2"/>
+<pinref part="C6" gate="G$1" pin="2"/>
 </segment>
 <segment>
-<pinref part="R19" gate="G$1" pin="1"/>
-<pinref part="GND41" gate="1" pin="GND"/>
+<pinref part="R7" gate="G$1" pin="1"/>
+<pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="73.66" y1="238.76" x2="73.66" y2="243.84" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="JP13" gate="G$1" pin="1"/>
+<pinref part="JP1" gate="G$1" pin="1"/>
 <wire x1="17.78" y1="228.6" x2="20.32" y2="228.6" width="0.1524" layer="91"/>
-<pinref part="GND42" gate="1" pin="GND"/>
+<pinref part="GND4" gate="1" pin="GND"/>
 <wire x1="20.32" y1="228.6" x2="20.32" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="GND5" gate="1" pin="GND"/>
+<pinref part="R5" gate="G$1" pin="1"/>
+<pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="58.42" y1="226.06" x2="58.42" y2="236.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND43" gate="1" pin="GND"/>
-<pinref part="SJ3" gate="G$1" pin="1"/>
+<pinref part="GND22" gate="1" pin="GND"/>
+<pinref part="SJ2" gate="G$1" pin="1"/>
 <wire x1="137.16" y1="220.98" x2="137.16" y2="218.44" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="GND39" gate="1" pin="GND"/>
-<pinref part="R22" gate="G$1" pin="1"/>
+<pinref part="GND11" gate="1" pin="GND"/>
+<pinref part="R6" gate="G$1" pin="1"/>
 <wire x1="63.5" y1="228.6" x2="63.5" y2="226.06" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -22846,7 +22856,7 @@ cell LiPo battery.</text>
 <pinref part="U2" gate="G$1" pin="CHIP_EN"/>
 <wire x1="71.12" y1="101.6" x2="73.66" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="101.6" x2="73.66" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="R2" gate="G$1" pin="1"/>
+<pinref part="R8" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="U0RXI" class="0">
@@ -22861,9 +22871,9 @@ cell LiPo battery.</text>
 <wire x1="279.4" y1="264.16" x2="281.94" y2="264.16" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J10" gate="G$1" pin="1"/>
+<pinref part="JP8" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="58.42" x2="175.26" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="JP15" gate="G$1" pin="1"/>
+<pinref part="JP9" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="48.26" x2="175.26" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="48.26" x2="175.26" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="58.42" x2="177.8" y2="58.42" width="0.1524" layer="91"/>
@@ -22883,9 +22893,9 @@ cell LiPo battery.</text>
 <wire x1="279.4" y1="261.62" x2="281.94" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J9" gate="G$1" pin="1"/>
+<pinref part="JP10" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="38.1" x2="175.26" y2="38.1" width="0.1524" layer="91"/>
-<pinref part="JP14" gate="G$1" pin="1"/>
+<pinref part="JP11" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="38.1" x2="177.8" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="172.72" y1="27.94" x2="175.26" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="27.94" x2="175.26" y2="38.1" width="0.1524" layer="91"/>
@@ -22895,7 +22905,7 @@ cell LiPo battery.</text>
 </net>
 <net name="RESET" class="0">
 <segment>
-<pinref part="R5" gate="G$1" pin="1"/>
+<pinref part="R10" gate="G$1" pin="1"/>
 <pinref part="U2" gate="G$1" pin="EXT_RSTB"/>
 <wire x1="81.28" y1="99.06" x2="81.28" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="99.06" x2="71.12" y2="99.06" width="0.1524" layer="91"/>
@@ -22904,12 +22914,12 @@ cell LiPo battery.</text>
 <label x="83.82" y="99.06" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="Q1" gate="G$1" pin="C"/>
+<pinref part="Q2" gate="G$1" pin="C"/>
 <wire x1="342.9" y1="109.22" x2="342.9" y2="111.76" width="0.1524" layer="91"/>
 <label x="342.9" y="111.76" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP4" gate="G$1" pin="1"/>
+<pinref part="JP28" gate="G$1" pin="1"/>
 <wire x1="236.22" y1="33.02" x2="238.76" y2="33.02" width="0.1524" layer="91"/>
 <label x="238.76" y="33.02" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -22920,7 +22930,7 @@ cell LiPo battery.</text>
 <pinref part="L1" gate="G$1" pin="1"/>
 <wire x1="71.12" y1="93.98" x2="101.6" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="93.98" x2="101.6" y2="91.44" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="C8" gate="G$1" pin="1"/>
 <wire x1="101.6" y1="93.98" x2="104.14" y2="93.98" width="0.1524" layer="91"/>
 <junction x="101.6" y="93.98"/>
 </segment>
@@ -22932,10 +22942,10 @@ cell LiPo battery.</text>
 <label x="281.94" y="251.46" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="R9" gate="G$1" pin="1"/>
+<pinref part="R17" gate="G$1" pin="1"/>
 <wire x1="360.68" y1="104.14" x2="365.76" y2="104.14" width="0.1524" layer="91"/>
 <label x="368.3" y="104.14" size="1.27" layer="95" xref="yes"/>
-<pinref part="Q2" gate="G$1" pin="E"/>
+<pinref part="Q3" gate="G$1" pin="E"/>
 <wire x1="365.76" y1="104.14" x2="368.3" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="342.9" y1="91.44" x2="342.9" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="342.9" y1="93.98" x2="365.76" y2="93.98" width="0.1524" layer="91"/>
@@ -22950,12 +22960,12 @@ cell LiPo battery.</text>
 <label x="73.66" y="33.02" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U8" gate="B" pin="-IN"/>
+<pinref part="IC1" gate="B" pin="-IN"/>
 <wire x1="55.88" y1="170.18" x2="53.34" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="170.18" x2="53.34" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="165.1" x2="73.66" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="165.1" x2="73.66" y2="172.72" width="0.1524" layer="91"/>
-<pinref part="U8" gate="B" pin="OUT"/>
+<pinref part="IC1" gate="B" pin="OUT"/>
 <wire x1="73.66" y1="172.72" x2="71.12" y2="172.72" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="172.72" x2="76.2" y2="172.72" width="0.1524" layer="91"/>
 <junction x="73.66" y="172.72"/>
@@ -22964,19 +22974,18 @@ cell LiPo battery.</text>
 <net name="GPIO5" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="GPIO5"/>
-<pinref part="D4" gate="G$1" pin="A"/>
-<wire x1="71.12" y1="55.88" x2="86.36" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="55.88" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="86.36" y1="55.88" x2="86.36" y2="58.42" width="0.1524" layer="91"/>
-<junction x="86.36" y="55.88"/>
-<wire x1="86.36" y1="58.42" x2="88.9" y2="58.42" width="0.1524" layer="91"/>
-<label x="88.9" y="58.42" size="1.27" layer="95" xref="yes"/>
+<pinref part="D3" gate="G$1" pin="A"/>
+<wire x1="71.12" y1="55.88" x2="88.9" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="55.88" x2="88.9" y2="50.8" width="0.1524" layer="91"/>
+<label x="91.44" y="55.88" size="1.27" layer="95" xref="yes"/>
+<wire x1="88.9" y1="55.88" x2="91.44" y2="55.88" width="0.1524" layer="91"/>
+<junction x="88.9" y="55.88"/>
 </segment>
 <segment>
-<pinref part="J5" gate="G$1" pin="1"/>
+<pinref part="JP12" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="17.78" x2="175.26" y2="17.78" width="0.1524" layer="91"/>
 <label x="177.8" y="17.78" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP5" gate="G$1" pin="1"/>
+<pinref part="JP13" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="17.78" x2="177.8" y2="17.78" width="0.1524" layer="91"/>
 <wire x1="172.72" y1="7.62" x2="175.26" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="7.62" x2="175.26" y2="17.78" width="0.1524" layer="91"/>
@@ -22992,7 +23001,7 @@ cell LiPo battery.</text>
 <segment>
 <wire x1="274.32" y1="86.36" x2="271.78" y2="86.36" width="0.1524" layer="91"/>
 <label x="271.78" y="86.36" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="!WP!(D2)"/>
+<pinref part="U5" gate="G$1" pin="!WP!(D2)"/>
 </segment>
 </net>
 <net name="SD_!HD!" class="0">
@@ -23004,7 +23013,7 @@ cell LiPo battery.</text>
 <segment>
 <wire x1="304.8" y1="88.9" x2="307.34" y2="88.9" width="0.1524" layer="91"/>
 <label x="307.34" y="88.9" size="1.27" layer="95" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="!HOLD!(D3)"/>
+<pinref part="U5" gate="G$1" pin="!HOLD!(D3)"/>
 </segment>
 </net>
 <net name="SD_SI" class="0">
@@ -23016,7 +23025,7 @@ cell LiPo battery.</text>
 <segment>
 <wire x1="304.8" y1="83.82" x2="307.34" y2="83.82" width="0.1524" layer="91"/>
 <label x="307.34" y="83.82" size="1.27" layer="95" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="SI(D0)"/>
+<pinref part="U5" gate="G$1" pin="SI(D0)"/>
 </segment>
 </net>
 <net name="SD_SO" class="0">
@@ -23028,19 +23037,19 @@ cell LiPo battery.</text>
 <segment>
 <wire x1="274.32" y1="88.9" x2="271.78" y2="88.9" width="0.1524" layer="91"/>
 <label x="271.78" y="88.9" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="SO(D1)"/>
+<pinref part="U5" gate="G$1" pin="SO(D1)"/>
 </segment>
 </net>
 <net name="SD_CLK" class="0">
 <segment>
 <wire x1="83.82" y1="86.36" x2="86.36" y2="86.36" width="0.1524" layer="91"/>
 <label x="86.36" y="86.36" size="1.27" layer="95" xref="yes"/>
-<pinref part="R4" gate="G$1" pin="1"/>
+<pinref part="R9" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <wire x1="304.8" y1="86.36" x2="307.34" y2="86.36" width="0.1524" layer="91"/>
 <label x="307.34" y="86.36" size="1.27" layer="95" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="SCK"/>
+<pinref part="U5" gate="G$1" pin="SCK"/>
 </segment>
 </net>
 <net name="SD_CS0" class="0">
@@ -23052,7 +23061,7 @@ cell LiPo battery.</text>
 <segment>
 <wire x1="274.32" y1="91.44" x2="271.78" y2="91.44" width="0.1524" layer="91"/>
 <label x="271.78" y="91.44" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="U3" gate="G$1" pin="!CS!"/>
+<pinref part="U5" gate="G$1" pin="!CS!"/>
 </segment>
 </net>
 <net name="GPIO16" class="0">
@@ -23062,10 +23071,10 @@ cell LiPo battery.</text>
 <label x="73.66" y="38.1" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J4" gate="G$1" pin="1"/>
+<pinref part="JP24" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="38.1" x2="208.28" y2="38.1" width="0.1524" layer="91"/>
 <label x="210.82" y="38.1" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP9" gate="G$1" pin="1"/>
+<pinref part="JP25" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="38.1" x2="210.82" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="205.74" y1="27.94" x2="208.28" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="27.94" x2="208.28" y2="38.1" width="0.1524" layer="91"/>
@@ -23079,16 +23088,16 @@ cell LiPo battery.</text>
 <label x="73.66" y="43.18" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="R17" gate="G$1" pin="2"/>
+<pinref part="R20" gate="G$1" pin="2"/>
 <wire x1="421.64" y1="101.6" x2="421.64" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="421.64" y1="104.14" x2="419.1" y2="104.14" width="0.1524" layer="91"/>
 <label x="419.1" y="104.14" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J3" gate="G$1" pin="1"/>
+<pinref part="JP22" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="58.42" x2="208.28" y2="58.42" width="0.1524" layer="91"/>
 <label x="210.82" y="58.42" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP10" gate="G$1" pin="1"/>
+<pinref part="JP23" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="58.42" x2="210.82" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="205.74" y1="48.26" x2="208.28" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="48.26" x2="208.28" y2="58.42" width="0.1524" layer="91"/>
@@ -23102,10 +23111,10 @@ cell LiPo battery.</text>
 <label x="73.66" y="48.26" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J2" gate="G$1" pin="1"/>
+<pinref part="JP18" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="101.6" x2="208.28" y2="101.6" width="0.1524" layer="91"/>
 <label x="210.82" y="101.6" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP11" gate="G$1" pin="1"/>
+<pinref part="JP19" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="101.6" x2="210.82" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="205.74" y1="91.44" x2="208.28" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="91.44" x2="208.28" y2="101.6" width="0.1524" layer="91"/>
@@ -23119,10 +23128,10 @@ cell LiPo battery.</text>
 <label x="73.66" y="50.8" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="1"/>
+<pinref part="JP16" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="121.92" x2="208.28" y2="121.92" width="0.1524" layer="91"/>
 <label x="210.82" y="121.92" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP12" gate="G$1" pin="1"/>
+<pinref part="JP17" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="121.92" x2="210.82" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="205.74" y1="111.76" x2="208.28" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="111.76" x2="208.28" y2="121.92" width="0.1524" layer="91"/>
@@ -23133,7 +23142,7 @@ cell LiPo battery.</text>
 <segment>
 <pinref part="U2" gate="G$1" pin="SPICLK/SD_CLK"/>
 <wire x1="71.12" y1="86.36" x2="73.66" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="R4" gate="G$1" pin="2"/>
+<pinref part="R9" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="V_USB" class="0">
@@ -23145,17 +23154,17 @@ cell LiPo battery.</text>
 <wire x1="241.3" y1="264.16" x2="254" y2="264.16" width="0.1524" layer="91"/>
 <wire x1="241.3" y1="243.84" x2="241.3" y2="264.16" width="0.1524" layer="91"/>
 <junction x="241.3" y="264.16"/>
-<pinref part="C12" gate="G$1" pin="1"/>
+<pinref part="C14" gate="G$1" pin="1"/>
 <wire x1="233.68" y1="243.84" x2="233.68" y2="264.16" width="0.1524" layer="91"/>
 <junction x="233.68" y="264.16"/>
 <wire x1="220.98" y1="264.16" x2="220.98" y2="266.7" width="0.1524" layer="91"/>
 <junction x="220.98" y="264.16"/>
 <pinref part="F1" gate="G$1" pin="2"/>
-<pinref part="C13" gate="G$1" pin="1"/>
-<pinref part="SUPPLY10" gate="G$1" pin="V_USB"/>
+<pinref part="C15" gate="G$1" pin="1"/>
+<pinref part="SUPPLY14" gate="G$1" pin="V_USB"/>
 </segment>
 <segment>
-<pinref part="U6" gate="G$1" pin="VIN"/>
+<pinref part="U1" gate="G$1" pin="VIN"/>
 <wire x1="17.78" y1="256.54" x2="20.32" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="256.54" x2="27.94" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="256.54" x2="30.48" y2="256.54" width="0.1524" layer="91"/>
@@ -23168,15 +23177,15 @@ cell LiPo battery.</text>
 <junction x="27.94" y="256.54"/>
 <wire x1="81.28" y1="266.7" x2="88.9" y2="266.7" width="0.1524" layer="91"/>
 <junction x="81.28" y="266.7"/>
-<pinref part="D5" gate="G$1" pin="A"/>
+<pinref part="D2" gate="G$1" pin="A"/>
 <wire x1="88.9" y1="266.7" x2="88.9" y2="264.16" width="0.1524" layer="91"/>
-<pinref part="R19" gate="G$1" pin="2"/>
+<pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="73.66" y1="254" x2="73.66" y2="266.7" width="0.1524" layer="91"/>
 <junction x="73.66" y="266.7"/>
 <label x="76.2" y="266.7" size="1.778" layer="95"/>
-<pinref part="D6" gate="G$1" pin="A"/>
-<pinref part="Q3" gate="G$1" pin="G"/>
-<pinref part="SUPPLY7" gate="G$1" pin="V_USB"/>
+<pinref part="D1" gate="G$1" pin="A"/>
+<pinref part="Q1" gate="G$1" pin="G"/>
+<pinref part="SUPPLY1" gate="G$1" pin="V_USB"/>
 <wire x1="17.78" y1="256.54" x2="17.78" y2="259.08" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -23184,37 +23193,37 @@ cell LiPo battery.</text>
 <segment>
 <label x="205.74" y="254" size="1.778" layer="95" rot="MR0"/>
 <wire x1="208.28" y1="254" x2="190.5" y2="254" width="0.1524" layer="91"/>
-<pinref part="R7" gate="G$1" pin="1"/>
-<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<pinref part="C12" gate="G$1" pin="1"/>
 <wire x1="220.98" y1="254" x2="208.28" y2="254" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="254" x2="208.28" y2="248.92" width="0.1524" layer="91"/>
 <junction x="208.28" y="254"/>
-<pinref part="JP1" gate="G$1" pin="D-"/>
+<pinref part="JP15" gate="G$1" pin="D-"/>
 </segment>
 </net>
 <net name="D+" class="0">
 <segment>
 <label x="205.74" y="251.46" size="1.778" layer="95" rot="MR0"/>
 <wire x1="215.9" y1="251.46" x2="190.5" y2="251.46" width="0.1524" layer="91"/>
-<pinref part="R8" gate="G$1" pin="1"/>
-<pinref part="C11" gate="G$1" pin="1"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<pinref part="C13" gate="G$1" pin="1"/>
 <wire x1="220.98" y1="251.46" x2="215.9" y2="251.46" width="0.1524" layer="91"/>
 <wire x1="215.9" y1="251.46" x2="215.9" y2="248.92" width="0.1524" layer="91"/>
 <junction x="215.9" y="251.46"/>
-<pinref part="JP1" gate="G$1" pin="D+"/>
+<pinref part="JP15" gate="G$1" pin="D+"/>
 </segment>
 </net>
 <net name="VUSB" class="0">
 <segment>
 <wire x1="195.58" y1="256.54" x2="195.58" y2="264.16" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="264.16" x2="200.66" y2="264.16" width="0.1524" layer="91"/>
-<pinref part="C8" gate="G$1" pin="1"/>
+<pinref part="C11" gate="G$1" pin="1"/>
 <wire x1="200.66" y1="264.16" x2="203.2" y2="264.16" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="248.92" x2="200.66" y2="264.16" width="0.1524" layer="91"/>
 <junction x="200.66" y="264.16"/>
 <wire x1="195.58" y1="256.54" x2="190.5" y2="256.54" width="0.1524" layer="91"/>
 <pinref part="F1" gate="G$1" pin="1"/>
-<pinref part="JP1" gate="G$1" pin="VCC"/>
+<pinref part="JP15" gate="G$1" pin="VCC"/>
 </segment>
 </net>
 <net name="TXLED" class="0">
@@ -23234,20 +23243,20 @@ cell LiPo battery.</text>
 <net name="N$4" class="0">
 <segment>
 <pinref part="U4" gate="U$1" pin="USBDM"/>
-<pinref part="R7" gate="G$1" pin="2"/>
+<pinref part="R13" gate="G$1" pin="2"/>
 <wire x1="254" y1="254" x2="231.14" y2="254" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="U4" gate="U$1" pin="USBDP"/>
-<pinref part="R8" gate="G$1" pin="2"/>
+<pinref part="R14" gate="G$1" pin="2"/>
 <wire x1="254" y1="251.46" x2="231.14" y2="251.46" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3.3V_F" class="0">
 <segment>
-<pinref part="C14" gate="G$1" pin="1"/>
+<pinref part="C16" gate="G$1" pin="1"/>
 <wire x1="246.38" y1="243.84" x2="246.38" y2="246.38" width="0.1524" layer="91"/>
 <pinref part="U4" gate="U$1" pin="!RESET"/>
 <wire x1="246.38" y1="246.38" x2="254" y2="246.38" width="0.1524" layer="91"/>
@@ -23265,35 +23274,35 @@ cell LiPo battery.</text>
 <net name="VIN" class="0">
 <segment>
 <wire x1="104.14" y1="256.54" x2="101.6" y2="256.54" width="0.1524" layer="91"/>
-<pinref part="C18" gate="G$1" pin="1"/>
+<pinref part="C7" gate="G$1" pin="1"/>
 <wire x1="101.6" y1="256.54" x2="99.06" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="256.54" x2="93.98" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="256.54" x2="93.98" y2="254" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="256.54" x2="88.9" y2="256.54" width="0.1524" layer="91"/>
 <junction x="93.98" y="256.54"/>
-<pinref part="D5" gate="G$1" pin="C"/>
+<pinref part="D2" gate="G$1" pin="C"/>
 <wire x1="88.9" y1="256.54" x2="93.98" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="259.08" x2="88.9" y2="256.54" width="0.1524" layer="91"/>
 <junction x="88.9" y="256.54"/>
-<pinref part="SUPPLY23" gate="G$1" pin="VIN"/>
+<pinref part="SUPPLY7" gate="G$1" pin="VIN"/>
 <wire x1="99.06" y1="256.54" x2="99.06" y2="259.08" width="0.1524" layer="91"/>
 <junction x="99.06" y="256.54"/>
-<pinref part="U7" gate="G$1" pin="IN"/>
-<pinref part="Q3" gate="G$1" pin="S"/>
-<pinref part="U7" gate="G$1" pin="EN"/>
+<pinref part="U3" gate="G$1" pin="IN"/>
+<pinref part="Q1" gate="G$1" pin="S"/>
+<pinref part="U3" gate="G$1" pin="EN"/>
 <wire x1="104.14" y1="251.46" x2="101.6" y2="251.46" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="251.46" x2="101.6" y2="256.54" width="0.1524" layer="91"/>
 <junction x="101.6" y="256.54"/>
 </segment>
 <segment>
-<pinref part="JP17" gate="G$1" pin="1"/>
+<pinref part="JP3" gate="G$1" pin="1"/>
 <wire x1="172.72" y1="111.76" x2="175.26" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="111.76" x2="175.26" y2="121.92" width="0.1524" layer="91"/>
-<pinref part="J12" gate="G$1" pin="1"/>
+<pinref part="JP2" gate="G$1" pin="1"/>
 <wire x1="175.26" y1="121.92" x2="175.26" y2="124.46" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="121.92" x2="172.72" y2="121.92" width="0.1524" layer="91"/>
 <junction x="175.26" y="121.92"/>
-<pinref part="SUPPLY4" gate="G$1" pin="VIN"/>
+<pinref part="SUPPLY11" gate="G$1" pin="VIN"/>
 </segment>
 </net>
 <net name="RTS" class="0">
@@ -23303,34 +23312,34 @@ cell LiPo battery.</text>
 <label x="281.94" y="256.54" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="R10" gate="G$1" pin="1"/>
+<pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="360.68" y1="86.36" x2="363.22" y2="86.36" width="0.1524" layer="91"/>
 <label x="365.76" y="86.36" size="1.27" layer="95" xref="yes"/>
 <wire x1="363.22" y1="86.36" x2="365.76" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="363.22" y1="86.36" x2="363.22" y2="96.52" width="0.1524" layer="91"/>
 <junction x="363.22" y="86.36"/>
-<pinref part="Q1" gate="G$1" pin="E"/>
+<pinref part="Q2" gate="G$1" pin="E"/>
 <wire x1="363.22" y1="96.52" x2="342.9" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="342.9" y1="96.52" x2="342.9" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
-<pinref part="Q1" gate="G$1" pin="B"/>
-<pinref part="R9" gate="G$1" pin="2"/>
+<pinref part="Q2" gate="G$1" pin="B"/>
+<pinref part="R17" gate="G$1" pin="2"/>
 <wire x1="350.52" y1="104.14" x2="347.98" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$12" class="0">
 <segment>
-<pinref part="Q2" gate="G$1" pin="B"/>
-<pinref part="R10" gate="G$1" pin="2"/>
+<pinref part="Q3" gate="G$1" pin="B"/>
+<pinref part="R18" gate="G$1" pin="2"/>
 <wire x1="350.52" y1="86.36" x2="347.98" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TRACE_ANT" class="0">
 <segment>
-<pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="C8" gate="G$1" pin="2"/>
 <wire x1="111.76" y1="93.98" x2="114.3" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="L2" gate="G$1" pin="1"/>
 <wire x1="114.3" y1="93.98" x2="114.3" y2="91.44" width="0.1524" layer="91"/>
@@ -23342,15 +23351,15 @@ cell LiPo battery.</text>
 </net>
 <net name="SHIELD" class="0">
 <segment>
-<pinref part="JP1" gate="G$1" pin="SHIELD"/>
+<pinref part="JP15" gate="G$1" pin="SHIELD"/>
 <wire x1="175.26" y1="251.46" x2="172.72" y2="251.46" width="0.1524" layer="91"/>
 <label x="172.72" y="251.46" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="2/SDA" class="0">
 <segment>
-<pinref part="U5" gate="G$1" pin="DATA"/>
-<pinref part="R6" gate="G$1" pin="1"/>
+<pinref part="U6" gate="G$1" pin="DATA"/>
+<pinref part="R15" gate="G$1" pin="1"/>
 <wire x1="335.28" y1="162.56" x2="337.82" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="337.82" y1="162.56" x2="337.82" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="337.82" y1="162.56" x2="355.6" y2="162.56" width="0.1524" layer="91"/>
@@ -23363,15 +23372,15 @@ cell LiPo battery.</text>
 <label x="73.66" y="60.96" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="3"/>
+<pinref part="JP29" gate="G$1" pin="3"/>
 <wire x1="383.54" y1="162.56" x2="388.62" y2="162.56" width="0.1524" layer="91"/>
 <label x="388.62" y="162.56" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="14/SCL" class="0">
 <segment>
-<pinref part="U5" gate="G$1" pin="SCK"/>
-<pinref part="R18" gate="G$1" pin="1"/>
+<pinref part="U6" gate="G$1" pin="SCK"/>
+<pinref part="R16" gate="G$1" pin="1"/>
 <wire x1="335.28" y1="160.02" x2="353.06" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="160.02" x2="353.06" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="160.02" x2="355.6" y2="160.02" width="0.1524" layer="91"/>
@@ -23384,7 +23393,7 @@ cell LiPo battery.</text>
 <label x="73.66" y="45.72" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP2" gate="G$1" pin="4"/>
+<pinref part="JP29" gate="G$1" pin="4"/>
 <wire x1="383.54" y1="165.1" x2="388.62" y2="165.1" width="0.1524" layer="91"/>
 <label x="388.62" y="165.1" size="1.27" layer="95" xref="yes"/>
 </segment>
@@ -23396,13 +23405,13 @@ cell LiPo battery.</text>
 <label x="73.66" y="63.5" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="R14" gate="G$1" pin="1"/>
+<pinref part="R19" gate="G$1" pin="1"/>
 <wire x1="401.32" y1="88.9" x2="401.32" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="401.32" y1="83.82" x2="398.78" y2="83.82" width="0.1524" layer="91"/>
 <label x="398.78" y="83.82" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="Q2" gate="G$1" pin="C"/>
+<pinref part="Q3" gate="G$1" pin="C"/>
 <wire x1="342.9" y1="81.28" x2="342.9" y2="78.74" width="0.1524" layer="91"/>
 <label x="342.9" y="78.74" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -23412,9 +23421,9 @@ cell LiPo battery.</text>
 <label x="241.3" y="162.56" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="J11" gate="G$1" pin="1"/>
+<pinref part="JP26" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="17.78" x2="208.28" y2="17.78" width="0.1524" layer="91"/>
-<pinref part="JP16" gate="G$1" pin="1"/>
+<pinref part="JP27" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="7.62" x2="208.28" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="7.62" x2="208.28" y2="17.78" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="17.78" x2="210.82" y2="17.78" width="0.1524" layer="91"/>
@@ -23424,24 +23433,24 @@ cell LiPo battery.</text>
 </net>
 <net name="WS2812-DOUT" class="0">
 <segment>
-<pinref part="D3" gate="G$1" pin="DOUT"/>
+<pinref part="D4" gate="G$1" pin="DOUT"/>
 <wire x1="114.3" y1="160.02" x2="111.76" y2="160.02" width="0.1524" layer="91"/>
 <label x="111.76" y="160.02" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="JP3" gate="G$1" pin="3"/>
+<pinref part="JP14" gate="G$1" pin="3"/>
 <wire x1="177.8" y1="162.56" x2="182.88" y2="162.56" width="0.1524" layer="91"/>
 <label x="182.88" y="162.56" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="N$15" class="0">
 <segment>
-<pinref part="U8" gate="A" pin="OUT"/>
-<pinref part="R25" gate="G$1" pin="2"/>
+<pinref part="IC1" gate="A" pin="OUT"/>
+<pinref part="R3" gate="G$1" pin="2"/>
 <wire x1="38.1" y1="175.26" x2="40.64" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="175.26" x2="43.18" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="175.26" x2="43.18" y2="172.72" width="0.1524" layer="91"/>
-<pinref part="U8" gate="A" pin="-IN"/>
+<pinref part="IC1" gate="A" pin="-IN"/>
 <wire x1="22.86" y1="172.72" x2="20.32" y2="172.72" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="172.72" x2="20.32" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="154.94" x2="40.64" y2="154.94" width="0.1524" layer="91"/>
@@ -23451,30 +23460,30 @@ cell LiPo battery.</text>
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="R25" gate="G$1" pin="1"/>
-<pinref part="R26" gate="G$1" pin="2"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<pinref part="R4" gate="G$1" pin="2"/>
 <wire x1="43.18" y1="162.56" x2="43.18" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="160.02" x2="43.18" y2="157.48" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="160.02" x2="50.8" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="160.02" x2="50.8" y2="175.26" width="0.1524" layer="91"/>
 <junction x="43.18" y="160.02"/>
-<pinref part="U8" gate="B" pin="+IN"/>
+<pinref part="IC1" gate="B" pin="+IN"/>
 <wire x1="50.8" y1="175.26" x2="55.88" y2="175.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="ADC-IN" class="0">
 <segment>
-<pinref part="J6" gate="G$1" pin="1"/>
+<pinref part="JP20" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="81.28" x2="208.28" y2="81.28" width="0.1524" layer="91"/>
 <label x="210.82" y="81.28" size="1.27" layer="95" xref="yes"/>
-<pinref part="JP6" gate="G$1" pin="1"/>
+<pinref part="JP21" gate="G$1" pin="1"/>
 <wire x1="208.28" y1="81.28" x2="210.82" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="205.74" y1="71.12" x2="208.28" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="208.28" y1="71.12" x2="208.28" y2="81.28" width="0.1524" layer="91"/>
 <junction x="208.28" y="81.28"/>
 </segment>
 <segment>
-<pinref part="U8" gate="A" pin="+IN"/>
+<pinref part="IC1" gate="A" pin="+IN"/>
 <wire x1="22.86" y1="177.8" x2="20.32" y2="177.8" width="0.1524" layer="91"/>
 <label x="20.32" y="177.8" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -23486,16 +23495,16 @@ cell LiPo battery.</text>
 <label x="73.66" y="58.42" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="D3" gate="G$1" pin="DIN"/>
+<pinref part="D4" gate="G$1" pin="DIN"/>
 <wire x1="137.16" y1="167.64" x2="139.7" y2="167.64" width="0.1524" layer="91"/>
 <label x="139.7" y="167.64" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="D4" gate="G$1" pin="C"/>
-<pinref part="R16" gate="G$1" pin="1"/>
-<wire x1="106.68" y1="55.88" x2="104.14" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="D3" gate="G$1" pin="C"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="88.9" y1="40.64" x2="88.9" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$17" class="0">
@@ -23503,81 +23512,81 @@ cell LiPo battery.</text>
 <wire x1="27.94" y1="238.76" x2="27.94" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="236.22" x2="20.32" y2="236.22" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="236.22" x2="20.32" y2="243.84" width="0.1524" layer="91"/>
-<pinref part="D6" gate="G$1" pin="C"/>
-<pinref part="R20" gate="G$1" pin="2"/>
+<pinref part="D1" gate="G$1" pin="C"/>
+<pinref part="R2" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="N$9" class="0">
 <segment>
-<pinref part="U6" gate="G$1" pin="STAT"/>
+<pinref part="U1" gate="G$1" pin="STAT"/>
 <wire x1="27.94" y1="248.92" x2="27.94" y2="251.46" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="251.46" x2="30.48" y2="251.46" width="0.1524" layer="91"/>
-<pinref part="R20" gate="G$1" pin="1"/>
+<pinref part="R2" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$14" class="0">
 <segment>
-<pinref part="U6" gate="G$1" pin="PROG"/>
+<pinref part="U1" gate="G$1" pin="PROG"/>
 <wire x1="50.8" y1="254" x2="58.42" y2="254" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="254" x2="63.5" y2="254" width="0.1524" layer="91"/>
-<pinref part="R3" gate="G$1" pin="2"/>
+<pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="58.42" y1="246.38" x2="58.42" y2="254" width="0.1524" layer="91"/>
 <junction x="58.42" y="254"/>
-<pinref part="SJ2" gate="G$1" pin="2"/>
+<pinref part="SJ1" gate="G$1" pin="2"/>
 <wire x1="63.5" y1="254" x2="63.5" y2="251.46" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VBAT" class="0">
 <segment>
-<pinref part="U6" gate="G$1" pin="VBAT"/>
+<pinref part="U1" gate="G$1" pin="VBAT"/>
 <wire x1="76.2" y1="256.54" x2="68.58" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="68.58" y1="256.54" x2="50.8" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="68.58" y1="251.46" x2="68.58" y2="256.54" width="0.1524" layer="91"/>
 <junction x="68.58" y="256.54"/>
-<pinref part="C20" gate="G$1" pin="1"/>
+<pinref part="C6" gate="G$1" pin="1"/>
 <label x="53.34" y="256.54" size="1.778" layer="95"/>
-<pinref part="Q3" gate="G$1" pin="D"/>
+<pinref part="Q1" gate="G$1" pin="D"/>
 </segment>
 <segment>
-<pinref part="JP13" gate="G$1" pin="2"/>
+<pinref part="JP1" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="231.14" x2="20.32" y2="231.14" width="0.1524" layer="91"/>
 <label x="20.32" y="231.14" size="1.27" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="D7" gate="G$1" pin="C"/>
-<pinref part="SJ3" gate="G$1" pin="2"/>
+<pinref part="D5" gate="G$1" pin="C"/>
+<pinref part="SJ2" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="231.14" x2="137.16" y2="233.68" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$10" class="0">
 <segment>
-<pinref part="D7" gate="G$1" pin="A"/>
-<pinref part="R21" gate="G$1" pin="2"/>
+<pinref part="D5" gate="G$1" pin="A"/>
+<pinref part="R12" gate="G$1" pin="2"/>
 <wire x1="137.16" y1="241.3" x2="137.16" y2="243.84" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$11" class="0">
 <segment>
-<pinref part="R6" gate="G$1" pin="2"/>
+<pinref part="R15" gate="G$1" pin="2"/>
 <wire x1="337.82" y1="175.26" x2="337.82" y2="177.8" width="0.1524" layer="91"/>
-<pinref part="SJ1" gate="G$1" pin="3"/>
+<pinref part="SJ3" gate="G$1" pin="3"/>
 <wire x1="337.82" y1="177.8" x2="340.36" y2="177.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$13" class="0">
 <segment>
-<pinref part="SJ1" gate="G$1" pin="1"/>
-<pinref part="R18" gate="G$1" pin="2"/>
+<pinref part="SJ3" gate="G$1" pin="1"/>
+<pinref part="R16" gate="G$1" pin="2"/>
 <wire x1="350.52" y1="177.8" x2="353.06" y2="177.8" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="177.8" x2="353.06" y2="175.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$16" class="0">
 <segment>
-<pinref part="R22" gate="G$1" pin="2"/>
-<pinref part="SJ2" gate="G$1" pin="1"/>
+<pinref part="R6" gate="G$1" pin="2"/>
+<pinref part="SJ1" gate="G$1" pin="1"/>
 <wire x1="63.5" y1="241.3" x2="63.5" y2="238.76" width="0.1524" layer="91"/>
 </segment>
 </net>
