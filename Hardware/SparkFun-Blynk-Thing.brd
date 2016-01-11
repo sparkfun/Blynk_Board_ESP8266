@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.005" altunitdist="inch" altunit="inch"/>
+<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -228,6 +228,16 @@
 <dimension x1="2.54" y1="0" x2="46.355" y2="34.29" x3="-8.89" y3="17.145" textsize="0.762" textratio="15" layer="47" dtype="vertical" unit="inch" precision="3"/>
 <text x="-12.065" y="-5.08" size="0.762" layer="47" font="vector" ratio="15" align="center-left">Units in inches</text>
 <text x="24.765" y="-22.225" size="1.778" layer="51" font="vector" ratio="15">Jim Lindblom</text>
+<wire x1="7.85" y1="13.065" x2="7.85" y2="13.446" width="0.2032" layer="21"/>
+<wire x1="7.85" y1="13.065" x2="7.85" y2="12.684" width="0.2032" layer="21"/>
+<wire x1="7.85" y1="13.065" x2="7.469" y2="13.065" width="0.2032" layer="21"/>
+<wire x1="7.85" y1="13.065" x2="8.231" y2="13.065" width="0.2032" layer="21"/>
+<wire x1="7.85" y1="11.446" x2="7.85" y2="10.684" width="0.2032" layer="21"/>
+<wire x1="7.85" y1="13.065" x2="7.85" y2="13.446" width="0.2032" layer="22"/>
+<wire x1="7.85" y1="13.065" x2="7.85" y2="12.684" width="0.2032" layer="22"/>
+<wire x1="7.85" y1="13.065" x2="8.231" y2="13.065" width="0.2032" layer="22"/>
+<wire x1="7.85" y1="13.065" x2="7.469" y2="13.065" width="0.2032" layer="22"/>
+<wire x1="7.85" y1="11.446" x2="7.85" y2="10.684" width="0.2032" layer="22"/>
 </plain>
 <libraries>
 <library name="SparkFun-Capacitors">
