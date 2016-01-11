@@ -161,7 +161,7 @@
 <text x="34.798" y="5.715" size="1.27" layer="21" ratio="15" rot="R180" align="center-right">5</text>
 <text x="13.462" y="6.858" size="1.2065" layer="21" ratio="15" align="bottom-center">3.3V</text>
 <text x="18.542" y="6.858" size="1.27" layer="21" ratio="15" align="bottom-center">GND</text>
-<text x="47.625" y="22.86" size="1.778" layer="21" ratio="15" rot="R90" align="top-center">Blynk Thing</text>
+<text x="47.498" y="22.86" size="1.778" layer="21" ratio="15" rot="R90" align="top-center">Blynk Thing</text>
 <text x="4.1275" y="6.35" size="1.016" layer="21" font="vector" ratio="15" align="center-left">PWR</text>
 <text x="4.1275" y="8.255" size="1.016" layer="21" font="vector" ratio="15" align="center-left">CHG</text>
 <text x="18.542" y="35.1155" size="1.27" layer="21" ratio="15" align="top-center">ADC</text>
@@ -174,11 +174,11 @@
 <wire x1="39.37" y1="41.91" x2="41.91" y2="39.37" width="0.2032" layer="20" curve="-90"/>
 <wire x1="41.91" y1="39.37" x2="41.91" y2="35.56" width="0.2032" layer="20"/>
 <wire x1="41.91" y1="35.56" x2="43.18" y2="34.29" width="0.2032" layer="20" curve="90"/>
-<wire x1="43.18" y1="34.29" x2="49.53" y2="34.29" width="0.2032" layer="20"/>
-<wire x1="49.53" y1="34.29" x2="50.165" y2="33.655" width="0.2032" layer="20" curve="-90"/>
-<wire x1="50.165" y1="33.655" x2="50.165" y2="8.255" width="0.2032" layer="20"/>
-<wire x1="50.165" y1="8.255" x2="49.53" y2="7.62" width="0.2032" layer="20" curve="-90"/>
-<wire x1="49.53" y1="7.62" x2="43.18" y2="7.62" width="0.2032" layer="20"/>
+<wire x1="43.18" y1="34.29" x2="49.403" y2="34.29" width="0.2032" layer="20"/>
+<wire x1="49.403" y1="34.29" x2="50.038" y2="33.655" width="0.2032" layer="20" curve="-90"/>
+<wire x1="50.038" y1="33.655" x2="50.038" y2="8.255" width="0.2032" layer="20"/>
+<wire x1="50.038" y1="8.255" x2="49.403" y2="7.62" width="0.2032" layer="20" curve="-90"/>
+<wire x1="49.403" y1="7.62" x2="43.18" y2="7.62" width="0.2032" layer="20"/>
 <wire x1="43.18" y1="7.62" x2="41.91" y2="6.35" width="0.2032" layer="20" curve="90"/>
 <wire x1="41.91" y1="6.35" x2="41.91" y2="2.54" width="0.2032" layer="20"/>
 <wire x1="41.91" y1="2.54" x2="39.37" y2="0" width="0.2032" layer="20" curve="-90"/>
@@ -213,7 +213,7 @@
 <text x="3.048" y="32.369" size="0.8128" layer="21" font="vector" ratio="15" rot="R270" align="bottom-center">3V3</text>
 <text x="3.048" y="29.861" size="0.8128" layer="21" font="vector" ratio="15" rot="R270" align="bottom-center">SDA</text>
 <text x="2.207" y="27.178" size="0.8128" layer="21" font="vector" ratio="15" rot="R180" align="bottom-center">SCL</text>
-<dimension x1="0" y1="2.54" x2="50.165" y2="8.255" x3="25.0825" y3="-11.43" textsize="0.762" textratio="15" layer="47" dtype="horizontal" unit="inch" precision="3"/>
+<dimension x1="0" y1="2.54" x2="50.038" y2="8.255" x3="25.019" y3="-11.43" textsize="0.762" textratio="15" layer="47" dtype="horizontal" unit="inch" precision="3"/>
 <dimension x1="0" y1="2.54" x2="41.91" y2="6.35" x3="20.955" y3="-9.525" textsize="0.762" textratio="15" layer="47" dtype="horizontal" unit="inch" precision="3"/>
 <dimension x1="0" y1="2.54" x2="39.37" y2="2.54" x3="19.685" y3="-7.62" textsize="0.762" textratio="15" layer="47" dtype="horizontal" unit="inch" precision="3"/>
 <dimension x1="0" y1="2.54" x2="33.655" y2="5.715" x3="16.8275" y3="-5.715" textsize="0.762" textratio="15" layer="47" dtype="horizontal" unit="inch" precision="3"/>
