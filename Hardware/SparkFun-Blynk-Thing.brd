@@ -56,7 +56,7 @@
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
 <layer number="51" name="tDocu" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
@@ -2344,7 +2344,7 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <attribute name="PROD_ID" value="IC-12452" x="30.48" y="24.13" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="U5" library="blynk-thing-temp" package="SO08" value="W25Q32FVSS" x="22.225" y="24.13" rot="R90">
-<attribute name="PROD_ID" value="TBD" x="22.225" y="24.13" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="PROD_ID" value="IC-13229" x="22.225" y="24.13" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
 <element name="U4" library="SparkFun-DigitalIC" package="SSOP20_L" value="FT231XS-U" x="21.59" y="12.065">
 <attribute name="PROD_ID" value="IC-11524" x="21.59" y="12.065" size="1.778" layer="27" display="off"/>
@@ -2370,7 +2370,7 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <attribute name="PROD_ID" value="DIO-12503" x="38.735" y="15.24" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
 </element>
 <element name="JP14" library="SparkFun-Connectors" package="JST-3-PTH-VERT" value="" x="36.957" y="9.271">
-<attribute name="PROD_ID" value="TBD" x="36.957" y="9.271" size="1.778" layer="27" display="off"/>
+<attribute name="PROD_ID" value="CONN-13230" x="36.957" y="9.271" size="1.778" layer="27" display="off"/>
 </element>
 <element name="U6" library="SparkFun-Sensors" package="SI7021" value="SI7021" x="12.065" y="31.115" rot="R270">
 <attribute name="PROD_ID" value="IC-13093" x="12.065" y="31.115" size="1.778" layer="27" ratio="15" rot="R270" display="off"/>
