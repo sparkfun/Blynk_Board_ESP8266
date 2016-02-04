@@ -22207,8 +22207,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R3" library="SparkFun-Resistors" deviceset="22KOHM1/10W1%(0603)" device="" value="22K"/>
 <part name="R4" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 <part name="GND7" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="C5" library="SparkFun-Capacitors" deviceset="0.1UF-25V(+80/-20%)(0603)" device="" value="0.1uF"/>
 <part name="SUPPLY4" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -22285,6 +22283,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C19" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
 <part name="SUPPLY23" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
 <part name="GND41" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
+<part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
+<part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -22496,15 +22496,13 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="SUPPLY13" gate="G$1" x="139.7" y="177.8" smashed="yes" rot="MR0">
 <attribute name="VALUE" x="140.716" y="181.356" size="1.778" layer="96" rot="MR0"/>
 </instance>
-<instance part="IC1" gate="A" x="17.78" y="175.26" rot="MR180">
-<attribute name="PROD_ID" x="17.78" y="175.26" size="1.27" layer="96" rot="MR180" display="off"/>
+<instance part="IC1" gate="A" x="17.78" y="175.26">
+<attribute name="PROD_ID" x="17.78" y="175.26" size="1.27" layer="96" display="off"/>
 </instance>
 <instance part="IC1" gate="B" x="63.5" y="172.72"/>
 <instance part="R3" gate="G$1" x="43.18" y="167.64" rot="R90"/>
 <instance part="R4" gate="G$1" x="43.18" y="152.4" rot="R90"/>
 <instance part="GND7" gate="1" x="43.18" y="142.24"/>
-<instance part="GND6" gate="1" x="17.78" y="160.02"/>
-<instance part="SUPPLY3" gate="G$1" x="17.78" y="185.42"/>
 <instance part="C5" gate="G$1" x="48.26" y="190.5" rot="MR0"/>
 <instance part="SUPPLY4" gate="G$1" x="48.26" y="198.12"/>
 <instance part="GND8" gate="1" x="48.26" y="182.88"/>
@@ -22596,6 +22594,8 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="C19" gate="G$1" x="231.14" y="246.38"/>
 <instance part="SUPPLY23" gate="G$1" x="231.14" y="256.54" rot="MR0"/>
 <instance part="GND41" gate="1" x="231.14" y="238.76" rot="MR0"/>
+<instance part="SUPPLY1" gate="G$1" x="17.78" y="185.42"/>
+<instance part="GND6" gate="1" x="17.78" y="162.56"/>
 </instances>
 <busses>
 </busses>
@@ -22689,11 +22689,6 @@ e.g.: 3.3V in : 1.03 out</text>
 <wire x1="114.3" y1="187.96" x2="114.3" y2="185.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="A" pin="V-"/>
-<pinref part="SUPPLY3" gate="G$1" pin="VCC"/>
-<wire x1="17.78" y1="182.88" x2="17.78" y2="185.42" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="C5" gate="G$1" pin="1"/>
 <pinref part="SUPPLY4" gate="G$1" pin="VCC"/>
 <wire x1="48.26" y1="198.12" x2="48.26" y2="195.58" width="0.1524" layer="91"/>
@@ -22744,6 +22739,11 @@ e.g.: 3.3V in : 1.03 out</text>
 <wire x1="414.02" y1="160.02" x2="416.56" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="416.56" y1="160.02" x2="416.56" y2="170.18" width="0.1524" layer="91"/>
 <pinref part="SUPPLY21" gate="G$1" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="A" pin="V+"/>
+<pinref part="SUPPLY1" gate="G$1" pin="VCC"/>
+<wire x1="17.78" y1="185.42" x2="17.78" y2="182.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -22891,11 +22891,6 @@ e.g.: 3.3V in : 1.03 out</text>
 <wire x1="43.18" y1="144.78" x2="43.18" y2="147.32" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="A" pin="V+"/>
-<pinref part="GND6" gate="1" pin="GND"/>
-<wire x1="17.78" y1="167.64" x2="17.78" y2="162.56" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="C5" gate="G$1" pin="2"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <wire x1="48.26" y1="185.42" x2="48.26" y2="187.96" width="0.1524" layer="91"/>
@@ -22990,6 +22985,11 @@ e.g.: 3.3V in : 1.03 out</text>
 <pinref part="C19" gate="G$1" pin="2"/>
 <pinref part="GND41" gate="1" pin="GND"/>
 <wire x1="231.14" y1="241.3" x2="231.14" y2="243.84" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="IC1" gate="A" pin="V-"/>
+<pinref part="GND6" gate="1" pin="GND"/>
+<wire x1="17.78" y1="165.1" x2="17.78" y2="167.64" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -23614,10 +23614,10 @@ e.g.: 3.3V in : 1.03 out</text>
 <wire x1="33.02" y1="175.26" x2="43.18" y2="175.26" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="175.26" x2="43.18" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="A" pin="-IN"/>
-<wire x1="12.7" y1="172.72" x2="10.16" y2="172.72" width="0.1524" layer="91"/>
-<wire x1="10.16" y1="172.72" x2="10.16" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="10.16" y1="154.94" x2="33.02" y2="154.94" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="154.94" x2="33.02" y2="175.26" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="177.8" x2="10.16" y2="177.8" width="0.1524" layer="91"/>
+<wire x1="10.16" y1="177.8" x2="10.16" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="10.16" y1="193.04" x2="33.02" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="193.04" x2="33.02" y2="175.26" width="0.1524" layer="91"/>
 <junction x="33.02" y="175.26"/>
 </segment>
 </net>
@@ -23647,8 +23647,8 @@ e.g.: 3.3V in : 1.03 out</text>
 </segment>
 <segment>
 <pinref part="IC1" gate="A" pin="+IN"/>
-<wire x1="12.7" y1="177.8" x2="10.16" y2="177.8" width="0.1524" layer="91"/>
-<label x="10.16" y="177.8" size="1.27" layer="95" rot="R180" xref="yes"/>
+<wire x1="12.7" y1="172.72" x2="10.16" y2="172.72" width="0.1524" layer="91"/>
+<label x="10.16" y="172.72" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="4/WS2812" class="0">
