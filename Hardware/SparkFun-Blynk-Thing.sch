@@ -21913,7 +21913,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <vertex x="0.3" y="-1.25"/>
 <vertex x="-0.7" y="-1.25"/>
 </polygon>
-<polygon width="0.127" layer="31">
+<polygon width="0.127" layer="29">
 <vertex x="-0.55" y="1.05"/>
 <vertex x="0.55" y="1.05"/>
 <vertex x="0.55" y="-0.65"/>
@@ -21937,7 +21937,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="SI7021" prefix="U">
+<deviceset name="SI7021">
 <description>The Si7021 is an I2C Humidity and Temperature Sensor</description>
 <gates>
 <gate name="G$1" symbol="SI7021" x="0" y="0"/>
@@ -22370,10 +22370,6 @@ V_ADC-IN = V_ADC * 32/10
 e.g.: 3.3V in : 1.03 out</text>
 <text x="76.2" y="218.44" size="1.524" layer="97">600mA out
 6V max in</text>
-<text x="-63.5" y="53.34" size="2.54" layer="97">- Move WS2812 jumper
-- Fix Flash package
-- Fix Op amp power
-- Fix Si7021 package</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="63.5" y="63.5">

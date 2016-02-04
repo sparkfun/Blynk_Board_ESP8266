@@ -2025,7 +2025,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <vertex x="0.3" y="-1.25"/>
 <vertex x="-0.7" y="-1.25"/>
 </polygon>
-<polygon width="0.127" layer="31">
+<polygon width="0.127" layer="29">
 <vertex x="-0.55" y="1.05"/>
 <vertex x="0.55" y="1.05"/>
 <vertex x="0.55" y="-0.65"/>
