@@ -175,7 +175,7 @@
 <text x="8.3439" y="4.826" size="1.016" layer="21" ratio="15" align="bottom-center">VIN</text>
 <wire x1="29.718" y1="34.925" x2="29.972" y2="34.925" width="0.508" layer="21"/>
 <wire x1="29.718" y1="34.925" x2="29.972" y2="34.925" width="0.508" layer="22"/>
-<text x="1.397" y="20.955" size="1.016" layer="16" font="vector" ratio="15" rot="MR90" align="top-center">v01</text>
+<text x="1.397" y="20.955" size="1.016" layer="16" font="vector" ratio="15" rot="MR90" align="top-center">v02</text>
 <text x="2.54" y="35.56" size="0.8128" layer="22" font="vector" ratio="15" rot="MR90" align="bottom-center">GND</text>
 <text x="2.54" y="33.02" size="0.8128" layer="22" font="vector" ratio="15" rot="MR90" align="bottom-center">3V3</text>
 <text x="2.54" y="30.48" size="0.8128" layer="22" font="vector" ratio="15" rot="MR90" align="bottom-center">SDA</text>
