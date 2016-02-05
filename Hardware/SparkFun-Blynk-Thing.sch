@@ -22282,7 +22282,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND41" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP29" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT"/>
+<part name="JP29" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT">
+<attribute name="PROD_ID" value="TBD"/>
+</part>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND42" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 </parts>
@@ -22589,7 +22591,9 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="GND41" gate="1" x="231.14" y="238.76" rot="MR0"/>
 <instance part="SUPPLY1" gate="G$1" x="17.78" y="185.42"/>
 <instance part="GND6" gate="1" x="17.78" y="162.56"/>
-<instance part="JP29" gate="G$1" x="375.92" y="160.02"/>
+<instance part="JP29" gate="G$1" x="375.92" y="160.02">
+<attribute name="PROD_ID" x="375.92" y="160.02" size="1.27" layer="96" display="off"/>
+</instance>
 <instance part="SUPPLY3" gate="G$1" x="383.54" y="170.18"/>
 <instance part="GND42" gate="1" x="386.08" y="152.4"/>
 </instances>

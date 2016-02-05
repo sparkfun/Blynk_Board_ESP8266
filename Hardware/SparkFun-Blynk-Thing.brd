@@ -2489,7 +2489,9 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <element name="C19" library="SparkFun-Capacitors" package="0603-CAP" value="4.7uF" x="15.875" y="6.35" rot="R270">
 <attribute name="PROD_ID" value="CAP-08280" x="15.875" y="6.35" size="0.8128" layer="27" font="vector" ratio="15" rot="R270" display="off"/>
 </element>
-<element name="JP29" library="SparkFun-Connectors" package="JST-4-PTH-VERT" value="" x="4.826" y="31.369" rot="R90"/>
+<element name="JP29" library="SparkFun-Connectors" package="JST-4-PTH-VERT" value="" x="4.826" y="31.369" rot="R90">
+<attribute name="PROD_ID" value="TBD" x="4.826" y="31.369" size="1.778" layer="27" rot="R90" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="VCC">
