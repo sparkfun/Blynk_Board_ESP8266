@@ -154,7 +154,6 @@
 </layers>
 <board>
 <plain>
-<text x="47.498" y="22.86" size="1.778" layer="21" ratio="15" rot="R90" align="top-center">Blynk Thing</text>
 <text x="2.54" y="5.715" size="1.016" layer="21" font="vector" ratio="15" rot="R180" align="bottom-center">PWR</text>
 <wire x1="0" y1="2.54" x2="0" y2="39.37" width="0.2032" layer="20"/>
 <wire x1="0" y1="39.37" x2="2.54" y2="41.91" width="0.2032" layer="20" curve="-90"/>
@@ -248,8 +247,8 @@ VCC</text>
 <text x="28.4861" y="37.084" size="1.016" layer="22" ratio="15" rot="MR180" align="bottom-center">16</text>
 <text x="31.0261" y="36.8808" size="0.8128" layer="22" ratio="15" rot="MR180" align="bottom-center">RST</text>
 <text x="33.5661" y="37.084" size="1.016" layer="22" ratio="15" rot="MR180" align="bottom-center">0</text>
-<text x="46.228" y="14.605" size="1.27" layer="21" ratio="15" rot="R90" align="top-left">ESP8266 Blynk
-Thyng</text>
+<text x="46.228" y="22.86" size="1.27" layer="21" ratio="15" rot="R90" align="top-center">ESP8266 Blynk
+Board</text>
 </plain>
 <libraries>
 <library name="SparkFun-Capacitors">
@@ -3809,33 +3808,33 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <approved hash="19,16,795d647d9ddf7d17"/>
 <approved hash="19,16,a6aebc0fc58612f8"/>
 <approved hash="19,16,d60af126c2b41870"/>
-<approved hash="4,16,152d09625733a72d"/>
-<approved hash="4,16,e7525f30eb356f55"/>
-<approved hash="4,16,a97b2566ef32277b"/>
-<approved hash="4,16,4b6ceb576b325f6c"/>
-<approved hash="4,16,5d89a158d732b788"/>
-<approved hash="4,16,6fb1777a5b338fb1"/>
 <approved hash="4,16,38749d4e6fb426df"/>
 <approved hash="4,16,6e0c6f48a7e69aa0"/>
 <approved hash="4,16,1422214fefb09e89"/>
 <approved hash="4,16,da35c34f97811a9e"/>
 <approved hash="4,16,90d1d54f7f8ea67b"/>
 <approved hash="4,16,46e8e74e47ac2a43"/>
-<approved hash="5,16,fe3c4cda7b5dc8d4"/>
+<approved hash="4,16,152d09625733a72d"/>
+<approved hash="4,16,e7525f30eb356f55"/>
+<approved hash="4,16,a97b2566ef32277b"/>
+<approved hash="4,16,4b6ceb576b325f6c"/>
+<approved hash="4,16,5d89a158d732b788"/>
+<approved hash="4,16,6fb1777a5b338fb1"/>
 <approved hash="5,16,431437c2f86136df"/>
+<approved hash="5,16,fe3c4cda7b5dc8d4"/>
 <approved hash="19,16,6fdc0f6d11924fe1"/>
 <approved hash="19,16,6edc079d19824f81"/>
-<approved hash="19,16,d94208e5c3f0a2aa"/>
 <approved hash="19,16,d97b32fd8390d8eb"/>
-<approved hash="19,16,238c43ea853655ad"/>
+<approved hash="19,16,d94208e5c3f0a2aa"/>
 <approved hash="19,16,a49d34c242e16243"/>
+<approved hash="19,16,238c43ea853655ad"/>
 <approved hash="19,16,c1adfbdd479c00b0"/>
 <approved hash="19,16,d551ed3e00d8b472"/>
 <approved hash="19,16,35da367173d70d20"/>
 <approved hash="19,16,fc02c3bff512b56d"/>
 <approved hash="19,16,ff7e65f9a35d99bc"/>
-<approved hash="19,16,0f98ed751cd209c3"/>
 <approved hash="19,16,d2150dfa08712062"/>
+<approved hash="19,16,0f98ed751cd209c3"/>
 <approved hash="19,16,8b6a0530a1746fd0"/>
 </errors>
 </board>
