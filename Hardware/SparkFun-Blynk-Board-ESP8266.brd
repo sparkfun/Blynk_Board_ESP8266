@@ -154,7 +154,7 @@
 </layers>
 <board>
 <plain>
-<text x="2.54" y="5.715" size="1.016" layer="21" font="vector" ratio="15" rot="R180" align="bottom-center">PWR</text>
+<text x="2.54" y="5.969" size="1.016" layer="21" font="vector" ratio="15" rot="R180" align="bottom-center">PWR</text>
 <wire x1="0" y1="2.54" x2="0" y2="39.37" width="0.2032" layer="20"/>
 <wire x1="0" y1="39.37" x2="2.54" y2="41.91" width="0.2032" layer="20" curve="-90"/>
 <wire x1="2.54" y1="41.91" x2="39.37" y2="41.91" width="0.2032" layer="20"/>
@@ -3398,8 +3398,8 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <element name="R12" library="SparkFun-Resistors" package="0603-RES" value="1K" x="5.08" y="6.35" rot="R90">
 <attribute name="PROD_ID" value="RES-07856" x="6.35" y="-36.83" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
 </element>
-<element name="D5" library="SparkFun-LED" package="LED-0603" value="RED" x="2.54" y="6.35" rot="R90">
-<attribute name="PROD_ID" value="DIO-00819" x="8.89" y="-34.29" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
+<element name="D5" library="SparkFun-LED" package="LED-0603" value="RED" x="2.54" y="6.604" rot="R90">
+<attribute name="PROD_ID" value="DIO-00819" x="8.89" y="-34.036" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
 </element>
 <element name="R6" library="SparkFun-Resistors" package="0603-RES" value="2.0k" x="13.335" y="12.065">
 <attribute name="PROD_ID" value="RES-08296" x="-18.415" y="4.445" size="1.778" layer="27" font="vector" ratio="15" display="off"/>
@@ -4456,7 +4456,7 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <signal name="N$5">
 <contactref element="D5" pad="C"/>
 <contactref element="SJ2" pad="2"/>
-<wire x1="1.663" y1="6.35" x2="1.663" y2="5.727" width="0.2032" layer="1"/>
+<wire x1="1.663" y1="6.604" x2="1.663" y2="5.727" width="0.2032" layer="1"/>
 <wire x1="1.663" y1="5.727" x2="0.889" y2="4.953" width="0.2032" layer="1"/>
 <via x="0.889" y="4.953" extent="1-16" drill="0.381"/>
 <wire x1="0.889" y1="4.953" x2="1.397" y2="5.461" width="0.2032" layer="16"/>
@@ -4465,8 +4465,8 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <signal name="N$10">
 <contactref element="D5" pad="A"/>
 <contactref element="R12" pad="2"/>
-<wire x1="3.417" y1="6.35" x2="4.267" y2="7.2" width="0.254" layer="1"/>
-<wire x1="4.267" y1="7.2" x2="5.08" y2="7.2" width="0.254" layer="1"/>
+<wire x1="3.417" y1="6.604" x2="4.013" y2="7.2" width="0.254" layer="1"/>
+<wire x1="4.013" y1="7.2" x2="5.08" y2="7.2" width="0.254" layer="1"/>
 </signal>
 <signal name="N$11">
 <contactref element="R15" pad="2"/>
@@ -4719,9 +4719,9 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <approved hash="3,16,fd67816f08387430"/>
 <approved hash="3,1,5d66eb68eb685d66"/>
 <approved hash="3,1,37d54ced4ce737df"/>
-<approved hash="19,1,f8185ada5c21fee3"/>
 <approved hash="19,1,741956db542276e0"/>
 <approved hash="19,1,fbba5978543ef6fc"/>
+<approved hash="19,1,f8185ada5c21fee3"/>
 <approved hash="4,1,38749d4e6fb426df"/>
 <approved hash="4,1,6e0c6f48a7e69aa0"/>
 <approved hash="4,1,1422214fefb09e89"/>
@@ -4735,9 +4735,9 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <approved hash="4,1,5d89a158d732b788"/>
 <approved hash="4,1,6fb1777a5b338fb1"/>
 <approved hash="4,1,87378f8c593ad27f"/>
+<approved hash="4,1,7051fb427e56d906"/>
 <approved hash="4,1,6fa80538b6a907fc"/>
 <approved hash="4,1,0c42eb1630c3067a"/>
-<approved hash="4,1,7051fb427e56d906"/>
 <approved hash="19,1,f59c26de2325f067"/>
 <approved hash="19,1,7c2b2f692d247e66"/>
 <approved hash="19,1,7a59291b34a067e2"/>
@@ -4766,21 +4766,21 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <approved hash="4,16,4b6ceb576b325f6c"/>
 <approved hash="4,16,5d89a158d732b788"/>
 <approved hash="4,16,6fb1777a5b338fb1"/>
-<approved hash="5,16,b2dde950c872c89a"/>
 <approved hash="5,16,b3ad6676f192cf99"/>
+<approved hash="5,16,b2dde950c872c89a"/>
 <approved hash="19,16,6fdc0f6d11924fe1"/>
 <approved hash="19,16,6edc079d19824f81"/>
-<approved hash="19,16,d97b32fd8390d8eb"/>
-<approved hash="19,16,d94208e5c3f0a2aa"/>
-<approved hash="19,16,a49d34c242e16243"/>
 <approved hash="19,16,238c43ea853655ad"/>
+<approved hash="19,16,d94208e5c3f0a2aa"/>
+<approved hash="19,16,d97b32fd8390d8eb"/>
+<approved hash="19,16,a49d34c242e16243"/>
 <approved hash="19,16,c1adfbdd479c00b0"/>
 <approved hash="19,16,d551ed3e00d8b472"/>
 <approved hash="19,16,35da367173d70d20"/>
 <approved hash="19,16,fc02c3bff512b56d"/>
 <approved hash="19,16,7f0d659ba1b2e177"/>
-<approved hash="19,16,0f539382e0698b44"/>
 <approved hash="19,16,d28c735ff704a12b"/>
+<approved hash="19,16,0f539382e0698b44"/>
 <approved hash="19,16,73b2fde85b869522"/>
 </errors>
 </board>
