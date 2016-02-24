@@ -25,7 +25,9 @@ void initHardware(void)
 {
   delay(1000);
   Serial.begin(115200);
-  Serial.println();
+  BB_DEBUG("");
+  BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
+  BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
 
   //! TODO: find something more unique to randomSeed
   //! Maybe the Si7021's guaranteed unique serial #
@@ -61,15 +63,15 @@ bool writeBlynkAuth(String authToken)
   File authFile = SPIFFS.open(BLYNK_AUTH_SPIFF_FILE, "w");
   if (authFile)
   {
-    Serial.println("Writing file.");
+    BB_DEBUG("Opened " + String(BLYNK_AUTH_SPIFF_FILE));
     authFile.print(authToken);
     authFile.close();
-    Serial.println("Wrote file.");
+    BB_DEBUG("Wrote file.");
     return true;
   }
   else
   {
-    Serial.println("Failed to open file to write.");
+    BB_DEBUG("Failed to open file to write.");
     return false;
   }
 }
@@ -80,11 +82,11 @@ String getBlynkAuth(void)
   
   if (SPIFFS.exists(BLYNK_AUTH_SPIFF_FILE))
   {
-    Serial.println("Opening auth file.");
+    BB_DEBUG("Opening auth file.");
     File authFile = SPIFFS.open(BLYNK_AUTH_SPIFF_FILE, "r");
     if(authFile)
     {
-      Serial.println("File opened.");
+      BB_DEBUG("File opened.");
       size_t authFileSize = authFile.size();
       // Only return auth token if it's the right size (32 bytes)
       if (authFileSize == BLYNK_AUTH_TOKEN_SIZE)
@@ -98,12 +100,12 @@ String getBlynkAuth(void)
     }
     else
     {
-      Serial.println("Failed to open auth file.");
+      BB_DEBUG("Failed to open auth file.");
     }
   }
   else
   {
-    Serial.println("File does not exist.");
+    BB_DEBUG("File does not exist.");
   }
 
   return retAuth;
@@ -125,7 +127,7 @@ bool setupBlynkStation(String network, String psk, String blynk)
 
   if (timeIn <= 0)
   {
-    Serial.println("Timed out connecting to WiFi.");
+    BB_DEBUG("Timed out connecting to WiFi.");
     return false;
   }
 
@@ -141,7 +143,7 @@ bool setupBlynkStation(String network, String psk, String blynk)
 
   if (timeIn <= 0)
   {
-    Serial.println("Timed out connecting to Blynk.");
+    BB_DEBUG("Timed out connecting to Blynk.");
     return false;  
   }
   return true;
@@ -152,4 +154,5 @@ void resetEEPROM(void)
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 0);
   EEPROM.commit();
   writeBlynkAuth("");
+
 }

@@ -24,7 +24,7 @@ Arduino IDE 1.6.7
 SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
 
-#define BLYNK_PRINT Serial
+#define DEBUG_ENABLED
 
 #include "BlynkBoard_settings.h"
 #include <ESP8266WiFi.h>
@@ -33,7 +33,6 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <Ticker.h>
 #include <BlynkSimpleEsp8266.h>
-//#include <BlynkSimpleEsp8266_SSL.h>
 #include <EEPROM.h>
 #include "FS.h"
 
@@ -90,7 +89,7 @@ void setup()
     
     if (authTokenStr == 0)
     {
-      Serial.println("No auth token.");
+      BB_DEBUG("No auth token.");
       //! TODO: If connect times out. Wait for user to hold
       //! TODO: combine this with the fail to connect outcome below
       // GPIO0 LOW for ~5s. If that happens reset EEPROM,
@@ -101,7 +100,7 @@ void setup()
     }
     else
     {
-      Serial.println("Auth token:" + authTokenStr + ".");
+      BB_DEBUG("Auth token:" + authTokenStr + ".");
       
       runMode = MODE_CONNECTING_WIFI;
     

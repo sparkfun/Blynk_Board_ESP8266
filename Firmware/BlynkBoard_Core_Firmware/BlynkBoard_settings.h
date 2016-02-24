@@ -25,6 +25,18 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
+#define BLYNKBOARD_FIRMWARE_VERSION "0.2.0"
+#define BLYNKBOARD_HARDWARE_VERSION "0.2.0"
+
+#ifdef DEBUG_ENABLED
+#define BLYNK_PRINT Serial
+#define BB_DEBUG(msg) {\
+  Serial.print("[" + String(millis()) + "] "); \
+  Serial.println(msg);}
+#else
+#define BB_DEBUG(msg)
+#endif
+
 #define BLYNK_AUTH_TOKEN_SIZE 32
 
 ///////////////

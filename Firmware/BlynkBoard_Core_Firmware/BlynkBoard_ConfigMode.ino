@@ -43,8 +43,7 @@ void setupAP(char * ssidName)
   WiFi.softAP(ssidName);
 
   IPAddress myIP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(myIP);
+  BB_DEBUG("AP IP address: " + String(myIP));
 }
 
 void handleRoot(void) // On root request to server, send form
@@ -65,9 +64,9 @@ void handleConfig(void) // handler for "/config" server request
   String pass = server.arg("pass"); // Network password
   String auth = server.arg("blynk"); // Blynk auth code
 
-  Serial.println("SSID: " + ssid + ".");
-  Serial.println("Pass: " + pass + ".");
-  Serial.println("Auth: " + auth + ".");
+  BB_DEBUG("SSID: " + ssid + ".");
+  BB_DEBUG("Pass: " + pass + ".");
+  BB_DEBUG("Auth: " + auth + ".");
 
   // Send a response back to the requester
   String rsp = "<!DOCTYPE HTML> <html>";
@@ -104,7 +103,7 @@ void setupServer(void)
   server.on("/reset", handleReset);
   server.begin();
 
-  Serial.println("HTTP server started");
+  BB_DEBUG("HTTP server started");
 }
 
 void generateSSID(bool rgbCode)
@@ -117,7 +116,7 @@ void generateSSID(bool rgbCode)
       ssidSuffixIndex[i] = random(0, WS2812_NUM_COLORS);
       strncat(BoardSSID, &SSID_COLOR_CHAR[ssidSuffixIndex[i]], 1);
     }
-    Serial.println("New SSID: " + String(BoardSSID));
+    BB_DEBUG("New SSID: " + String(BoardSSID));
   }
   suffixGenerated = rgbCode;
 

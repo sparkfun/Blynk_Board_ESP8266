@@ -106,7 +106,7 @@ BLYNK_WRITE(BLUE_VIRTUAL)
 BLYNK_WRITE(SERIAL_VIRTUAL)
 {
   String incoming = param.asStr();
-  Serial.println("Serial: " + incoming);
+  BB_DEBUG("Serial: " + incoming);
   if (incoming.charAt(0) == '!')
   {
     String email = incoming.substring(1, incoming.length());
@@ -122,7 +122,7 @@ BLYNK_WRITE(SERIAL_VIRTUAL)
 
 BLYNK_WRITE(RESET_VIRTUAL)
 {
-  Serial.println("Factory resetting");
+  BB_DEBUG("Factory resetting");
   resetEEPROM();
   ESP.reset();
 }
