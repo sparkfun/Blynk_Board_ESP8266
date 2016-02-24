@@ -48,6 +48,8 @@ void generateSSID(bool rgbCode = true);
 void handleConfigServer(void);
 void checkForStations(void);
 void setupAP(char * ssidName);
+void checkSerialConfig(void);
+void executeSerialCommand(void);
 
 // BlynkBoard_BlynkMode functions:
 void blynkSetup(void);
@@ -58,7 +60,8 @@ void initHardware(void);
 bool checkConfigFlag(void);
 bool writeBlynkAuth(String authToken);
 String getBlynkAuth(void);
-bool setupBlynkStation(String network, String psk, String blynk);
+//void startBlynk(String ssid, String pass, String auth);
+int8_t setupBlynkStation(String network, String psk, String blynk);
 void resetEEPROM(void);
 
 // BlynkBoard_Core_Firmware functions:
@@ -134,9 +137,11 @@ void loop()
   {
   case MODE_CONFIG:
     checkForStations();
+    checkSerialConfig();
     break;
   case MODE_CONFIG_DEVICE_CONNECTED:
     handleConfigServer();
+    checkSerialConfig();
     break;
   case MODE_BLYNK_RUN:
     previousMode = MODE_BLYNK_RUN;

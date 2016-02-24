@@ -25,8 +25,10 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.2.0"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.3.0"
 #define BLYNKBOARD_HARDWARE_VERSION "0.2.0"
+
+#define SERIAL_TERMINAL_BAUD 9600
 
 #ifdef DEBUG_ENABLED
 #define BLYNK_PRINT Serial
@@ -128,3 +130,43 @@ const char SSID_PREFIX[] = "BlynkMe";
 uint8_t ssidSuffixIndex[SSID_SUFFIX_LENGTH] = {0, 0, 0, 0};
 char BoardSSID[33];
 bool suffixGenerated = false;
+
+////////////////////////
+// Serial Config Mode //
+////////////////////////
+#define SERIAL_RX_BUFFER_SIZE 128
+#define NUM_SERIAL_CONFIG_CHARS 4
+const char CONFIG_CHAR_WIFI_NETWORK = 'w';
+const char CONFIG_CHAR_WIFI_PASSWORD = 'p';
+const char CONFIG_CHAR_BLYNK = 'b';
+const char CONFIG_CHAR_HELP = 'h';
+const char CONFIG_CHAR_SUBMIT = '\r';
+const char CONFIG_CHARS[NUM_SERIAL_CONFIG_CHARS] = {
+  CONFIG_CHAR_WIFI_NETWORK, CONFIG_CHAR_WIFI_PASSWORD, CONFIG_CHAR_BLYNK,
+  CONFIG_CHAR_HELP
+};
+enum {
+  SERIAL_CONFIG_WAITING,
+  SERIAL_CONFIG_WIFI_NETWORK,
+  SERIAL_CONFIG_WIFI_PASSWORD,
+  SERIAL_CONFIG_BLYNK
+} serialConfigMode = SERIAL_CONFIG_WAITING;
+const char SERIAL_MESSAGE_WIFI_NETWORK[] = "Type your WiFi network SSID and hit enter.\r\n";
+const char SERIAL_MESSAGE_WIFI_PASSWORD[] = "Type your WiFi network password and hit enter.\r\n" \
+                                            "(If connecting to an open network, leave blank.)\r\n" ;
+const char SERIAL_MESSAGE_BLYNK[]= "Enter your 32-character Blynk Auth token.\r\n";
+const char SERIAL_MESSAGE_HELP[] = "Blynk Board - ESP8266 Serial Config\r\n" \
+                                   "  w: Config WiFi network\r\n" \
+                                   "  p: Config WiFi password\r\n" \
+                                   "  b: Config Blynk Auth token\r\n" \
+                                   "  h: (This) Help menu\r\n";
+
+/////////////////////////
+// Error/Success Codes //
+/////////////////////////
+enum {
+  WIFI_BLYNK_SUCCESS = 1,
+  ERROR_CONNECT_WIFI = -1,
+  ERROR_CONNECT_BLYNK = -2
+};
+

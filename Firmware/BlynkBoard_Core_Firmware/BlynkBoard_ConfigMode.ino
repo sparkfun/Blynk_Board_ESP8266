@@ -23,10 +23,7 @@ Development environment specifics:
 Arduino IDE 1.6.7
 SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
-
-///////////////////////////
-// BlynkMe Config Server //
-///////////////////////////
+#include "string.h"
 ESP8266WebServer server(BLYNK_WIFI_CONFIG_PORT);
 const String SSIDWebForm = "<!DOCTYPE HTML> "\
                            "<html>" \
@@ -37,6 +34,10 @@ const String SSIDWebForm = "<!DOCTYPE HTML> "\
                            "<label>PASS: </label><input name='pass' type = 'password' length=64><br>" \
                            "<label>Blynk: </label><input name='blynk' length=32><br><br>" \
                            "<input type='submit' value='submit'></form></p></html>";
+String serialConfigBuffer = "";
+String serialConfigWiFiSSID = "";
+String serialConfigWiFiPSK = "";
+String serialConfigBlynkAuth = "";
 
 void setupAP(char * ssidName)
 {
@@ -75,25 +76,8 @@ void handleConfig(void) // handler for "/config" server request
   rsp += "</html>";
   server.send(200, "text/html", rsp);
 
-  // Setup the BlynkBoard as a WiFi station
-  if (setupBlynkStation(ssid, pass, auth))
-  {
-    writeBlynkAuth(auth); //! TODO: check return value of this
-    WiFi.enableAP(false);
-    
-    // Detach button input so it can be used in Blynk:
-    detachInterrupt(BUTTON_PIN);
-    
-    EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 1);
-    EEPROM.commit();
-
-    blynkSetup();
-  }
-  else
-  {
-    WiFi.enableSTA(false); // Disable station mode
-    runMode = MODE_CONFIG; // Back to config LED blink
-  }
+  //startBlynk(ssid, pass, auth);
+  setupBlynkStation(ssid, pass, auth);
 }
 
 void setupServer(void)
@@ -140,4 +124,104 @@ void checkForStations(void)
     runMode = MODE_CONFIG_DEVICE_CONNECTED;
   else
     runMode = MODE_CONFIG;
+}
+
+void checkSerialConfig(void)
+{
+  if (Serial.available())
+  {
+    while (Serial.available())
+    {
+      char c = Serial.read();
+      if (serialConfigMode == SERIAL_CONFIG_WAITING)
+      {
+        if (strchr(CONFIG_CHARS, c)) // If it's one of the config chars
+        {
+          switch (c)
+          {
+          case CONFIG_CHAR_WIFI_NETWORK:
+            serialConfigMode = SERIAL_CONFIG_WIFI_NETWORK;
+            Serial.println(SERIAL_MESSAGE_WIFI_NETWORK);
+            break;
+          case CONFIG_CHAR_WIFI_PASSWORD:
+            serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
+            Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+            break;
+          case CONFIG_CHAR_BLYNK:
+            serialConfigMode = SERIAL_CONFIG_BLYNK;
+            Serial.println(SERIAL_MESSAGE_BLYNK);
+            break;
+          case CONFIG_CHAR_HELP:
+            Serial.println(SERIAL_MESSAGE_HELP);
+            break;
+          }
+        }
+        else // If it's not a config char, and we're in waitin mode
+        {
+          // Ignore it (?)
+        }
+      }
+      else // If it's not a config char, and we're _not_ in waiting mode
+      {
+        if (c == CONFIG_CHAR_SUBMIT)
+        {
+          Serial.println();
+          executeSerialCommand();
+        }
+        else if (c == '\b')
+        {
+          serialConfigBuffer.remove(serialConfigBuffer.length() - 1);
+        }
+        else //! TODO: Should be checking to make sure the character is valid
+        {
+          serialConfigBuffer += c;
+          Serial.write(c);
+        }
+      }
+    }
+  }
+}
+
+void executeSerialCommand(void)
+{
+  bool checkCommand = false;
+  switch (serialConfigMode)
+  {
+  case SERIAL_CONFIG_WIFI_NETWORK:
+    serialConfigWiFiSSID = serialConfigBuffer;
+    serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
+    Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+    BB_DEBUG("WiFi Network: \"" + serialConfigWiFiSSID + "\"");
+    break;
+  case SERIAL_CONFIG_WIFI_PASSWORD:
+    serialConfigWiFiPSK = serialConfigBuffer;
+    serialConfigMode = SERIAL_CONFIG_WAITING;
+    BB_DEBUG("WiFI Password: \"" + serialConfigWiFiPSK + "\"");
+    break;
+  case SERIAL_CONFIG_BLYNK:
+    serialConfigBlynkAuth = serialConfigBuffer;
+    serialConfigMode = SERIAL_CONFIG_WAITING;
+    BB_DEBUG("Blynk Auth: \"" + serialConfigBlynkAuth + "\"");
+    break;
+  }
+  if ((serialConfigWiFiSSID != "") && (serialConfigWiFiPSK != "") && (serialConfigBlynkAuth != ""))
+  {
+    BB_DEBUG("Connecting to WiFi.");
+    int8_t ret = setupBlynkStation(serialConfigWiFiSSID, serialConfigWiFiPSK, serialConfigBlynkAuth);
+    if (ret < 0)
+    {
+      if (ret == ERROR_CONNECT_BLYNK)
+      {
+        BB_DEBUG("Serial error connecting to Blynk.");
+        serialConfigBlynkAuth = "";
+      }
+      else if (ret == ERROR_CONNECT_WIFI)
+      {
+        BB_DEBUG("Serial error connecting to WiFi.");
+        serialConfigWiFiSSID = "";
+        serialConfigWiFiPSK = "";
+      }
+    }
+  }
+  serialConfigBuffer = "";
 }

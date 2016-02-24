@@ -74,6 +74,8 @@ void adcUpdate(void);
 
 void blynkSetup(void)
 {
+  BB_DEBUG("Initializing Blynk Demo");
+  WiFi.enableAP(false);
   runMode = MODE_BLYNK_RUN;
   detachInterrupt(BUTTON_PIN);
   thSense.begin();

@@ -24,7 +24,7 @@ SparkFun BlynkBoard - ESP8266
 void initHardware(void)
 {
   delay(1000);
-  Serial.begin(115200);
+  Serial.begin(SERIAL_TERMINAL_BAUD);
   BB_DEBUG("");
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
   BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
@@ -58,8 +58,6 @@ bool checkConfigFlag(void)
 
 bool writeBlynkAuth(String authToken)
 {
-  //! TODO: consider returning fail if file exists.
-  //  Or if we even need to worry about overwriting.
   File authFile = SPIFFS.open(BLYNK_AUTH_SPIFF_FILE, "w");
   if (authFile)
   {
@@ -111,7 +109,7 @@ String getBlynkAuth(void)
   return retAuth;
 }
 
-bool setupBlynkStation(String network, String psk, String blynk)
+int8_t setupBlynkStation(String network, String psk, String blynk)
 {
   long timeIn = WIFI_STA_CONNECT_TIMEOUT;
   
@@ -128,7 +126,9 @@ bool setupBlynkStation(String network, String psk, String blynk)
   if (timeIn <= 0)
   {
     BB_DEBUG("Timed out connecting to WiFi.");
-    return false;
+    WiFi.enableSTA(false); // Disable station mode
+    runMode = MODE_CONFIG; // Back to config LED blink
+    return ERROR_CONNECT_WIFI;
   }
 
   runMode = MODE_CONNECTING_BLYNK;
@@ -144,9 +144,20 @@ bool setupBlynkStation(String network, String psk, String blynk)
   if (timeIn <= 0)
   {
     BB_DEBUG("Timed out connecting to Blynk.");
-    return false;  
+    runMode = MODE_CONFIG; // Back to config LED blink
+    return ERROR_CONNECT_BLYNK;  
   }
-  return true;
+
+  //! TODO: Put these three lines into a separate function:
+  writeBlynkAuth(blynk); //! TODO: check return value of this
+  EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 1);
+  EEPROM.commit();
+
+  //! TODO: Consider changing mode to an intermediary
+  //  MODE_BLYNK_SETUP, where blynkSetup is called.
+  blynkSetup();
+  
+  return WIFI_BLYNK_SUCCESS;
 }
 
 void resetEEPROM(void)
@@ -154,5 +165,4 @@ void resetEEPROM(void)
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 0);
   EEPROM.commit();
   writeBlynkAuth("");
-
 }
