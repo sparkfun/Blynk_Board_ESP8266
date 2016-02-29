@@ -45,7 +45,8 @@ void initHardware(void)
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(BUTTON_PIN, buttonPress, RISING);
 
-  SPIFFS.begin(); //! TODO: consider returning error if this fails.
+  if (!SPIFFS.begin())
+    BB_DEBUG("Failed to initialize SPIFFS"); //! TODO: consider returning error if this fails.
   EEPROM.begin(EEPROM_SIZE);
 }
 
@@ -164,5 +165,5 @@ void resetEEPROM(void)
 {
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 0);
   EEPROM.commit();
-  writeBlynkAuth("");
+  SPIFFS.remove(BLYNK_AUTH_SPIFF_FILE);
 }

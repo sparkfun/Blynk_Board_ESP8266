@@ -82,3 +82,4 @@ Any upload speed can be used to load code onto the Blynk Board. 921600 is recomm
 * [Blynk Arduino Library](https://github.com/blynkkk/blynk-library/releases/tag/v0.3.1)
 * [SparkFun HTU21D](https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library/releases/tag/V_1.1.1)
 * [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel)
+* [SparkFun TSL2561 Library](https://github.com/sparkfun/SparkFun_TSL2561_Arduino_Library/releases/tag/V_1.1.0)

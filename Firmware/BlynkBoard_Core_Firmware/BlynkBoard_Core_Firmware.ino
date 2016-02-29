@@ -60,7 +60,6 @@ void initHardware(void);
 bool checkConfigFlag(void);
 bool writeBlynkAuth(String authToken);
 String getBlynkAuth(void);
-//void startBlynk(String ssid, String pass, String auth);
 int8_t setupBlynkStation(String network, String psk, String blynk);
 void resetEEPROM(void);
 
@@ -128,7 +127,6 @@ void setup()
       }
     }
   }
-  
 }
 
 void loop()
