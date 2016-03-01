@@ -38,7 +38,6 @@ SparkFun BlynkBoard - ESP8266
 
 #include <Wire.h>
 #include "SparkFunHTU21D.h"
-#include <SparkFun_MMA8452Q.h>
 #include <SparkFunTSL2561.h>
 #include "Servo.h"
 HTU21D thSense;
@@ -46,7 +45,6 @@ HTU21D thSense;
 #define BLYNK_BOARD_SDA 2
 #define BLYNK_BOARD_SCL 14
 void initializeVirtualVariables(void);
-void accelUpdate(void);
 bool scanI2C(uint8_t address);
 void luxInit(void);
 void luxUpdate(void);
@@ -99,9 +97,9 @@ void buttonUpdate(void);
 unsigned long lastTHUpdate = 0;
 void thUpdate(void);
 
-#define ADC_UPDATE_RATE 60000
-unsigned long lastADCupdate = 0;
-void adcUpdate(void);
+#define BATT_UPDATE_RATE 60000
+unsigned long lastBattUpdate = 0;
+void battUpdate(void);
 
 #define SERVO_PIN 15
 #define SERVO_MINIMUM 5
@@ -109,12 +107,6 @@ unsigned int servoMax = 180;
 int servoX = 0;
 int servoY = 0;
 Servo myServo;
-
-MMA8452Q mma;
-#define MMA8452Q_ADDRESS 0x1D
-bool accelPresent = false;
-#define ACCEL_UPDATE_RATE 1000
-unsigned long lastAccelupdate = 0;
 
 #define LUX_ADDRESS 0x39
 bool luxPresent = false;
@@ -162,17 +154,6 @@ void blynkSetup(void)
   else
   {
     BB_DEBUG("No lux sensor.");
-  }
-  
-  if (mma.init())
-  {
-    BB_DEBUG("MMA8452Q connected.");
-    accelPresent = true;
-  }
-  else
-  {
-    BB_DEBUG("MMA8452Q not found.");
-    accelPresent = false;
   }
 }
 
@@ -357,10 +338,10 @@ void blynkLoop(void)
     lastTHUpdate = millis();
   }
 
-  if (lastADCupdate + ADC_UPDATE_RATE < millis())
+  if (lastBattUpdate + BATT_UPDATE_RATE < millis())
   {
-    adcUpdate();
-    lastADCupdate = millis(); 
+    battUpdate();
+    lastBattUpdate = millis(); 
   }
 
   if (lastLuxUpdate + luxUpdateRate < millis())
@@ -378,7 +359,7 @@ void blynkLoop(void)
     lastDoorSwitchUpdate = millis();
   }
 
-  if (tweetEnabled && (lastTweetUpdate + tweetUpdateRate < millis()))
+  if (tweetEnabled && ((lastTweetUpdate == 0) || (lastTweetUpdate + tweetUpdateRate < millis())))
   {
     twitterUpdate();
     lastTweetUpdate = millis();
@@ -405,7 +386,7 @@ void initializeVirtualVariables(void)
   Blynk.virtualWrite(TWITTER_THRESHOLD_VIRTUAL, moistureThreshold);
 }
 
-void adcUpdate(void)
+void battUpdate(void)
 {
   int rawADC = analogRead(A0);
   float voltage = ((float) rawADC / 1024.0) * 32.0 / 10.0 * 2.0;
@@ -425,26 +406,15 @@ void thUpdate(void)
 {
   float humd = thSense.readHumidity();
   float tempC = thSense.readTemperature();
+
   float tempF = tempC * 9.0 / 5.0 + 32.0;
-  Blynk.virtualWrite(TEMPERATURE_C_VIRTUAL, String(tempC, 1));// + "F");
-  Blynk.virtualWrite(TEMPERATURE_F_VIRTUAL, String(tempF, 1));// + "F");
-  Blynk.virtualWrite(HUMIDITY_VIRTUAL, String(humd, 1));// + "%");
+  Blynk.virtualWrite(TEMPERATURE_C_VIRTUAL, tempC);
+  Blynk.virtualWrite(TEMPERATURE_F_VIRTUAL, tempF);
+  Blynk.virtualWrite(HUMIDITY_VIRTUAL, humd);
+  
   si7021LCD.clear();
   si7021LCD.print(0, 0, String(tempF, 2) + "F / "+ String(tempC, 2) + "C");
   si7021LCD.print(0, 1, "Humidity: " + String(humd, 1) + "%");
-}
-
-void accelUpdate(void)
-{
-  if (mma.available())
-  {
-    mma.read();
-    Serial.print(mma.cx, 3);
-    Serial.print("\t");
-    Serial.print(mma.cy, 3);
-    Serial.print("\t");
-    Serial.println(mma.cz, 3);
-  }  
 }
 
 void luxInit(void)

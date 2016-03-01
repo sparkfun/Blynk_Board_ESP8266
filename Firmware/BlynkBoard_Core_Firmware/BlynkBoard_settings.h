@@ -25,8 +25,8 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.4.0"
-#define BLYNKBOARD_HARDWARE_VERSION "0.2.0"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.4.1"
+#define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
 
