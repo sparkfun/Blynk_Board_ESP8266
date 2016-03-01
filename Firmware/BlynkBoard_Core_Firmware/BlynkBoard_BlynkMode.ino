@@ -77,6 +77,7 @@ void emailUpdate(void);
 #define TWITTER_RATE_VIRTUAL V20
 #define EMAIL_ENABLED_VIRTUAL V21
 
+#define RUNTIME_VIRTUAL V30
 #define RESET_VIRTUAL V31
 
 WidgetLED buttonLED(BUTTON_VIRTUAL);
@@ -119,18 +120,21 @@ boolean gain = 0;
 
 #define DOOR_SWITCH_PIN 16
 #define DOOR_SWITCH_UPDATE_RATE 1000
-unsigned int lastDoorSwitchUpdate = 0;
+unsigned long lastDoorSwitchUpdate = 0;
 bool pushEnabled = false;
 uint8_t lastSwitchState;
 
 bool tweetEnabled = false;
 unsigned long tweetUpdateRate = 60000;
-unsigned int lastTweetUpdate = 0;
+unsigned long lastTweetUpdate = 0;
 unsigned int moistureThreshold = 0;
 
 String emailAddress = "";
 #define EMAIL_UPDATE_RATE 60000
 unsigned long lastEmailUpdate = 0;
+
+#define RUNTIME_UPDATE_RATE 1000
+unsigned long lastRunTimeUpdate = 0;
 
 void blynkSetup(void)
 {
@@ -363,6 +367,24 @@ void blynkLoop(void)
   {
     twitterUpdate();
     lastTweetUpdate = millis();
+  }
+
+  if (lastRunTimeUpdate + RUNTIME_UPDATE_RATE < millis())
+  {
+    float runTime = (float) millis() / 1000.0; // Convert millis to seconds
+    // Assume we can only show 4 digits
+    if (runTime >= 1000) // 1000 seconds = 16.67 minutes
+    {
+      runTime /= 60.0; // Convert to minutes
+      if (runTime >= 1000) // 1000 minutes = 16.67 hours
+      {
+        runTime /= 60.0; // Convert to hours
+        if (runTime >= 1000) // 1000 hours = 41.67 days
+          runTime /= 24.0;
+      }
+    }
+    Blynk.virtualWrite(RUNTIME_VIRTUAL, runTime);
+    lastRunTimeUpdate = millis();
   }
 
   if (Serial.available())
