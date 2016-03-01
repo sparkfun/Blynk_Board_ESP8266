@@ -62,70 +62,66 @@ bool writeBlynkAuth(String authToken);
 String getBlynkAuth(void);
 int8_t setupBlynkStation(String network, String psk, String blynk);
 void resetEEPROM(void);
+long WiFiConnectWithTimeout(unsigned long timeout);
+long BlynkConnectWithTimeout(const char * blynkAuth, unsigned long timeout);
 
 // BlynkBoard_Core_Firmware functions:
 void buttonPress(void);
 void blinkRGBTimer(void);
 void setRGB(uint32_t color);
 uint32_t rgbModeConfig(void);
-uint32_t evenBlinkRGB(uint32_t onColor, uint32_t period);
-uint32_t rgbModeRun(void);
+uint32_t blinkRGB(uint32_t onColor, uint32_t period);
+uint32_t breatheRGB(uint32_t colorMax, unsigned int breathePeriod);
 
-String authTokenStr;
+// If authTokenStr isn't global, Blynk sees the token as invalid
+String authTokenStr; 
 
 void setup()
 {
-  runMode = MODE_CONFIG;
-  previousMode = runMode;
-  initHardware();
-  //resetEEPROM();
+  // runMode keeps track of the Blynk Board's current operating mode.
+  // It may be either MODE_WAIT_CONFIG, MODE_CONFIG, MODE_CONFIG_DEVICE_CONNECTED,
+  // MODE_CONNECTING_WIFI, MODE_CONNECTING_BLYNK, MODE_BLYNK_RUN,
+  // or MODE_BLYNK_ERROR.
+  runMode = MODE_WAIT_CONFIG;
+  previousMode = runMode; // Previous mode keeps track of the previous runMode
   
-  if (checkConfigFlag() == false)
-  {
-    generateSSID(false); // Generate a unique RGB-appended SSID
-    setupServer();
+  // initHardware() initializes: Serial terminal, randomSeed, WS2812 RGB LED,
+  // GP0 button, GP5 LED, SPIFFS (flash storage), and EEPROM.
+  initHardware();
+
+  bool connectSuccess = false;
+  
+  // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
+  // to determine if the Blynk Board's Blynk auth token has been set.
+  if (checkConfigFlag())
+  { // If the flag has been set, 
+    authTokenStr = getBlynkAuth(); // read the stored auth token
+    BB_DEBUG("Auth token:" + authTokenStr + ".");
+    
+    if (authTokenStr != 0) // As long as the auth token isn't null
+    {
+      // Connect to WiFi network stored in ESP8266's persistent flash
+      if (WiFiConnectWithTimeout(WIFI_STA_CONNECT_TIMEOUT))
+      { // If we successfully connect to WiFi, connect to Blynk
+        if (BlynkConnectWithTimeout(authTokenStr.c_str(), BLYNK_CONNECT_TIMEOUT))
+        { // If we successfully connect to Blynk
+          connectSuccess = true; // Set the connectSuccess flag
+          blynkSetup(); // Run the Blynk setup function [BlynkBoard_BlynkMode]
+        }
+      }
+    }
+    if (!connectSuccess) // If we fail to connect to either WiFi or Blynk
+    {
+      // Hop into MODE_WAIT_CONFIG. The board will wait for the GP0
+      // button to be pressed/released before jumping back into config mode
+      runMode = MODE_WAIT_CONFIG;
+    }
   }
-  else
+  else // If an auth token isn't stored
   {
-    authTokenStr = getBlynkAuth();
-    
-    if (authTokenStr == 0)
-    {
-      BB_DEBUG("No auth token.");
-      //! TODO: If connect times out. Wait for user to hold
-      //! TODO: combine this with the fail to connect outcome below
-      // GPIO0 LOW for ~5s. If that happens reset EEPROM,
-      // jump into MODE_CONFIG.
-      runMode = MODE_CONFIG;
-      generateSSID(false); // Generate a unique RGB-appended SSID
-      setupServer();
-    }
-    else
-    {
-      BB_DEBUG("Auth token:" + authTokenStr + ".");
-      
-      runMode = MODE_CONNECTING_WIFI;
-    
-      long timeIn = WIFI_STA_CONNECT_TIMEOUT;
-      // Relying on persistent ESP8266 WiFi credentials:
-      //! TODO: Consider not doing that, using SPIFFS instead.
-      while ((WiFi.status() != WL_CONNECTED) && (--timeIn > 0))
-        delay(1);
-      if (timeIn > 0)
-      {
-        Blynk.config(authTokenStr.c_str());
-        blynkSetup();
-      }
-      else
-      {
-        //! TODO: If connect times out. Wait for user to hold
-        // GPIO0 LOW for ~5s. If that happens reset EEPROM,
-        // jump into MODE_CONFIG.
-        runMode = MODE_CONFIG;
-        generateSSID(true); // Generate a unique RGB-appended SSID
-        setupServer();
-      }
-    }
+    runMode = MODE_CONFIG; // go to config mode
+    generateSSID(false); // Start the AP with the default SSID ("BlynkMe")
+    setupServer(); // Start the config server up:
   }
 }
 
@@ -133,127 +129,178 @@ void loop()
 {
   switch (runMode)
   {
-  case MODE_CONFIG:
-    checkForStations();
-    checkSerialConfig();
+  case MODE_WAIT_CONFIG: // Do nothing, wait for GP0 button
     break;
-  case MODE_CONFIG_DEVICE_CONNECTED:
-    handleConfigServer();
-    checkSerialConfig();
+  case MODE_CONFIG: // Config mode - no connected device
+    checkForStations(); // Check for any new connected device
+    checkSerialConfig(); // Check for serial config messages
     break;
-  case MODE_BLYNK_RUN:
-    previousMode = MODE_BLYNK_RUN;
-    if (Blynk.connected())
-      blynkLoop();
+  case MODE_CONFIG_DEVICE_CONNECTED: // Config mode - connected device
+    checkForStations(); // Check if any stations disconnect
+    handleConfigServer(); // Serve up the config webpage
+    checkSerialConfig(); // Check for serial config messages
+    break;
+  case MODE_BLYNK_RUN: // Main Blynk Demo run mode
+    previousMode = MODE_BLYNK_RUN; // previousMode is used by MODE_BLYNK_ERROR
+    if (Blynk.connected()) // If Blynk is connected
+      blynkLoop(); // Do the blynkLoop [BlynkBoard_BlynkMode]
     else
-      runMode = MODE_BLYNK_ERROR;
+      runMode = MODE_BLYNK_ERROR; // Otherwise switch to MODE_BLYNK_ERROR mode
     break;
-  case MODE_BLYNK_ERROR:
-    if (previousMode == MODE_BLYNK_RUN)
-    {
-      blinker.attach_ms(1, blinkRGBTimer);
-    }
-    previousMode = MODE_BLYNK_ERROR;
+  case MODE_BLYNK_ERROR: // Error connecting to Blynk
+    if (previousMode != MODE_BLYNK_ERROR) // If we just got here
+      blinker.attach_ms(1, blinkRGBTimer); // Turn on the RGB blink timer
+    previousMode = MODE_BLYNK_ERROR; // Update previousMode so blink timer isn't re-called
     Blynk.run(); // Try to do a Blynk run
     if (Blynk.connected()) // If it establishes a connection
       runMode = MODE_BLYNK_RUN; // Change to Blynk Run mode
     break;
-  default:
+  default: // Modes not defined: MODE_CONNECTING_WIFI
     break;
   }
 }
 
+// buttonPress is actually set to be called when the GP0 button is released
+// [BlynkBoard_Setup] configures the interrupt with:
+//    attachInterrupt(BUTTON_PIN, buttonPress, RISING)
 void buttonPress(void)
 {
-  generateSSID();
-  blinkCount = 255;
+  // A button press has different effects in different modes:
+  switch (runMode)
+  {
+  case MODE_WAIT_CONFIG: // If we're in "wait for config mode"
+    runMode = MODE_CONFIG; // A button release will switch to config mode
+    generateSSID(false); // Set up the AP with a default SSID
+    setupServer(); // And set up the config server
+    break;
+  case MODE_CONFIG: // If we're in config mode:
+  //! UX question: should button press when device is connected do anything?
+  //case MODE_CONFIG_DEVICE_CONNECTED:
+    generateSSID(true); // Create a new SSID, with RGB suffix
+    blinkCount = 255; // Restart the blink counter
+    break;
+  case MODE_CONNECTING_WIFI:
+  case MODE_CONNECTING_BLYNK:
+    runMode = MODE_CONFIG;
+    break;
+  }  
 }
 
+// This function is tied to the blinker Ticker. It will either blink or
+// breathe the RGB LED, then re-set the Ticker to be called at either
+// the same, or a new return time.
 void blinkRGBTimer(void)
 {
   uint32_t returnTime = 0;
   switch (runMode)
   {
+    case MODE_WAIT_CONFIG: // Waiting for config mode, blink white:
+      returnTime = blinkRGB(RGB_STATUS_MODE_WAIT_CONFIG, RGB_PERIOD_START);
+      break;
     case MODE_CONFIG:
-      if (suffixGenerated)
-        returnTime = rgbModeConfig();
-      else
-        returnTime = evenBlinkRGB(RGB_STATUS_AP_MODE_DEFAULT, RGB_PERIOD_AP_DEFAULT);
+      if (suffixGenerated) // If a suffix is generated
+        returnTime = rgbModeConfig(); // Blink the unique RGBYP code
+      else // Otherwise blink red:
+        returnTime = blinkRGB(RGB_STATUS_AP_MODE_DEFAULT, RGB_PERIOD_AP_DEFAULT);
       break;
-    case MODE_CONFIG_DEVICE_CONNECTED:
-      returnTime = evenBlinkRGB(RGB_STATUS_AP_MODE_DEVICE_ON, RGB_PERIOD_AP_DEVICE_ON);
+    case MODE_CONFIG_DEVICE_CONNECTED: // Device connected in config mode, blink purple:
+      returnTime = blinkRGB(RGB_STATUS_AP_MODE_DEVICE_ON, RGB_PERIOD_AP_DEVICE_ON);
       break;
-    case MODE_CONNECTING_WIFI:
-      returnTime = evenBlinkRGB(RGB_STATUS_CONNECTING_WIFI, RGB_PERIOD_CONNECTING);
+    case MODE_CONNECTING_WIFI: // Connecting to a WiFi AP, blink green
+      returnTime = blinkRGB(RGB_STATUS_CONNECTING_WIFI, RGB_PERIOD_CONNECTING);
       break;
-    case MODE_CONNECTING_BLYNK:
-      returnTime = evenBlinkRGB(RGB_STATUS_CONNECTING_BLYNK, RGB_PERIOD_BLYNK_CONNECTING);
+    case MODE_CONNECTING_BLYNK: // Connecting to Blynk cloud, blink blue
+      returnTime = blinkRGB(RGB_STATUS_CONNECTING_BLYNK, RGB_PERIOD_BLYNK_CONNECTING);
       break;
-    case MODE_BLYNK_RUN:
-      returnTime = rgbModeRun();
+    case MODE_BLYNK_RUN: // In Blynk run mode, breathe blue
+      returnTime = breatheRGB(RGB_STATUS_CONNECTED_BLYNK, RGB_PERIOD_RUNNING);
       break;
-    case MODE_BLYNK_ERROR:
-      returnTime = evenBlinkRGB(RGB_STATUS_CANT_CONNECT_BLYNK, RGB_PERIOD_BLINK_ERROR);
+    case MODE_BLYNK_ERROR: // Error connecting to Blynk, blink yellow
+      returnTime = blinkRGB(RGB_STATUS_CANT_CONNECT_BLYNK, RGB_PERIOD_BLINK_ERROR);
       break;
   }
-  if (returnTime > 0)
+  if (returnTime > 0) // Call this function again in returnTime ms
     blinker.attach_ms(returnTime, blinkRGBTimer);
 }
 
+// Blink the LED with a unique-ish combination of R/G/B/Y/P
+// Returns a time, in ms, when this function should be called again
 uint32_t rgbModeConfig(void)
 {
   uint32_t retVal = 0;
-  
+
+  // Assume blinkCount is anywhere between 0-255
+  // If it's greater than our suffix length (4) times two
   if (blinkCount >= SSID_SUFFIX_LENGTH * 2)
   {
-    setRGB(WS2812_OFF);
-    retVal = RGB_PERIOD_AP_STOP;
-    blinkCount = 0;
+    setRGB(WS2812_OFF); // Turn the LED off
+    retVal = RGB_PERIOD_AP_STOP; // Come back in a longer time
+    blinkCount = 0; // Reset blinkCount
   }
-  else
+  else // If we're blinking a color, or mid-color
   {
-    if (blinkCount % 2 == 0)
+    if (blinkCount % 2 == 0) // If even, blink the color
       setRGB(SSID_COLORS[ssidSuffixIndex[blinkCount / 2]]);
-    else
+    else // If odd, turn the LED off
       setRGB(WS2812_OFF);
-    retVal = RGB_PERIOD_AP / 2;
-    blinkCount++;
+    retVal = RGB_PERIOD_AP / 2; // Come back in a shorter time
+    blinkCount++; // Increment blinkCount
   }
 
-  return retVal;
+  return retVal; // Return the blink time
 }
 
-uint32_t evenBlinkRGB(uint32_t onColor, uint32_t period)
+// Blink the LED a specific color with a set period.
+// 50% duty cycle ~ even on/off time.
+// Returns a time, in ms, when this function should be called again
+uint32_t blinkRGB(uint32_t onColor, uint32_t period)
 {
   // Assume blinkCount is anywhere between 0-255
-  if (blinkCount % 2 == 0)
+  if (blinkCount % 2 == 0) // If blinkCount is even (0)
   {
-    setRGB(onColor);
-    blinkCount = 1;
+    setRGB(onColor); // Turn the LED on
+    blinkCount = 1; // Turn the LED off next time
   }
-  else
+  else // If blinkCount is odd (1)
   {
-    setRGB(WS2812_OFF);
-    blinkCount = 0;
+    setRGB(WS2812_OFF); // Turn LED off
+    blinkCount = 0; // Turn the LED on next time
   }
   
-  return period / 2;
+  return period / 2; // Come back in half the period
 }
 
-uint32_t rgbModeRun(void)
+// Breathe the LED between off and a maximum 32-bit color value
+// Returns a time, in ms, when this function should be called again
+uint32_t breatheRGB(uint32_t colorMax, unsigned int breathePeriod)
 {
-  uint8_t blue;
-  if (blinkCount < 128)
-    blue = blinkCount;
-  else
-    blue = 255 - blinkCount;
-  blue /= 2; // 255 hurts my eyes
-  setRGB(rgb.Color(0, 0, blue));
+  // Find the three r/g/b colors from colorMax:
+  uint8_t redMax = (colorMax & 0xFF0000) >> 16;
+  uint8_t greenMax = (colorMax & 0x00FF00) >> 8;
+  uint8_t blueMax = (colorMax & 0x0000FF);
 
-  blinkCount++;
-  return RGB_PERIOD_RUNNING / 256;
+  // Determine the color brightness, based on blinkCount.
+  // brightness will steadily rise from 0 to 128, then steadily fall back to 0
+  uint8_t brightness;
+  if (blinkCount < 128) // If it's 0-128
+    brightness = blinkCount; // Leave it be
+  else // If it's 129->255
+    brightness = 255 - blinkCount; // Adjust it to 127-0
+
+  // Multiply our three colors by the brightness:
+  redMax *= ((float)brightness / 128.0);
+  greenMax *= ((float)brightness / 128.0);
+  blueMax *= ((float)brightness / 128.0);
+  // And turn the LED to that color:
+  setRGB(rgb.Color(redMax, greenMax, blueMax));
+
+  blinkCount++; // Increment blinkCount
+  // This function relies on the 8-bit, unsigned blinkCount rolling over. 
+  // If it's 255, it'll go back to 0.
+  return breathePeriod / 256;
 }
 
+// All-in-one RGB-setting function
 void setRGB(uint32_t color)
 {
   rgb.setPixelColor(0, color);

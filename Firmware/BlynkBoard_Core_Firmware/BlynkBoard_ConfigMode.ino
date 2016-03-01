@@ -111,11 +111,6 @@ void generateSSID(bool rgbCode)
 void handleConfigServer(void)
 {
   server.handleClient();
-  if (WiFi.softAPgetStationNum() == 0)
-  {
-    if (runMode == MODE_CONFIG_DEVICE_CONNECTED)
-      runMode = MODE_CONFIG;
-  }
 }
 
 void checkForStations(void)

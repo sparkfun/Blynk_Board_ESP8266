@@ -29,8 +29,6 @@ void initHardware(void)
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
   BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
 
-  //! TODO: find something more unique to randomSeed
-  //! Maybe the Si7021's guaranteed unique serial #
   randomSeed(millis() - analogRead(A0));
 
   // Initialize RGB LED and turn it off:
@@ -44,6 +42,10 @@ void initHardware(void)
   // Look for RISING - when the button is released.
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(BUTTON_PIN, buttonPress, RISING);
+
+  // Initialize the LED pin:
+  pinMode(BLUE_LED_PIN, OUTPUT);   // Set pin as an output
+  digitalWrite(BLUE_LED_PIN, LOW); // Turn the LED off
 
   if (!SPIFFS.begin())
     BB_DEBUG("Failed to initialize SPIFFS"); //! TODO: consider returning error if this fails.
@@ -112,44 +114,27 @@ String getBlynkAuth(void)
 
 int8_t setupBlynkStation(String network, String psk, String blynk)
 {
-  long timeIn = WIFI_STA_CONNECT_TIMEOUT;
-  
-  runMode = MODE_CONNECTING_WIFI;
   blinker.attach_ms(0.1, blinkRGBTimer);
 
   WiFi.enableSTA(true);
   WiFi.disconnect();
   WiFi.begin(network.c_str(), psk.c_str());
-  
-  while ((WiFi.status() != WL_CONNECTED) && (--timeIn > 0))
-    delay(1);
 
-  if (timeIn <= 0)
+  if (!WiFiConnectWithTimeout(WIFI_STA_CONNECT_TIMEOUT))
   {
     BB_DEBUG("Timed out connecting to WiFi.");
     WiFi.enableSTA(false); // Disable station mode
     runMode = MODE_CONFIG; // Back to config LED blink
-    return ERROR_CONNECT_WIFI;
+    return ERROR_CONNECT_WIFI;    
   }
 
-  runMode = MODE_CONNECTING_BLYNK;
-
-  Blynk.config(blynk.c_str());
-  timeIn = BLYNK_CONNECT_TIMEOUT;
-  while ((!Blynk.connected()) && (--timeIn > 0))
-  {
-    Blynk.run();
-    delay(1);
-  }
-
-  if (timeIn <= 0)
+  if (!BlynkConnectWithTimeout(blynk.c_str(), BLYNK_CONNECT_TIMEOUT))
   {
     BB_DEBUG("Timed out connecting to Blynk.");
     runMode = MODE_CONFIG; // Back to config LED blink
-    return ERROR_CONNECT_BLYNK;  
+    return ERROR_CONNECT_BLYNK;
   }
 
-  //! TODO: Put these three lines into a separate function:
   writeBlynkAuth(blynk); //! TODO: check return value of this
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 1);
   EEPROM.commit();
@@ -159,6 +144,39 @@ int8_t setupBlynkStation(String network, String psk, String blynk)
   blynkSetup();
   
   return WIFI_BLYNK_SUCCESS;
+}
+
+long WiFiConnectWithTimeout(unsigned long timeout)
+{
+  runMode = MODE_CONNECTING_WIFI;
+  
+  long timeIn = timeout;
+  // Relying on persistent ESP8266 WiFi credentials.
+  while ((WiFi.status() != WL_CONNECTED) && (--timeIn > 0))
+  {
+    if (runMode != MODE_CONNECTING_WIFI)
+      return 0;
+    delay(1);
+  }
+
+  return timeIn;
+}
+
+long BlynkConnectWithTimeout(const char * blynkAuth, unsigned long timeout)
+{
+  runMode = MODE_CONNECTING_BLYNK;
+  
+  long timeIn = timeout;
+  Blynk.config(blynkAuth);
+  
+  while ((!Blynk.connected()) && (--timeIn > 0))
+  {
+    if (runMode != MODE_CONNECTING_BLYNK)
+      return 0;
+    Blynk.run();
+    delay(1);
+  }
+  return timeIn;
 }
 
 void resetEEPROM(void)
