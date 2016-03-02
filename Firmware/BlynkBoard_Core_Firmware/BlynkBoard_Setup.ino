@@ -55,8 +55,10 @@ void initHardware(void)
 bool checkConfigFlag(void)
 {  
   byte configFlag = EEPROM.read(EEPROM_CONFIG_FLAG_ADDRESS);
-
-  return configFlag;
+  if (configFlag == 1)
+    return true;
+    
+  return false;
 }
 
 bool writeBlynkAuth(String authToken)
@@ -114,8 +116,6 @@ String getBlynkAuth(void)
 
 int8_t setupBlynkStation(String network, String psk, String blynk)
 {
-  blinker.attach_ms(0.1, blinkRGBTimer);
-
   WiFi.enableSTA(true);
   WiFi.disconnect();
   WiFi.begin(network.c_str(), psk.c_str());
