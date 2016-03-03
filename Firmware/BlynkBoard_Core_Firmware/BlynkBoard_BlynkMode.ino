@@ -42,100 +42,68 @@ SparkFun BlynkBoard - ESP8266
 #include "Servo.h"
 HTU21D thSense;
 
-#define BLYNK_BOARD_SDA 2
-#define BLYNK_BOARD_SCL 14
 bool scanI2C(uint8_t address);
-void luxInit(void);
-void luxUpdate(void);
-void twitterUpdate(void);
-void emailUpdate(void);
 
-/****************************************** 
- *********************************************/
-#define RGB_VIRTUAL V0
-#define BUTTON_VIRTUAL V1
-#define RED_VIRTUAL V2
-#define GREEN_VIRTUAL V3
-#define BLUE_VIRTUAL V4
-#define TEMPERATURE_F_VIRTUAL V5
-#define TEMPERATURE_C_VIRTUAL V6
-#define HUMIDITY_VIRTUAL V7
-#define ADC_VOLTAGE_VIRTUAL V8
-#define RGB_RAINBOW_VIRTUAL V9
-#define LCD_VIRTUAL V10
-#define LCD_TEMPHUMID_VIRTUAL V11
-#define LCD_STATS_VIRTUAL V12
-#define LCD_RUNTIME_VIRTUAL V13
-#define SERVO_X_VIRTUAL V14
-#define SERVO_Y_VIRTUAL V15
-#define SERVO_MAX_VIRTUAL V16
-#define SERVO_ANGLE_VIRUTAL V17
-#define LUX_VIRTUAL V18
-#define LUX_RATE_VIRTUAL V19
-#define ADC_BATT_VIRTUAL V20
-#define SERIAL_VIRTUAL V21
-#define TWEET_ENABLE_VIRTUAL V22
-#define TWITTER_THRESHOLD_VIRTUAL V23
-#define TWITTER_RATE_VIRTUAL V24
-#define DOOR_STATE_VIRTUAL V25
-#define PUSH_ENABLE_VIRTUAL V26
-#define EMAIL_ENABLED_VIRTUAL V27
-#define TEMP_OFFSET_VIRTUAL V28
-#define RGB_STRIP_NUM_VIRTUAL V29
-#define RUNTIME_VIRTUAL V30
-#define RESET_VIRTUAL V31
+////////////////////////////////////
+// Blynk Virtual Variable Mapping //
+//////////////////////////////////// // Experiment #(s)
+#define RGB_VIRTUAL               V0 // 0, 6
+#define BUTTON_VIRTUAL            V1 // 1
+#define RED_VIRTUAL               V2 // 3
+#define GREEN_VIRTUAL             V3 // 3
+#define BLUE_VIRTUAL              V4 // 3
+#define TEMPERATURE_F_VIRTUAL     V5 // 4
+#define TEMPERATURE_C_VIRTUAL     V6 // 4
+#define HUMIDITY_VIRTUAL          V7 // 4
+#define ADC_VOLTAGE_VIRTUAL       V8 // 5
+#define RGB_RAINBOW_VIRTUAL       V9 // 6
+#define LCD_VIRTUAL               V10 // 8
+#define LCD_TEMPHUMID_VIRTUAL     V11 // 8
+#define LCD_STATS_VIRTUAL         V12 // 8
+#define LCD_RUNTIME_VIRTUAL       V13 // 8
+#define SERVO_X_VIRTUAL           V14 // 9
+#define SERVO_Y_VIRTUAL           V15 // 9
+#define SERVO_MAX_VIRTUAL         V16 // 9
+#define SERVO_ANGLE_VIRUTAL       V17 // 9
+#define LUX_VIRTUAL               V18 // 10
+#define LUX_RATE_VIRTUAL          V19 // 10
+#define ADC_BATT_VIRTUAL          V20 // 11
+#define SERIAL_VIRTUAL            V21 // 12, 15
+#define TWEET_ENABLE_VIRTUAL      V22 // 13
+#define TWITTER_THRESHOLD_VIRTUAL V23 // 13
+#define TWITTER_RATE_VIRTUAL      V24 // 13
+#define DOOR_STATE_VIRTUAL        V25 // 14
+#define PUSH_ENABLE_VIRTUAL       V26 // 14
+#define EMAIL_ENABLED_VIRTUAL     V27 // 15
+#define TEMP_OFFSET_VIRTUAL       V28 // 4
+#define RGB_STRIP_NUM_VIRTUAL     V29 // 6
+#define RUNTIME_VIRTUAL           V30 // Utility
+#define RESET_VIRTUAL             V31 // Utility
 
-WidgetTerminal terminal(SERIAL_VIRTUAL);
+WidgetLCD thLCD(LCD_VIRTUAL); // LCD widget, updated in blynkLoop
 
-/*#define TH_UPDATE_RATE 2000
-unsigned long lastTHUpdate = 0;
-void thUpdate(void);*/
-
-#define BATT_UPDATE_RATE 1000
-unsigned long lastBattUpdate = 0;
-void battUpdate(void);
-
-#define SERVO_PIN 15
-#define SERVO_MINIMUM 5
-unsigned int servoMax = 180;
-int servoX = 0;
-int servoY = 0;
-Servo myServo;
-
-#define LUX_ADDRESS 0x39
-bool luxPresent = false;
-bool luxInitialized = false;
-unsigned int luxUpdateRate = 1000;
-unsigned int ms = 1000;  // Integration ("shutter") time in milliseconds
-unsigned long lastLuxUpdate = 0;
-SFE_TSL2561 light;
-boolean gain = 0;
-
-bool tweetEnabled = false;
-unsigned long tweetUpdateRate = 60000;
-unsigned long lastTweetUpdate = 0;
-unsigned int moistureThreshold = 0;
-
-String emailAddress = "";
-#define EMAIL_UPDATE_RATE 60000
-unsigned long lastEmailUpdate = 0;
-
-#define RUNTIME_UPDATE_RATE 1000
-unsigned long lastRunTimeUpdate = 0;
-
+// BLYNK_CONNECTED is called the first time the Blynk Board
+// connects to Blynk. Then any time it reconnects later on.
+bool firstConnect = true;
 BLYNK_CONNECTED() 
 {
-  //! If first connect, print a message to the LCD
+  if (firstConnect)
+  {
+    // Print a message to the LCD the first time connecting.
+    thLCD.print(0, 0, " SparkFun Blynk ");
+    thLCD.print(0, 1, "Board FW v" + String(BLYNKBOARD_FIRMWARE_VERSION));
+    
+    firstConnect = false;
+  }
   Blynk.syncAll(); // Sync all virtual variables
 }
 
-//////////////////////////
-// Experiment 0: zeRGBa //
-// Widget(s):           //
-//  - zeRGBa: Merge, V0 //
-//////////////////////////
+/* 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 Experiment 0: zeRGBa                0
+ 0 Widget(s):                          0
+ 0  - zeRGBa: Merge, V0                0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 */
 bool firstRGBWrite = true; // On startup
-
 BLYNK_WRITE(RGB_VIRTUAL)
 {
   int redParam = param[0].asInt();
@@ -143,13 +111,17 @@ BLYNK_WRITE(RGB_VIRTUAL)
   int blueParam = param[2].asInt();
   BB_DEBUG("Blynk Write RGB: " + String(redParam) + ", " + 
           String(greenParam) + ", " + String(blueParam));
+  // Don't update the RGB if this is the first time. syncAll
+  // will call this function initially. We want to breathe
+  // the status LED instead.
   if (!firstRGBWrite)
   {
-    if (!rgbSetByProject)
+    if (!rgbSetByProject) // If blinker timer is attached
     {
-      blinker.detach();
+      blinker.detach(); // Detach it
       rgbSetByProject = true;
     }
+    // Set all attached pixels (usually it'll only be 1)
     for (int i=0; i<rgb.numPixels(); i++)
       rgb.setPixelColor(i, rgb.Color(redParam, greenParam, blueParam));
     rgb.show();
@@ -160,38 +132,38 @@ BLYNK_WRITE(RGB_VIRTUAL)
   }
 }
 
-////////////////////////////////////
-// Experiment 1: Button           //
-// Widget(s):                     //
-//  - Button: GP5, Push or Switch //
-////////////////////////////////////
+/* 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 Experiment 1: Button                1
+ 1 Widget(s):                          1
+ 1  - Button: GP5, Push or switch      1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 */
 // No variables required - Use GP5 directly
 
-///////////////////////
-// Experiment 2: LED //
-// Widget(s):        //
-//  - Button: V1     //
-///////////////////////
+/* 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 Experiment 2: LED                   2
+ 2 Widget(s):                          2
+ 2  - LED: V1                          2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 */
 // To update the buttonLED widget, buttonUpdate() is called through
 // a pin-change interrupt.
 WidgetLED buttonLED(BUTTON_VIRTUAL); // LED widget in Blynk App
-void buttonUpdate(void)
+// Writing to the Blynk variables directly from the interrupt results
+// in timeouts and watchdog-timer resets. Set a flag and wait for
+// blynkLoop to catch and reset it.
+bool updateButtonLED = true;
+void buttonUpdate(void) 
 {
-  pinMode(BUTTON_PIN, INPUT);
-  if (digitalRead(BUTTON_PIN)) // Read the physical button status
-    buttonLED.off(); // Set the Blynk button widget to off
-  else
-    buttonLED.on(); // Set the Blynk button widget to on
+  updateButtonLED = true;
 }
 
-/////////////////////////////////////
-// Experiment 3: Sliders           //
-// Widget(s):                      //
-//  - Large Slider: GP5, D5, 0-255 //
-//  - Slider: Red, V2, 0-255       //
-//  - Slider: Green, V3, 0-255     //
-//  - Slider: Blue, V4, 0-255      //
-/////////////////////////////////////
+/* 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+ 3 Experiment 3: Sliders               3
+ 3 Widget(s):                          3
+ 3  - Large Slider: GP5, D5, 0-255     3
+ 3  - Slider: Red, V2, 0-255           3
+ 3  - Slider: Green, V3, 0-255         3
+ 3  - Slider: Blue, V4, 0-255          3
+ 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 */
 // GP5 variables not necessary - directly controlled
 //! RGB values are synced on connect, but GP5 is not.
 //  Is there any way to fix that?
@@ -237,13 +209,13 @@ BLYNK_WRITE(BLUE_VIRTUAL)
   updateBlynkRGB(); // Show the color on the LED
 }
 
-///////////////////////////////////////////
-// Experiment 4: Values                  //
-// Widget(s):                            //
-//  - Value: TempF, V5, 0-1023, 1 sec    //
-//  - Value: TempC, V6, 0-1023, 1 sec    //
-//  - Value: Humidity, V7, 0-1023, 1 sec //
-///////////////////////////////////////////
+/* 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+ 4 Experiment 4: Values                4
+ 4 Widget(s):                          4
+ 4  - Value: TempF, V5, 0-1023, 1 s    4
+ 4  - Value: TempC, V6, 0-1023, 1 s    4
+ 4  - Value: Humidity, V7, 0-1023, 1 s 4
+ 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 */
 // Value ranges are ignored once values are written
 // Board runs hot, subtract an offset to try to compensate:
 float tempCOffset = 0; //-8.33;
@@ -376,7 +348,6 @@ BLYNK_WRITE(RGB_STRIP_NUM_VIRTUAL)
  8  - Button: Runtime, V13             8
  8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 */
  //! This experiment may be causing random exceptions
-WidgetLCD thLCD(LCD_VIRTUAL); // LCD widget, updated in blynkLoop
 
 BLYNK_WRITE(LCD_TEMPHUMID_VIRTUAL)
 {
@@ -413,17 +384,25 @@ BLYNK_WRITE(LCD_RUNTIME_VIRTUAL)
   if (param.asInt() > 0)
   {
     String topLine = "RunTime-HH:MM:SS";
-    String botLine = "     ";
+    String botLine = "    ";
     float seconds, minutes, hours;
+    // Calculate seconds, minutes, hours elapsed, based on millis
     seconds = (float)millis() / 1000;
     minutes = seconds / 60;
     hours = minutes / 60;
     seconds = (int)seconds % 60;
     minutes = (int)minutes % 60;
-    botLine += String((int)hours) + ":" + String((int)minutes) + ":" + String((int)seconds);
+    // Construct a string indicating run time
+    if (hours < 10) botLine += "0"; // Add the leading 0
+    botLine += String((int)hours) + ":";
+    if (minutes < 10) botLine += "0"; // Add the leading 0
+    botLine += String((int)minutes) + ":";
+    if (seconds < 10) botLine += "0"; // Add the leading 0
+    botLine += String((int)seconds);
+    
     thLCD.clear(); // Clear the LCD
-    thLCD.print(0, 0, topLine.c_str());
-    thLCD.print(0, 1, botLine.c_str());    
+    thLCD.print(0, 0, topLine.c_str()); // Print top line
+    thLCD.print(0, 1, botLine.c_str()); // Print bottom line
   }
 }
 
@@ -435,6 +414,13 @@ BLYNK_WRITE(LCD_RUNTIME_VIRTUAL)
  9  - Slider: ServoMax, V16, 0-360     9
  9  - Gauge: ServoAngle, V17, 0-360    9
  9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 */
+
+#define SERVO_PIN 15 // Servo attached to pin 15
+#define SERVO_MINIMUM 5 // Minimum servo angle
+unsigned int servoMax = 180; // Default maximum servo angle
+int servoX = 0; // Servo angle x component
+int servoY = 0; // Servo angle y component
+Servo myServo; // Servo object
 
 BLYNK_WRITE(SERVO_X_VIRTUAL)
 {
@@ -481,6 +467,15 @@ BLYNK_WRITE(SERVO_MAX_VIRTUAL)
  10    5s, Line                        10
  10  - Slider: UpdateRate, V19, 0-???  10
  10 10 10 10 10 10 10 10 10 10 10 10 10 */
+
+#define LUX_ADDRESS 0x39 // I2C address of Lux sensor
+bool luxInitialized = false; // Lux initialized flag
+//! These are not implemented
+unsigned int luxUpdateRate = 1000; // Lux update rate (ms)
+unsigned int ms = 1000;  // Integration time (ms)
+unsigned long lastLuxUpdate = 0; // Last lux update (ms)
+SFE_TSL2561 light; // Lux sensor object
+boolean gain = 0; // Lux sensor gain setting
 
 void luxInit(void)
 {
@@ -557,6 +552,10 @@ BLYNK_READ(ADC_BATT_VIRTUAL)
  12 Widget(s):                         12
  12  - Terminal: V21, On, On           12
  12 12 12 12 12 12 12 12 12 12 12 12 12 */
+String emailAddress = "";
+
+WidgetTerminal terminal(SERIAL_VIRTUAL);
+
 BLYNK_WRITE(SERIAL_VIRTUAL)
 {
   String incoming = param.asStr();
@@ -585,18 +584,26 @@ BLYNK_WRITE(SERIAL_VIRTUAL)
  13  - Slider: Threshold, V23, 1023    13
  13  - Slider: Rate, V24, 0-60         13
  13 13 13 13 13 13 13 13 13 13 13 13 13 */
-BLYNK_WRITE(TWEET_ENABLE_VIRTUAL)
+// Tweets are sent in blynkLoop. These functions set enable
+// flags and other twitter-controlling parameters.
+bool tweetEnabled = false; // Twitter enabled flag
+unsigned long tweetUpdateRate = 60000; // Default tweet rate (ms)
+unsigned long lastTweetUpdate = 0; // Last tweet flag
+unsigned int moistureThreshold = 512; // Low-moisture setting
+
+// A button attached to V22 enables or disables tweeting
+BLYNK_WRITE(TWEET_ENABLE_VIRTUAL) 
 {
   uint8_t state = param.asInt();
   BB_DEBUG("Tweet enable: " + String(state));
-  if (state)
+  if (state) // If the param is >=1
   {
-    tweetEnabled = true;
+    tweetEnabled = true; // Enable tweeting
     BB_DEBUG("Tweet enabled.");
   }
   else
   {
-    tweetEnabled = false;
+    tweetEnabled = false; // Disable tweeting
     BB_DEBUG("Tweet disabled.");    
   }
 }
@@ -695,6 +702,9 @@ BLYNK_WRITE(PUSH_ENABLE_VIRTUAL)
  15  - Button: Send, V27, Push         15
  15 15 15 15 15 15 15 15 15 15 15 15 15 */
 
+#define EMAIL_UPDATE_RATE 60000 // Minimum time between emails
+unsigned long lastEmailUpdate = 0; // Keeps track of last email send time
+
 void emailUpdate(void)
 {
   String emailSubject = "My BlynkBoard Statistics";
@@ -746,6 +756,26 @@ BLYNK_WRITE(EMAIL_ENABLED_VIRTUAL)
   }
 }
 
+//#define RUNTIME_UPDATE_RATE 1000
+//unsigned long lastRunTimeUpdate = 0;
+
+BLYNK_READ(RUNTIME_VIRTUAL)
+{
+  float runTime = (float) millis() / 1000.0; // Convert millis to seconds
+  // Assume we can only show 4 digits
+  if (runTime >= 1000) // 1000 seconds = 16.67 minutes
+  {
+    runTime /= 60.0; // Convert to minutes
+    if (runTime >= 1000) // 1000 minutes = 16.67 hours
+    {
+      runTime /= 60.0; // Convert to hours
+      if (runTime >= 1000) // 1000 hours = 41.67 days
+        runTime /= 24.0;
+    }
+  }
+  Blynk.virtualWrite(RUNTIME_VIRTUAL, runTime);
+}
+
 BLYNK_WRITE(RESET_VIRTUAL)
 {
   int resetIn = param.asInt();
@@ -763,7 +793,7 @@ void blynkSetup(void)
   BB_DEBUG("Initializing Blynk Demo");
   WiFi.enableAP(false);
   runMode = MODE_BLYNK_RUN;
-  //detachInterrupt(BUTTON_PIN);
+  detachInterrupt(BUTTON_PIN);
   attachInterrupt(BUTTON_PIN, buttonUpdate, CHANGE);
   thSense.begin();
 
@@ -789,37 +819,31 @@ void blynkSetup(void)
 
 void blynkLoop(void)
 {
+  if (updateButtonLED) // If the button interrupt is triggered
+  {
+    if (digitalRead(BUTTON_PIN)) // If button is released (HIGH)
+      buttonLED.off(); // Turn the LED off
+    else // If the button is pressed (LOW)
+      buttonLED.on(); // Turn the LED on
+    updateButtonLED = false; // clear the flag
+    // (Updating this variable in the loop, instead of interrupt.
+    //  updating in the interrupt led to watchdog timer resets.)
+  }
+
+  // If twitter is enabled, and it's been long enough since the last tweet
   if (tweetEnabled && ((lastTweetUpdate == 0) || (lastTweetUpdate + tweetUpdateRate < millis())))
   {
-    twitterUpdate();
-    lastTweetUpdate = millis();
+    twitterUpdate(); // Send a tweet
+    lastTweetUpdate = millis(); // Update the last tweet time
   }
 
-  if (lastRunTimeUpdate + RUNTIME_UPDATE_RATE < millis())
-  {
-    float runTime = (float) millis() / 1000.0; // Convert millis to seconds
-    // Assume we can only show 4 digits
-    if (runTime >= 1000) // 1000 seconds = 16.67 minutes
-    {
-      runTime /= 60.0; // Convert to minutes
-      if (runTime >= 1000) // 1000 minutes = 16.67 hours
-      {
-        runTime /= 60.0; // Convert to hours
-        if (runTime >= 1000) // 1000 hours = 41.67 days
-          runTime /= 24.0;
-      }
-    }
-    Blynk.virtualWrite(RUNTIME_VIRTUAL, runTime);
-    lastRunTimeUpdate = millis();
-  }
-
-  if (Serial.available())
+  if (Serial.available()) // If serial is available
   {
     String toSend;
     while (Serial.available())
-      toSend += (char)Serial.read();
-    terminal.print(toSend);
-    terminal.flush();
+      toSend += (char)Serial.read(); // Read all available chars into a string
+    terminal.print(toSend); // Send them to the terminal
+    terminal.flush(); // Make sure they're sent
   }
 }
 
