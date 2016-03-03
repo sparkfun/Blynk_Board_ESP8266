@@ -44,7 +44,9 @@ void setupAP(char * ssidName)
   WiFi.softAP(ssidName);
 
   IPAddress myIP = WiFi.softAPIP();
-  BB_DEBUG("AP IP address: " + String(myIP));
+  //! Check if IP is 0, return error, or re-try
+  BB_DEBUG("AP IP address: " + String(myIP[0]) + "." + 
+       String(myIP[1]) + "." + String(myIP[2]) + "." + String(myIP[3]));
 }
 
 void handleRoot(void) // On root request to server, send form
