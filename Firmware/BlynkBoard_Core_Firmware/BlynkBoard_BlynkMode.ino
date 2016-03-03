@@ -421,35 +421,63 @@ unsigned int servoMax = 180; // Default maximum servo angle
 int servoX = 0; // Servo angle x component
 int servoY = 0; // Servo angle y component
 Servo myServo; // Servo object
+bool firstServoRun = true;
 
 BLYNK_WRITE(SERVO_X_VIRTUAL)
 {
+  // If it's the first time the servo is set, turn it on
+  if (firstServoRun)
+  {
+    myServo.attach(SERVO_PIN);
+    myServo.write(15);
+    firstServoRun = false;
+  }
+
+  // Read in the servo value:
   int servoXIn = param.asInt();
   BB_DEBUG("Servo X: " + String(servoXIn));
-  servoX = servoXIn - 128;
-  float pos = atan2(servoY, servoX) * 180.0 / PI;
-  if (pos < 0)
+  servoX = servoXIn - 128; // Center xIn around 0 (+/-128)
+
+  // Calculate the angle, given x and y components:
+  float pos = atan2(servoY, servoX) * 180.0 / PI; // Convert to degrees
+  // atan2 will give us an angle +/-180
+  if (pos < 0) // Convert it to 0-360:
     pos = 360.0 + pos;
+
+  // Write the newly calculated angle to a virtual variable:
   Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, pos);
+
+  // Constrain the angle between min/max:
   int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
-  myServo.write(servoPos);
-  Serial.println("Pos: " + String(pos));
-  Serial.println("ServoPos: " + String(servoPos));
+  myServo.write(servoPos); // And set the servo position
 }
 
 BLYNK_WRITE(SERVO_Y_VIRTUAL)
 {
+  // If it's the first time the servo is set, turn it on
+  if (firstServoRun)
+  {
+    myServo.attach(SERVO_PIN);
+    myServo.write(15);
+    firstServoRun = false;
+  }
+  
+  // Read in the servo value:
   int servoYIn = param.asInt();
   BB_DEBUG("Servo Y: " + String(servoYIn));
-  servoY = servoYIn - 128;
+  servoY = servoYIn - 128; // Center yIn around 0 (+/-128)
+  
+  // Calculate the angle, given x and y components:
   float pos = atan2(servoY, servoX) * 180.0 / PI;
   if (pos < 0)
     pos = 360.0 + pos;
+    
+  // Write the newly calculated angle to a virtual variable:
   Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, pos);
+  
+  // Constrain the angle between min/max:
   int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
-  myServo.write(servoPos);
-  Serial.println("Pos: " + String(pos));
-  Serial.println("ServoPos: " + String(servoPos));
+  myServo.write(servoPos); // And set the servo position
 }
 
 BLYNK_WRITE(SERVO_MAX_VIRTUAL)
@@ -553,6 +581,7 @@ BLYNK_READ(ADC_BATT_VIRTUAL)
  12  - Terminal: V21, On, On           12
  12 12 12 12 12 12 12 12 12 12 12 12 12 */
 String emailAddress = "";
+String boardName = "BlynkMe";
 
 WidgetTerminal terminal(SERIAL_VIRTUAL);
 
@@ -572,6 +601,14 @@ BLYNK_WRITE(SERIAL_VIRTUAL)
     //! TODO: Check if valid email - look for @, etc.
     terminal.println("Your email is:" + emailAdd + ".");
     emailAddress = emailAdd;
+    terminal.flush();
+  }
+  if (incoming.charAt(0) == '$')
+  {
+    String newName = incoming.substring(1, incoming.length());
+
+    boardName = newName;
+    terminal.println("Board name set to: " + boardName + ".");
     terminal.flush();
   }
 }
@@ -625,7 +662,7 @@ BLYNK_WRITE(TWITTER_RATE_VIRTUAL)
 void twitterUpdate(void)
 {
   unsigned int moisture = analogRead(A0);
-  String msg = "~~MyBoard~~\r\nSoil Moisture reading: " + String(moisture) + "\r\n";
+  String msg = boardName + "\r\nSoil Moisture reading: " + String(moisture) + "\r\n";
   if (moisture < moistureThreshold)
   {
     msg += "FEED ME!\r\n";
@@ -643,53 +680,81 @@ void twitterUpdate(void)
  14  - Button: PushEnable, V26, Switch 14
  14 14 14 14 14 14 14 14 14 14 14 14 14 */
 #define DOOR_SWITCH_PIN 16
-#define DOOR_SWITCH_UPDATE_RATE 1000
-unsigned long lastDoorSwitchUpdate = 0;
+#define NOTIFICATION_LIMIT 60000
+unsigned long lastDoorSwitchNotification = 0;
 bool pushEnabled = false;
 uint8_t lastSwitchState = 255;
 
 BLYNK_READ(DOOR_STATE_VIRTUAL)
 {
-  BB_DEBUG("Blynk read door state");
-  uint8_t switchState = digitalRead(DOOR_SWITCH_PIN);
-  if (lastSwitchState != switchState)
+  uint8_t switchState = digitalRead(DOOR_SWITCH_PIN); // Read the door switch pin
+  // Pin 16 is pulled low internally. If the switch (and door) is open,
+  // pin 16 is LOW. If the switch is closed (door too), pin 16 is HIGH.
+  // LOW = open
+  // HIGH = closed
+  if (switchState)
+    Blynk.virtualWrite(DOOR_STATE_VIRTUAL, "Close"); // Update virtual variable
+  else
+    Blynk.virtualWrite(DOOR_STATE_VIRTUAL, "Open");
+    
+  if (lastSwitchState != switchState) // If the state has changed
   {
-    if (switchState)
+    if (switchState) // If the switch is closed (door shut)
     {
-      BB_DEBUG("Door switch closed.");  
-      Blynk.virtualWrite(DOOR_STATE_VIRTUAL, "Close");
       if (pushEnabled)
       {
-        BB_DEBUG("Notified closed.");  
-        Blynk.notify("[" + String(millis()) + "]: Door closed");
+        BB_DEBUG("Notified closed.");
+        
+        if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
+        {
+          int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
+          BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
+          terminal.println("Door closed. Can't notify for " + String(timeLeft) + "s");
+        }
+        else
+        {
+          Blynk.notify("Door closed\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
+          lastDoorSwitchNotification = millis();
+        }
       }
     }
     else
-    {
-      BB_DEBUG("Door switch opened.");    
-      Blynk.virtualWrite(DOOR_STATE_VIRTUAL, "Open");
+    { 
       if (pushEnabled)
       {
-        BB_DEBUG("Notified opened.");  
-        Blynk.notify("[" + String(millis()) + "]: Door opened");          
+        BB_DEBUG("Notified opened.");
+        // Send the notification
+        if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
+        {
+          int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
+          BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
+          terminal.println("Door open. Can't notify for " + String(timeLeft) + "s");
+        }
+        else
+        {
+          Blynk.notify("Door open\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
+          lastDoorSwitchNotification = millis();
+        }
       }
     }
     lastSwitchState = switchState;
   }  
 }
 
+//! This may not be all that necessary.
+//  Push can be enabled/disabled by adding/removing it from app
 BLYNK_WRITE(PUSH_ENABLE_VIRTUAL)
 {
-  uint8_t state = param.asInt();
+  uint8_t state = param.asInt(); // Read in handler parameter
   BB_DEBUG("Push enable: " + String(state));
-  if (state)
+  if (state) // If it's >= 1
   {
-    pushEnabled = true;
+    pushEnabled = true; // enable push
     BB_DEBUG("Push enabled.");
   }
   else
   {
-    pushEnabled = false;
+    pushEnabled = false; // disable push
     BB_DEBUG("Push disabled.");    
   }
 }
@@ -707,58 +772,64 @@ unsigned long lastEmailUpdate = 0; // Keeps track of last email send time
 
 void emailUpdate(void)
 {
-  String emailSubject = "My BlynkBoard Statistics";
-  String emailMessage = "";
-  emailMessage += "D0: " + String(digitalRead(0)) + "\r\n";
-  emailMessage += "D16: " + String(digitalRead(16)) + "\r\n";
-  emailMessage += "\r\n";
-  emailMessage += "A0: " + String(analogRead(A0)) + "\r\n";
-  emailMessage += "\r\n";
-  emailMessage += "Temp: " + String(thSense.readTemperature()) + "C\r\n";
-  emailMessage += "Humidity: " + String(thSense.readHumidity()) + "%\r\n";
-  emailMessage += "\r\n";
+  String emailSubject = "My BlynkBoard Statistics"; // Set the subject
+  String emailMessage = ""; // Create a message string
+  emailMessage += "D0: " + String(digitalRead(0)) + "\r\n"; // Add D0 status
+  emailMessage += "D16: " + String(digitalRead(16)) + "\r\n"; // Add D16 status 
+  emailMessage += "\r\n"; // Empty line
+  emailMessage += "A0: " + String(analogRead(A0)) + "\r\n"; // Add A0 reading
+  emailMessage += "\r\n"; // Empty line
+  emailMessage += "Temp: " + String(thSense.readTemperature()) + "C\r\n"; // Add temp sensor
+  emailMessage += "Humidity: " + String(thSense.readHumidity()) + "%\r\n"; // Add humidity sensor
+  emailMessage += "\r\n"; // Empty line
   emailMessage += "Runtime: " + String(millis() / 1000) + "s\r\n";
-
+  //! May have been running into an issue with a too-long emailMessage.
+  //  Be careful adding anything else to this String.
   BB_DEBUG("email: " + emailAddress);
   BB_DEBUG("subject: " + emailSubject);
   BB_DEBUG("message: " + emailMessage);
+  // Send the email:
   Blynk.email(emailAddress.c_str(), emailSubject.c_str(), emailMessage.c_str());
+  // Print a help message
   terminal.println("Sent an email to " + emailAddress);
   terminal.flush();
 }
 
 BLYNK_WRITE(EMAIL_ENABLED_VIRTUAL)
 {
-  int emailEnableIn = param.asInt();
+  int emailEnableIn = param.asInt(); // Read parameter in
   BB_DEBUG("Email enabled: " + String(emailEnableIn))
-  if (emailEnableIn)
+  if (emailEnableIn) // If parameter is >= 1
   {
-    if (emailAddress != "")
+    // And if an email address has been set through terminal
+    if (emailAddress != "") 
     {
+      // And if it's been 60 or more seconds since the last email.
       if ((lastEmailUpdate == 0) || (lastEmailUpdate + EMAIL_UPDATE_RATE < millis()))
-      {
-        emailUpdate();
-        lastEmailUpdate = millis();
+      { 
+        emailUpdate(); // Send an email
+        lastEmailUpdate = millis(); // Update the email time
       }
-      else
+      else // If we haven't waited long enough
       {
+        // Print how many seconds before the next print
         int waitTime = (lastEmailUpdate + EMAIL_UPDATE_RATE) - millis();
         waitTime /= 1000;
         terminal.println("Please wait " + String(waitTime) + " seconds");
         terminal.flush();
       }
     }
-    else
-    {
+    else // If an email address has not been set
+    { // Print a help message:
       terminal.println("Type !email@address.com to set the email address");
       terminal.flush();
     }
   }
 }
 
-//#define RUNTIME_UPDATE_RATE 1000
-//unsigned long lastRunTimeUpdate = 0;
-
+// Runtime tracker utility function. Displays the run time to a 
+// maximum of four digits. It'll show up to 999 seconds, then
+// up to 999 minutes, then up to 999 hours, then up to 999 days
 BLYNK_READ(RUNTIME_VIRTUAL)
 {
   float runTime = (float) millis() / 1000.0; // Convert millis to seconds
@@ -771,11 +842,16 @@ BLYNK_READ(RUNTIME_VIRTUAL)
       runTime /= 60.0; // Convert to hours
       if (runTime >= 1000) // 1000 hours = 41.67 days
         runTime /= 24.0;
+      //! Years!?! 999 days = 2.7 years
     }
   }
   Blynk.virtualWrite(RUNTIME_VIRTUAL, runTime);
 }
 
+// Reset WiFi and Blynk auth token 
+// Utility function. 
+//! Not to be included in release firmware!
+#ifdef DEBUG_ENABLED
 BLYNK_WRITE(RESET_VIRTUAL)
 {
   int resetIn = param.asInt();
@@ -787,34 +863,31 @@ BLYNK_WRITE(RESET_VIRTUAL)
     ESP.reset();
   }
 }
+#endif
 
 void blynkSetup(void)
 {
   BB_DEBUG("Initializing Blynk Demo");
-  WiFi.enableAP(false);
-  runMode = MODE_BLYNK_RUN;
-  detachInterrupt(BUTTON_PIN);
-  attachInterrupt(BUTTON_PIN, buttonUpdate, CHANGE);
+  runMode = MODE_BLYNK_RUN; // Set to Blynk Run mode
+  
+  WiFi.enableAP(false); // Disable access point mode
+
+  // Setup the Pin 0 button:
+  detachInterrupt(BUTTON_PIN); // detatch the buttonPress interrupt [BlynkBoard_Core_Firmware]
+  attachInterrupt(BUTTON_PIN, buttonUpdate, CHANGE); // Attach a new pin-change interrupt
+
+  // Set up the temperature-humidity sensor
   thSense.begin();
 
-  //lcdTHTicker.attach(LCD_TICKER_UPDATE_RATE, updateLCDTH);
-  
-  myServo.attach(SERVO_PIN);
-  myServo.write(15);
-
+  // Set up the pin 16 door switch input:
   pinMode(DOOR_SWITCH_PIN, INPUT_PULLDOWN_16);
   lastSwitchState = digitalRead(DOOR_SWITCH_PIN);
 
-  if (scanI2C(LUX_ADDRESS))
+  if (scanI2C(LUX_ADDRESS)) // Look for a TSL light sensor
   {
     BB_DEBUG("Luminosity sensor connected.");
-    luxInit();
-  }
-  else
-  {
-    BB_DEBUG("No lux sensor.");
-  }
-  
+    luxInit(); // If it's there, initialize it
+  }  
 }
 
 void blynkLoop(void)
@@ -847,6 +920,7 @@ void blynkLoop(void)
   }
 }
 
+// Check for a response from an I2C device
 bool scanI2C(uint8_t address)
 {
   Wire.beginTransmission(address);
