@@ -22,6 +22,7 @@ Please see the included LICENSE.md for more information.
 Development environment specifics:
 Arduino IDE 1.6.7
 SparkFun BlynkBoard - ESP8266
+ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 ******************************************************************************/
 
 #define DEBUG_ENABLED
@@ -52,6 +53,7 @@ void checkSerialConfig(void);
 void executeSerialCommand(void);
 
 // BlynkBoard_BlynkMode functions:
+void buttonUpdate(void);
 void blynkSetup(void);
 void blynkLoop(void);
 
@@ -76,6 +78,8 @@ uint32_t breatheRGB(uint32_t colorMax, unsigned int breathePeriod);
 // If authTokenStr isn't global, Blynk sees the token as invalid
 String authTokenStr; 
 
+bool rgbSetByProject = false;
+
 void setup()
 {
   // runMode keeps track of the Blynk Board's current operating mode.
@@ -88,8 +92,6 @@ void setup()
   // initHardware() initializes: Serial terminal, randomSeed, WS2812 RGB LED,
   // GP0 button, GP5 LED, SPIFFS (flash storage), and EEPROM.
   initHardware();
-
-  bool connectSuccess = false;
   
   // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
   // to determine if the Blynk Board's Blynk auth token has been set.
@@ -105,23 +107,14 @@ void setup()
       { // If we successfully connect to WiFi, connect to Blynk
         if (BlynkConnectWithTimeout(authTokenStr.c_str(), BLYNK_CONNECT_TIMEOUT))
         { // If we successfully connect to Blynk
-          connectSuccess = true; // Set the connectSuccess flag
           blynkSetup(); // Run the Blynk setup function [BlynkBoard_BlynkMode]
         }
       }
     }
-    if (!connectSuccess) // If we fail to connect to either WiFi or Blynk
-    {
-      // Hop into MODE_WAIT_CONFIG. The board will wait for the GP0
-      // button to be pressed/released before jumping back into config mode
-      runMode = MODE_WAIT_CONFIG;
-    }
   }
-  else // If an auth token isn't stored
+  else
   {
-    runMode = MODE_CONFIG; // go to config mode
-    generateSSID(false); // Start the AP with the default SSID ("BlynkMe")
-    setupServer(); // Start the config server up:
+    runMode = MODE_CONFIG;
   }
 }
 
@@ -134,6 +127,12 @@ void loop()
   case MODE_CONFIG: // Config mode - no connected device
     checkForStations(); // Check for any new connected device
     checkSerialConfig(); // Check for serial config messages
+    if (previousMode != MODE_CONFIG)
+    {
+      generateSSID(false); // Start the AP with the default SSID ("BlynkMe")
+      setupServer(); // Start the config server up:      
+      previousMode = MODE_CONFIG;
+    }
     break;
   case MODE_CONFIG_DEVICE_CONNECTED: // Config mode - connected device
     checkForStations(); // Check if any stations disconnect
@@ -141,21 +140,35 @@ void loop()
     checkSerialConfig(); // Check for serial config messages
     break;
   case MODE_BLYNK_RUN: // Main Blynk Demo run mode
-    previousMode = MODE_BLYNK_RUN; // previousMode is used by MODE_BLYNK_ERROR
+    if (previousMode != MODE_BLYNK_RUN) // If this is the first execution of BLYNK_RUN since a state change
+    {
+      previousMode = MODE_BLYNK_RUN; // previousMode is used by MODE_BLYNK_ERROR
+    }
+    Blynk.run();
     if (Blynk.connected()) // If Blynk is connected
+    {
       blynkLoop(); // Do the blynkLoop [BlynkBoard_BlynkMode]
+    }
     else
+    {
       runMode = MODE_BLYNK_ERROR; // Otherwise switch to MODE_BLYNK_ERROR mode
+      BB_DEBUG("Blynk Connected -> Disconnected");
+    }
     break;
   case MODE_BLYNK_ERROR: // Error connecting to Blynk
     if (previousMode != MODE_BLYNK_ERROR) // If we just got here
+    {
       blinker.attach_ms(1, blinkRGBTimer); // Turn on the RGB blink timer
-    previousMode = MODE_BLYNK_ERROR; // Update previousMode so blink timer isn't re-called
+      previousMode = MODE_BLYNK_ERROR; // Update previousMode so blink timer isn't re-called
+    }
     Blynk.run(); // Try to do a Blynk run
     if (Blynk.connected()) // If it establishes a connection
+    {
       runMode = MODE_BLYNK_RUN; // Change to Blynk Run mode
+      BB_DEBUG("Blynk Disconnected -> Connected");
+    }
     break;
-  default: // Modes not defined: MODE_CONNECTING_WIFI
+  default: // Modes not defined: MODE_CONNECTING_WIFI, MODE_CONNECTING_BLYNK
     break;
   }
 }
@@ -169,18 +182,17 @@ void buttonPress(void)
   switch (runMode)
   {
   case MODE_WAIT_CONFIG: // If we're in "wait for config mode"
+    BB_DEBUG("Switching to config mode");
     runMode = MODE_CONFIG; // A button release will switch to config mode
-    generateSSID(false); // Set up the AP with a default SSID
-    setupServer(); // And set up the config server
     break;
   case MODE_CONFIG: // If we're in config mode:
-  //! UX question: should button press when device is connected do anything?
-  //case MODE_CONFIG_DEVICE_CONNECTED:
+    BB_DEBUG("Generating a new RGBYP SSID");
     generateSSID(true); // Create a new SSID, with RGB suffix
     blinkCount = 255; // Restart the blink counter
     break;
   case MODE_CONNECTING_WIFI:
   case MODE_CONNECTING_BLYNK:
+    BB_DEBUG("Switching to config mode");
     runMode = MODE_CONFIG;
     break;
   }  
@@ -192,6 +204,7 @@ void buttonPress(void)
 void blinkRGBTimer(void)
 {
   uint32_t returnTime = 0;
+  rgbSetByProject = false;
   switch (runMode)
   {
     case MODE_WAIT_CONFIG: // Waiting for config mode, blink white:
@@ -222,7 +235,6 @@ void blinkRGBTimer(void)
   if (returnTime > 0) // Call this function again in returnTime ms
     blinker.attach_ms(returnTime, blinkRGBTimer);
 }
-
 // Blink the LED with a unique-ish combination of R/G/B/Y/P
 // Returns a time, in ms, when this function should be called again
 uint32_t rgbModeConfig(void)

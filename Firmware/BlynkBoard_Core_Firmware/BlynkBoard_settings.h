@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.5.1"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.6.0"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -81,6 +81,7 @@ const String BLYNK_AUTH_SPIFF_FILE = "/blynk.txt";
 Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ800);
 #define BUTTON_PIN 0
 #define BLUE_LED_PIN 5
+#define ADC_VOLTAGE_DIVIDER 3.2
 
 ///////////////////////
 // RGB Status Colors //
