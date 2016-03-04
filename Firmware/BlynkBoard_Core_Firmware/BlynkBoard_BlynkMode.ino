@@ -710,6 +710,7 @@ BLYNK_READ(DOOR_STATE_VIRTUAL)
           int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
           BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
           terminal.println("Door closed. Can't notify for " + String(timeLeft) + "s");
+          terminal.flush();
         }
         else
         {
@@ -729,6 +730,7 @@ BLYNK_READ(DOOR_STATE_VIRTUAL)
           int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
           BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
           terminal.println("Door open. Can't notify for " + String(timeLeft) + "s");
+          terminal.flush();
         }
         else
         {
