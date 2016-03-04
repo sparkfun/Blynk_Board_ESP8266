@@ -14,7 +14,7 @@ To better navigate the firmware's funcationality, the source code is divided int
 
 ### Using Arduino to Upload to the Blynk Board
 
-The Blynk Board firmware is written in Arduion, and uses the [ESP8266/Arduino](https://github.com/esp8266/arduino) board support files. The ESP8266/Arduino board package must be installed - see [here](https://github.com/esp8266/arduino#installing-with-boards-manager) for more information.
+The Blynk Board firmware is written in Arduino, and uses the [ESP8266/Arduino](https://github.com/esp8266/arduino) board support files. The ESP8266/Arduino board package must be installed - see [here](https://github.com/esp8266/arduino#installing-with-boards-manager) for more information. **Version 2.1.0-rc2 or later is required**.
 
 After installing the Arduino ESP8266 board definitions, an additional board-entry item must be added to **boards.txt** to support the SparkFun Blynk Board. Find boards.txt within your latest esp8266 package. On Windows it should be somewhere like "C:\Users\user.name\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\2.1.0-rc2". On Mac, the package may be located in "/Users/NAME/Library/Arduino15/packages/esp8266/hardware/esp8266/2.1.0-rc1".
 
