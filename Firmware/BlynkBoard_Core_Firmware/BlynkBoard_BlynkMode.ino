@@ -11,7 +11,7 @@ connection and ~10 example experiments, which can be conducted without
 reprogramming the Blynk Board.
 
  Supported Experiment list:
- 0: RGB LED - ZeRGBa (V0, V1, V2)
+ 0: RGB LED - ZeRGBa (V0)
  2: 5 LED - Button (D5)
  3: 0 Button - Virtual LED (V3)
       2~: 0 Button - tweet, would need to modify button interrupt handler
@@ -147,13 +147,21 @@ BLYNK_WRITE(RGB_VIRTUAL)
 // To update the buttonLED widget, buttonUpdate() is called through
 // a pin-change interrupt.
 WidgetLED buttonLED(BUTTON_VIRTUAL); // LED widget in Blynk App
-// Writing to the Blynk variables directly from the interrupt results
-// in timeouts and watchdog-timer resets. Set a flag and wait for
-// blynkLoop to catch and reset it.
-bool updateButtonLED = true;
+unsigned long lastButtonUpdate = 0; // millis()-tracking button update rate
+#define BUTTON_UPDATE_RATE 100 // Button update rate in ms
+int lastButtonState = -1; // Keeps track of last button state push
+
 void buttonUpdate(void) 
 {
-  updateButtonLED = true;
+  int buttonState = digitalRead(BUTTON_PIN); // Read button state
+  if (buttonState != lastButtonState) // If the state has changed
+  {
+    lastButtonState = buttonState; // Update last state
+    if (buttonState) // If the button is released (HIGH)
+      buttonLED.off(); // Turn the LED off
+    else // If the button is pressed (LOW)
+      buttonLED.on(); // Turn the LED on
+  }
 }
 
 /* 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
@@ -876,7 +884,6 @@ void blynkSetup(void)
 
   // Setup the Pin 0 button:
   detachInterrupt(BUTTON_PIN); // detatch the buttonPress interrupt [BlynkBoard_Core_Firmware]
-  attachInterrupt(BUTTON_PIN, buttonUpdate, CHANGE); // Attach a new pin-change interrupt
 
   // Set up the temperature-humidity sensor
   thSense.begin();
@@ -894,15 +901,10 @@ void blynkSetup(void)
 
 void blynkLoop(void)
 {
-  if (updateButtonLED) // If the button interrupt is triggered
+  if (lastButtonUpdate + BUTTON_UPDATE_RATE < millis())
   {
-    if (digitalRead(BUTTON_PIN)) // If button is released (HIGH)
-      buttonLED.off(); // Turn the LED off
-    else // If the button is pressed (LOW)
-      buttonLED.on(); // Turn the LED on
-    updateButtonLED = false; // clear the flag
-    // (Updating this variable in the loop, instead of interrupt.
-    //  updating in the interrupt led to watchdog timer resets.)
+    buttonUpdate();
+    lastButtonUpdate = millis();
   }
 
   // If twitter is enabled, and it's been long enough since the last tweet
