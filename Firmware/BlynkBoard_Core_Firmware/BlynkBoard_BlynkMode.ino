@@ -61,8 +61,8 @@ bool scanI2C(uint8_t address);
 #define LCD_TEMPHUMID_VIRTUAL     V11 // 8
 #define LCD_STATS_VIRTUAL         V12 // 8
 #define LCD_RUNTIME_VIRTUAL       V13 // 8
-#define SERVO_X_VIRTUAL           V14 // 9
-#define SERVO_Y_VIRTUAL           V15 // 9
+#define SERVO_XY_VIRTUAL          V14
+//! V15 available
 #define SERVO_MAX_VIRTUAL         V16 // 9
 #define SERVO_ANGLE_VIRUTAL       V17 // 9
 #define LUX_VIRTUAL               V18 // 10
@@ -431,7 +431,7 @@ int servoY = 0; // Servo angle y component
 Servo myServo; // Servo object
 bool firstServoRun = true;
 
-BLYNK_WRITE(SERVO_X_VIRTUAL)
+BLYNK_WRITE(SERVO_XY_VIRTUAL)
 {
   // If it's the first time the servo is set, turn it on
   if (firstServoRun)
@@ -442,9 +442,12 @@ BLYNK_WRITE(SERVO_X_VIRTUAL)
   }
 
   // Read in the servo value:
-  int servoXIn = param.asInt();
+  int servoXIn = param[0].asInt();
+  int servoYIn = param[1].asInt();
   BB_DEBUG("Servo X: " + String(servoXIn));
+  BB_DEBUG("Servo Y: " + String(servoYIn));
   servoX = servoXIn - 128; // Center xIn around 0 (+/-128)
+  servoY = servoYIn - 128; // Center xIn around 0 (+/-128)
 
   // Calculate the angle, given x and y components:
   float pos = atan2(servoY, servoX) * 180.0 / PI; // Convert to degrees
@@ -452,39 +455,12 @@ BLYNK_WRITE(SERVO_X_VIRTUAL)
   if (pos < 0) // Convert it to 0-360:
     pos = 360.0 + pos;
 
+  int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
+  
   // Write the newly calculated angle to a virtual variable:
-  Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, pos);
+  Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, servoPos);
 
   // Constrain the angle between min/max:
-  int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
-  myServo.write(servoPos); // And set the servo position
-}
-
-BLYNK_WRITE(SERVO_Y_VIRTUAL)
-{
-  // If it's the first time the servo is set, turn it on
-  if (firstServoRun)
-  {
-    myServo.attach(SERVO_PIN);
-    myServo.write(15);
-    firstServoRun = false;
-  }
-  
-  // Read in the servo value:
-  int servoYIn = param.asInt();
-  BB_DEBUG("Servo Y: " + String(servoYIn));
-  servoY = servoYIn - 128; // Center yIn around 0 (+/-128)
-  
-  // Calculate the angle, given x and y components:
-  float pos = atan2(servoY, servoX) * 180.0 / PI;
-  if (pos < 0)
-    pos = 360.0 + pos;
-    
-  // Write the newly calculated angle to a virtual variable:
-  Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, pos);
-  
-  // Constrain the angle between min/max:
-  int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
   myServo.write(servoPos); // And set the servo position
 }
 
