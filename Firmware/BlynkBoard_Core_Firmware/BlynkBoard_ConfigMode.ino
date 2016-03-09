@@ -28,7 +28,8 @@ ESP8266WebServer server(BLYNK_WIFI_CONFIG_PORT);
 const String SSIDWebForm = "<!DOCTYPE HTML> "\
                            "<html>" \
                            "<h1>Blynk Board Config</h1>" \
-                           "<p>Enter your network name (SSID), password, and Blynk Auth token:</p>" \
+                           "<p>Enter your network name (SSID), password, and Blynk Auth token.<br>" \
+                           "Leave the password blank for an open network.</p>" \
                            "<p><form method='get' action='config'>" \
                            "<label>SSID: </label><input name='ssid' length=32><br>" \
                            "<label>PASS: </label><input name='pass' type = 'password' length=64><br>" \

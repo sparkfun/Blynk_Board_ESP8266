@@ -152,7 +152,7 @@ void loop()
     else
     {
       runMode = MODE_BLYNK_ERROR; // Otherwise switch to MODE_BLYNK_ERROR mode
-      BB_DEBUG("Blynk Connected -> Disconnected");
+      BB_DEBUG("Blynk Disconnected");
     }
     break;
   case MODE_BLYNK_ERROR: // Error connecting to Blynk
@@ -165,7 +165,7 @@ void loop()
     if (Blynk.connected()) // If it establishes a connection
     {
       runMode = MODE_BLYNK_RUN; // Change to Blynk Run mode
-      BB_DEBUG("Blynk Disconnected -> Connected");
+      BB_DEBUG("Blynk Connected");
     }
     break;
   default: // Modes not defined: MODE_CONNECTING_WIFI, MODE_CONNECTING_BLYNK
