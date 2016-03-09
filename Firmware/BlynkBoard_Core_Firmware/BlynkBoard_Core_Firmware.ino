@@ -26,6 +26,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 ******************************************************************************/
 
 #define DEBUG_ENABLED
+//#define CAPTIVE_PORTAL
 
 #include "BlynkBoard_settings.h"
 #include <ESP8266WiFi.h>

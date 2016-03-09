@@ -25,20 +25,27 @@ SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
 #include "string.h"
 ESP8266WebServer server(BLYNK_WIFI_CONFIG_PORT);
-const String SSIDWebForm = "<!DOCTYPE HTML> "\
-                           "<html>" \
-                           "<h1>Blynk Board Config</h1>" \
-                           "<p>Enter your network name (SSID), password, and Blynk Auth token.<br>" \
-                           "Leave the password blank for an open network.</p>" \
-                           "<p><form method='get' action='config'>" \
-                           "<label>SSID: </label><input name='ssid' length=32><br>" \
-                           "<label>PASS: </label><input name='pass' type = 'password' length=64><br>" \
-                           "<label>Blynk: </label><input name='blynk' length=32><br><br>" \
-                           "<input type='submit' value='submit'></form></p></html>";
+const String SSIDWebFormTop = "<!DOCTYPE HTML> "\
+                           "<html><body>" \
+                           "<h1>SparkFun Blynk Board Config</h1>" \
+                           "<p><form method='get' action='config' id='webconfig'>";
+const String SSIDWebFormBtm = "<p>Enter the <b>password</b> for your network. Leave it blank if the network is open:<br>" \
+                              "<input type=\"text\" name=\"pass\" placeholder=\"NetworkPassword\"></p>" \
+                              "<p>Enter the <b>Blynk auth token</b> for your Blynk project:<br>" \
+                              "<input type=\"text\" name=\"blynk\" length=\"32\" placeholder=\"a0b1c2d3e4f5ghijklmnopqrstuvwxyz\"></p>" \
+                              "<input type=\"submit\" value=\"submit\"></form>" \
+                              "</body></html>";
+
 String serialConfigBuffer = "";
 String serialConfigWiFiSSID = "";
 String serialConfigWiFiPSK = "";
 String serialConfigBlynkAuth = "";
+
+#ifdef CAPTIVE_PORTAL
+  #include <DNSServer.h>
+  const byte DNS_PORT = 53;
+  DNSServer dnsServer;
+#endif
 
 void setupAP(char * ssidName)
 {
@@ -52,7 +59,40 @@ void setupAP(char * ssidName)
 
 void handleRoot(void) // On root request to server, send form
 {
-  server.send(200, "text/html", SSIDWebForm);
+  String webPage = SSIDWebFormTop;
+  
+  BB_DEBUG("Initiating WiFi network scan.");
+  WiFi.enableSTA(true);
+
+  // WiFi.scanNetworks will return the number of networks found
+  int n = WiFi.scanNetworks();
+  if (n != 0)
+  {
+    BB_DEBUG("Scan found " + String(n) + " networks");
+    webPage += "<p>Select your <b>network</b>, or type it in if it's not in the list:<br>";
+    webPage += "<select name=\"ssid\">"; // Begin scrolling selection
+    webPage += "<option value=\"\">&mdash; (Not Listed)</option>"; // Add blank option
+    for (int i = 0; i < n; ++i)
+    {
+      webPage += "<option value=\"" + WiFi.SSID(i) + "\">";
+      webPage += WiFi.SSID(i) + " (" + String(WiFi.RSSI(i)) + ")";
+      webPage += WiFi.encryptionType(i) == ENC_TYPE_NONE ? " " : "*";
+      webPage += "</option>";
+    }
+    webPage += "</select>";
+    webPage += "<input type=\"text\" name=\"ssidManual\" placeholder=\"HiddenNetwork\"></p>";
+  }
+  else
+  {
+    BB_DEBUG("Scan didn't find any networks.");
+    webPage += "<p>Type in your <b>network</b> name:<br>";
+    webPage += "<input type=\"text\" name=\"ssid\" placeholder=\"NetworkName\"></p>";  
+  }
+  webPage += SSIDWebFormBtm;
+  Serial.println("");
+  WiFi.enableSTA(false);
+  
+  server.send(200, "text/html", webPage);
 }
 
 void handleReset(void)
@@ -64,9 +104,18 @@ void handleReset(void)
 void handleConfig(void) // handler for "/config" server request
 {
   // Gather the arguments into String variables
-  String ssid = server.arg("ssid"); // Network name
+  String ssidManual = server.arg("ssidManual"); // Network name - entered manually
+  String ssidScan = server.arg("ssid"); // Network name - entered from select list
   String pass = server.arg("pass"); // Network password
   String auth = server.arg("blynk"); // Blynk auth code
+
+  String ssid; // Select between the manually or scan entered
+  if (ssidScan != "") // Prefer scan entered
+    ssid = ssidScan;
+  else if (ssidManual != "") // Otherwise, if manually entered is valid
+    ssid = ssidManual; // Use manually entered
+  else
+    return;
 
   BB_DEBUG("SSID: " + ssid + ".");
   BB_DEBUG("Pass: " + pass + ".");
@@ -85,6 +134,10 @@ void handleConfig(void) // handler for "/config" server request
 
 void setupServer(void)
 {
+#ifdef CAPTIVE_PORTAL
+  dnsServer.start(DNS_PORT, "*", WiFi.softAPIP());
+  server.onNotFound(handleRoot);
+#endif
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
   server.on("/reset", handleReset);
@@ -114,6 +167,9 @@ void generateSSID(bool rgbCode)
 void handleConfigServer(void)
 {
   server.handleClient();
+#ifdef CAPTIVE_PORTAL
+  dnsServer.processNextRequest();
+#endif
 }
 
 void checkForStations(void)
@@ -190,18 +246,15 @@ void executeSerialCommand(void)
     serialConfigWiFiSSID = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
     Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
-    BB_DEBUG("WiFi Network: \"" + serialConfigWiFiSSID + "\"");
     break;
   case SERIAL_CONFIG_WIFI_PASSWORD:
     serialConfigWiFiPSK = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WAITING;
-    BB_DEBUG("WiFI Password: \"" + serialConfigWiFiPSK + "\"");
     passwordEntered = true;
     break;
   case SERIAL_CONFIG_BLYNK:
     serialConfigBlynkAuth = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WAITING;
-    BB_DEBUG("Blynk Auth: \"" + serialConfigBlynkAuth + "\"");
     break;
   }
   if ((serialConfigWiFiSSID != "") && (passwordEntered) && (serialConfigBlynkAuth != ""))
