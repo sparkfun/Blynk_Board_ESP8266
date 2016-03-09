@@ -28,7 +28,6 @@ void initHardware(void)
   BB_DEBUG("");
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
   BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
-
   randomSeed(millis() - analogRead(A0));
 
   // Initialize RGB LED and turn it off:
@@ -118,7 +117,9 @@ int8_t setupBlynkStation(String network, String psk, String blynk)
 {
   WiFi.enableSTA(true);
   WiFi.disconnect();
-  WiFi.begin(network.c_str(), psk.c_str());
+  
+  if (!WiFi.begin(network.c_str(), psk.c_str()))
+    return ERROR_CONNECT_WIFI;
 
   if (!WiFiConnectWithTimeout(WIFI_STA_CONNECT_TIMEOUT))
   {
@@ -152,11 +153,19 @@ long WiFiConnectWithTimeout(unsigned long timeout)
   
   long timeIn = timeout;
   // Relying on persistent ESP8266 WiFi credentials.
+  Serial.println("Connecting to: " + WiFi.SSID());
   while ((WiFi.status() != WL_CONNECTED) && (--timeIn > 0))
   {
     if (runMode != MODE_CONNECTING_WIFI)
       return 0;
-    delay(1);
+    delay(1000);
+    Serial.print('.');
+  }
+  Serial.println();
+  
+  if (timeIn <= 0)
+  {
+    runMode = MODE_WAIT_CONFIG;
   }
 
   return timeIn;
@@ -176,6 +185,12 @@ long BlynkConnectWithTimeout(const char * blynkAuth, unsigned long timeout)
     Blynk.run();
     delay(1);
   }
+  
+  if (timeIn <= 0)
+  {
+    runMode = MODE_WAIT_CONFIG;
+  }
+  
   return timeIn;
 }
 

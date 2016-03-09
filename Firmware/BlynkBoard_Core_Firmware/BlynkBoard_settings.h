@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.6.4"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.6.5"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -70,7 +70,7 @@ const String BLYNK_AUTH_SPIFF_FILE = "/blynk.txt";
 ///////////////////
 // WiFi Settings //
 ///////////////////
-#define WIFI_STA_CONNECT_TIMEOUT 30000
+#define WIFI_STA_CONNECT_TIMEOUT 30
 #define BLYNK_CONNECT_TIMEOUT    15000
 
 //////////////////////////

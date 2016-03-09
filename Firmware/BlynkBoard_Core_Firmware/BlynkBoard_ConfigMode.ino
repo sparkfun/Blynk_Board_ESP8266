@@ -182,6 +182,7 @@ void checkSerialConfig(void)
 void executeSerialCommand(void)
 {
   bool checkCommand = false;
+  static bool passwordEntered = false;
   switch (serialConfigMode)
   {
   case SERIAL_CONFIG_WIFI_NETWORK:
@@ -194,6 +195,7 @@ void executeSerialCommand(void)
     serialConfigWiFiPSK = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WAITING;
     BB_DEBUG("WiFI Password: \"" + serialConfigWiFiPSK + "\"");
+    passwordEntered = true;
     break;
   case SERIAL_CONFIG_BLYNK:
     serialConfigBlynkAuth = serialConfigBuffer;
@@ -201,7 +203,7 @@ void executeSerialCommand(void)
     BB_DEBUG("Blynk Auth: \"" + serialConfigBlynkAuth + "\"");
     break;
   }
-  if ((serialConfigWiFiSSID != "") && (serialConfigWiFiPSK != "") && (serialConfigBlynkAuth != ""))
+  if ((serialConfigWiFiSSID != "") && (passwordEntered) && (serialConfigBlynkAuth != ""))
   {
     BB_DEBUG("Connecting to WiFi.");
     int8_t ret = setupBlynkStation(serialConfigWiFiSSID, serialConfigWiFiPSK, serialConfigBlynkAuth);
