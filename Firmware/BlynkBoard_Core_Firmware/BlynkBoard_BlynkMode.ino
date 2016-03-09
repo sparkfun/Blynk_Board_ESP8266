@@ -66,7 +66,7 @@ bool scanI2C(uint8_t address);
 #define SERVO_MAX_VIRTUAL         V16 // 9
 #define SERVO_ANGLE_VIRUTAL       V17 // 9
 #define LUX_VIRTUAL               V18 // 10
-#define LUX_RATE_VIRTUAL          V19 // 10
+//! V19 available
 #define ADC_BATT_VIRTUAL          V20 // 11
 #define SERIAL_VIRTUAL            V21 // 12, 15
 #define TWEET_ENABLE_VIRTUAL      V22 // 13
@@ -480,14 +480,15 @@ BLYNK_WRITE(SERVO_MAX_VIRTUAL)
  10  - Slider: UpdateRate, V19, 0-???  10
  10 10 10 10 10 10 10 10 10 10 10 10 10 */
 
+// TSL2561 Definitions:
 #define LUX_ADDRESS 0x39 // I2C address of Lux sensor
-bool luxInitialized = false; // Lux initialized flag
-//! These are not implemented
-unsigned int luxUpdateRate = 1000; // Lux update rate (ms)
+bool luxInitialized = false; // Lux sensor initialized flag
 unsigned int ms = 1000;  // Integration time (ms)
-unsigned long lastLuxUpdate = 0; // Last lux update (ms)
-SFE_TSL2561 light; // Lux sensor object
 boolean gain = 0; // Lux sensor gain setting
+SFE_TSL2561 light; // Lux sensor object
+
+#define LUX_UPDATE_RATE 250 // Lux update rate (ms)
+unsigned long lastLuxUpdate = 0; // Last lux update (ms)
 
 void luxInit(void)
 {
@@ -510,38 +511,28 @@ void luxInit(void)
 
 void luxUpdate(void)
 {
-  // This sketch uses the TSL2561's built-in integration timer.
-  delay(ms);
-  
-  // Once integration is complete, we'll retrieve the data.
-  unsigned int data0, data1;
-  
-  if (light.getData(data0,data1))
-  {
-    double lux;    // Resulting lux value
-    boolean good;  // True if neither sensor is saturated
-    good = light.getLux(gain,ms,data0,data1,lux);
-    BB_DEBUG("Lux: " + String(lux));
-    Blynk.virtualWrite(LUX_VIRTUAL, lux);
-  }
-}
-
-BLYNK_READ(LUX_VIRTUAL)
-{
-  BB_DEBUG("Blynk read Lux");
   if (luxInitialized)
-    luxUpdate();
+  {
+    // This sketch uses the TSL2561's built-in integration timer.
+    delay(ms);
+    
+    // Once integration is complete, we'll retrieve the data.
+    unsigned int data0, data1;
+    
+    if (light.getData(data0,data1))
+    {
+      double lux;    // Resulting lux value
+      boolean good;  // True if neither sensor is saturated
+      good = light.getLux(gain,ms,data0,data1,lux);
+      BB_DEBUG("Lux: " + String(lux));
+      Blynk.virtualWrite(LUX_VIRTUAL, lux);
+    }
+  }
   else
-    Blynk.virtualWrite(LUX_VIRTUAL, analogRead(A0));
-  lastLuxUpdate = millis();  
-}
-//! Not implemented, leaving the virtual claimed for expansion of project
-BLYNK_WRITE(LUX_RATE_VIRTUAL)
-{
-  int luxUpdateIn = param.asInt();
-  BB_DEBUG("Lux update rate: " + String(luxUpdateIn));
-  luxUpdateRate = luxUpdateIn * 1000;
-  if (luxUpdateRate < 1000) luxUpdateRate = 1000;
+  {
+    int lightADC = analogRead(A0);
+    Blynk.virtualWrite(LUX_VIRTUAL, lightADC);
+  }
 }
 
 /* 11 11 11 11 11 11 11 11 11 11 11 11 11
@@ -877,10 +868,19 @@ void blynkSetup(void)
 
 void blynkLoop(void)
 {
+  // Polling Button status -- interrupts lead to bounce errors,
+  // especially if noisy buttons are connected.
   if (lastButtonUpdate + BUTTON_UPDATE_RATE < millis())
   {
     buttonUpdate();
     lastButtonUpdate = millis();
+  }
+
+  // Polling Light status -- results in the best UX using history graph
+  if (lastLuxUpdate + LUX_UPDATE_RATE < millis())
+  {
+    luxUpdate();
+    lastLuxUpdate = millis();
   }
 
   // If twitter is enabled, and it's been long enough since the last tweet
