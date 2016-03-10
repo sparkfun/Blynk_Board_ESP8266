@@ -180,6 +180,35 @@ void checkForStations(void)
     runMode = MODE_CONFIG;
 }
 
+bool SerialWiFiScan(void)
+{
+  int n = WiFi.scanNetworks();
+  if (n != 0)
+  {
+    Serial.println("Scan found " + String(n) + " networks:");
+    Serial.println("0: Not listed (hidden network)");
+    for (int i=0; i<n; ++i)
+    {
+      char index;
+      if (i <= 8)
+        index = '1' + i;
+      else
+        index = 'a' + (i - 9);
+      Serial.print(String(index) + ": ");
+      Serial.println(WiFi.SSID(i) + " (" + String(WiFi.RSSI(i)) + ")");
+    }
+    Serial.println();
+    Serial.print("Press 1-z, or 0 to enter manually\r\n> ");
+    
+    return true;
+  }
+  else
+  {
+    Serial.println("Didn't find any WiFi networks. Try typing 'w' to enter manually.");
+    return false;
+  }  
+}
+
 void checkSerialConfig(void)
 {
   if (Serial.available())
@@ -193,6 +222,11 @@ void checkSerialConfig(void)
         {
           switch (c)
           {
+          case CONFIG_CHAR_WIFI_SCAN:
+            Serial.println("Scanning for WiFi Networks");
+            if (SerialWiFiScan())
+              serialConfigMode = SERIAL_CONFIG_WIFI_SCAN;
+            break;            
           case CONFIG_CHAR_WIFI_NETWORK:
             serialConfigMode = SERIAL_CONFIG_WIFI_NETWORK;
             Serial.println(SERIAL_MESSAGE_WIFI_NETWORK);
@@ -213,6 +247,28 @@ void checkSerialConfig(void)
         else // If it's not a config char, and we're in waitin mode
         {
           // Ignore it (?)
+        }
+      }
+      else if (serialConfigMode == SERIAL_CONFIG_WIFI_SCAN)
+      {
+        int i;
+        if ((c >= '1') && (c <= '9'))
+          i = (int)c - ((int)'1' - 1);
+        else if ((c >= 'a') && (c <= 'z'))
+          i = (int)c - (int)'a' + 10;
+        else
+          i = 0;
+        if (i > 0)
+        {
+          Serial.println("Network " + String(c) + ": " + WiFi.SSID(i-1));
+          serialConfigWiFiSSID = WiFi.SSID(i-1);
+          serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
+          Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+        }
+        else
+        {
+          serialConfigMode = SERIAL_CONFIG_WIFI_NETWORK;
+          Serial.println(SERIAL_MESSAGE_WIFI_NETWORK);
         }
       }
       else // If it's not a config char, and we're _not_ in waiting mode
