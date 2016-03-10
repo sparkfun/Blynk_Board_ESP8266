@@ -30,7 +30,7 @@ const String SSIDWebFormTop = "<!DOCTYPE HTML> "\
                            "<h1>SparkFun Blynk Board Config</h1>" \
                            "<p><form method='get' action='config' id='webconfig'>";
 const String SSIDWebFormBtm = "<p>Enter the <b>password</b> for your network. Leave it blank if the network is open:<br>" \
-                              "<input type=\"text\" name=\"pass\" placeholder=\"NetworkPassword\"></p>" \
+                              "<input type=\"password\" name=\"pass\" placeholder=\"NetworkPassword\"></p>" \
                               "<p>Enter the <b>Blynk auth token</b> for your Blynk project:<br>" \
                               "<input type=\"text\" name=\"blynk\" length=\"32\" placeholder=\"a0b1c2d3e4f5ghijklmnopqrstuvwxyz\"></p>" \
                               "<input type=\"submit\" value=\"submit\"></form>" \
@@ -52,9 +52,12 @@ void setupAP(char * ssidName)
   WiFi.softAP(ssidName);
 
   IPAddress myIP = WiFi.softAPIP();
-  //! Check if IP is 0, return error, or re-try
   BB_DEBUG("AP IP address: " + String(myIP[0]) + "." + 
        String(myIP[1]) + "." + String(myIP[2]) + "." + String(myIP[3]));
+  //! ESP8266 bug: IP may be 0 -- makes AP un-connectable
+  //! Need to find out _why_ it's 0,but resetting and trying again usually works
+  if (myIP == (uint32_t)0)
+    ESP.reset();
 }
 
 void handleRoot(void) // On root request to server, send form
@@ -108,7 +111,7 @@ void handleConfig(void) // handler for "/config" server request
   String ssidScan = server.arg("ssid"); // Network name - entered from select list
   String pass = server.arg("pass"); // Network password
   String auth = server.arg("blynk"); // Blynk auth code
-
+  
   String ssid; // Select between the manually or scan entered
   if (ssidScan != "") // Prefer scan entered
     ssid = ssidScan;
@@ -147,21 +150,43 @@ void setupServer(void)
 }
 
 void generateSSID(bool rgbCode)
-{
+{  
   strcpy(BoardSSID, SSID_PREFIX);
   if (rgbCode)
   {
+    // Check if the SSID-generated flag is set:
+    if (EEPROM.read(EEPROM_SSID_GENERATED_ADDRESS) != 42)
+    { // If not, we need to generate a new, unique SSID:
+      // Random seed doesn't actually seed a set of random's
+      // They're psuedorandom no matter what, but just in case:
+      randomSeed(ESP.getChipId());
+      // Create four random numbers, and store them in EEPROM:
+      for (int i=0; i<SSID_SUFFIX_LENGTH; i++)
+      {
+        uint8_t id = random(0, WS2812_NUM_COLORS);
+        EEPROM.write(EEPROM_SSID_SUFFX_0 + i, id);
+      }
+      // Set the flag, so we don't have to do it again.
+      EEPROM.write(EEPROM_SSID_GENERATED_ADDRESS, 42);
+      EEPROM.commit(); // Commit all write's
+    }
+
+    char dash = '-';
+    strncat(BoardSSID, &dash, 1); // Add a dash between BlynkMe and color code
+    // Fill out the ssidSuffixIndex array -- used to index
+    // RGB colors to SSID suffix characters
     for (int i = 0; i < SSID_SUFFIX_LENGTH; i++)
     {
-      ssidSuffixIndex[i] = random(0, WS2812_NUM_COLORS);
+      ssidSuffixIndex[i] = EEPROM.read(EEPROM_SSID_SUFFX_0 + i);
+      ssidSuffixIndex[i] %= WS2812_NUM_COLORS; // Just in case it was invalid
       strncat(BoardSSID, &SSID_COLOR_CHAR[ssidSuffixIndex[i]], 1);
     }
     BB_DEBUG("New SSID: " + String(BoardSSID));
   }
   suffixGenerated = rgbCode;
 
-  setupAP(BoardSSID);
-  blinkCount = 0;
+  setupAP(BoardSSID); // Initialize the access point
+  blinkCount = 0; // Reset LED blinker count
 }
 
 void handleConfigServer(void)

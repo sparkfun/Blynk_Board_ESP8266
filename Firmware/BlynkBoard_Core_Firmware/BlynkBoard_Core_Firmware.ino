@@ -37,6 +37,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
+#include <ESP.h>
 
 /////////////////////////
 // Function Prototypes //
@@ -130,7 +131,7 @@ void loop()
     checkSerialConfig(); // Check for serial config messages
     if (previousMode != MODE_CONFIG)
     {
-      generateSSID(false); // Start the AP with the default SSID ("BlynkMe")
+      generateSSID(true); // Start the AP with the BlynkMe-CCCC SSID
       setupServer(); // Start the config server up:      
       previousMode = MODE_CONFIG;
     }
@@ -187,8 +188,8 @@ void buttonPress(void)
     runMode = MODE_CONFIG; // A button release will switch to config mode
     break;
   case MODE_CONFIG: // If we're in config mode:
-    BB_DEBUG("Generating a new RGBYP SSID");
-    generateSSID(true); // Create a new SSID, with RGB suffix
+    //BB_DEBUG("Generating a new RGBYP SSID");
+    //generateSSID(true); // Create a new SSID, with RGB suffix
     blinkCount = 255; // Restart the blink counter
     break;
   case MODE_CONNECTING_WIFI:

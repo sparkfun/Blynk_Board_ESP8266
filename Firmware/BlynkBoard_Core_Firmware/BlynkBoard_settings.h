@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.7.0"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.7.1"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -58,8 +58,14 @@ runModes runMode, previousMode;
 //////////////////////////////////
 // EEPROM and NV-Memory Defines //
 //////////////////////////////////
-#define EEPROM_SIZE 1
-#define EEPROM_CONFIG_FLAG_ADDRESS 0
+#define EEPROM_SIZE 7
+#define EEPROM_CONFIG_FLAG_ADDRESS    0
+#define EEPROM_SELF_TEST_ADDRESS      1
+#define EEPROM_SSID_GENERATED_ADDRESS 2
+#define EEPROM_SSID_SUFFX_0           3
+#define EEPROM_SSID_SUFFX_1           4
+#define EEPROM_SSID_SUFFX_2           5
+#define EEPROM_SSID_SUFFX_3           6
 const String BLYNK_AUTH_SPIFF_FILE = "/blynk.txt";
 
 ///////////////////////////////
