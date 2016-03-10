@@ -39,11 +39,6 @@ const String SSIDWebFormBtm = "<p>Enter the <b>password</b> for your network. Le
                               "<input type=\"submit\" value=\"submit\"></form>" \
                               "</body></html>";
 
-String serialConfigBuffer = "";
-String serialConfigWiFiSSID = "";
-String serialConfigWiFiPSK = "";
-String serialConfigBlynkAuth = "";
-
 #ifdef CAPTIVE_PORTAL
   #include <DNSServer.h>
   const byte DNS_PORT = 53;
@@ -227,11 +222,11 @@ bool SerialWiFiScan(void)
   int n = WiFi.scanNetworks();
   if (n != 0)
   {
+    char index;
     Serial.println("Scan found " + String(n) + " networks:");
     Serial.println("0: Not listed (hidden network)");
     for (int i=0; i<n; ++i)
     {
-      char index;
       if (i <= 8)
         index = '1' + i;
       else
@@ -239,8 +234,8 @@ bool SerialWiFiScan(void)
       Serial.print(String(index) + ": ");
       Serial.println(WiFi.SSID(i) + " (" + String(WiFi.RSSI(i)) + ")");
     }
-    Serial.println();
-    Serial.print("Press 1-z, or 0 to enter manually\r\n> ");
+    Serial.print("\r\nPress 1-" + String(index) + " to select from the list above.\r\n");
+    Serial.print("Press 0 if your network is hidden or not listed.\r\n> ");
     
     return true;
   }
@@ -250,6 +245,13 @@ bool SerialWiFiScan(void)
     return false;
   }  
 }
+
+String serialConfigBuffer = "";
+String serialConfigWiFiSSID = "";
+String serialConfigWiFiPSK = "";
+String serialConfigBlynkAuth = "";
+String serialConfigBlynkHost = "";
+uint16_t serialConfigBlynkPort = 0;
 
 void checkSerialConfig(void)
 {
@@ -271,22 +273,18 @@ void checkSerialConfig(void)
             break;            
           case CONFIG_CHAR_WIFI_NETWORK:
             serialConfigMode = SERIAL_CONFIG_WIFI_NETWORK;
-            Serial.println(SERIAL_MESSAGE_WIFI_NETWORK);
-            break;
-          case CONFIG_CHAR_WIFI_PASSWORD:
-            serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
-            Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+            Serial.print(SERIAL_MESSAGE_WIFI_NETWORK);
             break;
           case CONFIG_CHAR_BLYNK:
             serialConfigMode = SERIAL_CONFIG_BLYNK;
-            Serial.println(SERIAL_MESSAGE_BLYNK);
+            Serial.print(SERIAL_MESSAGE_BLYNK);
             break;
           case CONFIG_CHAR_HELP:
-            Serial.println(SERIAL_MESSAGE_HELP);
+            Serial.print(SERIAL_MESSAGE_HELP);
             break;
           }
         }
-        else // If it's not a config char, and we're in waitin mode
+        else // If it's not a config char, and we're in waiting mode
         {
           // Ignore it (?)
         }
@@ -305,12 +303,12 @@ void checkSerialConfig(void)
           Serial.println("Network " + String(c) + ": " + WiFi.SSID(i-1));
           serialConfigWiFiSSID = WiFi.SSID(i-1);
           serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
-          Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+          Serial.print(SERIAL_MESSAGE_WIFI_PASSWORD);
         }
         else
         {
           serialConfigMode = SERIAL_CONFIG_WIFI_NETWORK;
-          Serial.println(SERIAL_MESSAGE_WIFI_NETWORK);
+          Serial.print(SERIAL_MESSAGE_WIFI_NETWORK);
         }
       }
       else // If it's not a config char, and we're _not_ in waiting mode
@@ -335,36 +333,72 @@ void checkSerialConfig(void)
 }
 
 void executeSerialCommand(void)
-{
+{  
   bool checkCommand = false;
   static bool passwordEntered = false;
+  
   switch (serialConfigMode)
   {
   case SERIAL_CONFIG_WIFI_NETWORK:
     serialConfigWiFiSSID = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WIFI_PASSWORD;
-    Serial.println(SERIAL_MESSAGE_WIFI_PASSWORD);
+    Serial.print(SERIAL_MESSAGE_WIFI_PASSWORD);
     break;
   case SERIAL_CONFIG_WIFI_PASSWORD:
     serialConfigWiFiPSK = serialConfigBuffer;
     serialConfigMode = SERIAL_CONFIG_WAITING;
     passwordEntered = true;
+    if (serialConfigBlynkAuth == "") // If blynk auth token is blank
+      Serial.print("\r\nWiFi configured! Hit 'b' to configure Blynk.\r\n\r\n> ");
     break;
   case SERIAL_CONFIG_BLYNK:
     serialConfigBlynkAuth = serialConfigBuffer;
+    serialConfigMode = SERIAL_CONFIG_BLYNK_HOST;
+    Serial.print(SERIAL_MESSAGE_BLYNK_HOST);
+    break;
+  case SERIAL_CONFIG_BLYNK_HOST:
+    if (serialConfigBuffer == "")
+    {
+      Serial.println("Using default host: " + String(BB_BLYNK_HOST_DEFAULT));
+      serialConfigBlynkHost = BB_BLYNK_HOST_DEFAULT;
+    }
+    else
+    {
+      serialConfigBlynkHost = serialConfigBuffer;
+    }
+    serialConfigMode = SERIAL_CONFIG_BLYNK_PORT;
+    Serial.print(SERIAL_MESSAGE_BLYNK_PORT);
+    break;
+  case SERIAL_CONFIG_BLYNK_PORT:
+    if (serialConfigBuffer == "")
+    {
+      Serial.println("Using default port: " + String(BB_BLYNK_PORT_DEFAULT));
+      serialConfigBlynkPort = BB_BLYNK_PORT_DEFAULT;
+    }
+    else
+    {
+      serialConfigBlynkPort = serialConfigBuffer.toInt();
+    }
+    Serial.println();
+    if (serialConfigWiFiSSID == "")
+      Serial.print("Blynk configured. Hit 'w' or 's' to configure WiFi.\r\n\r\n> ");
     serialConfigMode = SERIAL_CONFIG_WAITING;
     break;
   }
-  if ((serialConfigWiFiSSID != "") && (passwordEntered) && (serialConfigBlynkAuth != ""))
+  if ((serialConfigWiFiSSID != "") && (passwordEntered) && (serialConfigBlynkAuth != "") &&
+      (serialConfigBlynkHost != "") && (serialConfigBlynkPort != 0))
   {
     BB_DEBUG("Connecting to WiFi.");
-    int8_t ret = setupBlynkStation(serialConfigWiFiSSID, serialConfigWiFiPSK, serialConfigBlynkAuth);
+    int8_t ret = setupBlynkStation(serialConfigWiFiSSID, serialConfigWiFiPSK, serialConfigBlynkAuth,
+                                   serialConfigBlynkHost, serialConfigBlynkPort);
     if (ret < 0)
     {
       if (ret == ERROR_CONNECT_BLYNK)
       {
         BB_DEBUG("Serial error connecting to Blynk.");
         serialConfigBlynkAuth = "";
+        serialConfigBlynkHost = "";
+        serialConfigBlynkPort = 0;
       }
       else if (ret == ERROR_CONNECT_WIFI)
       {

@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.7.2"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.7.3"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -154,15 +154,14 @@ bool suffixGenerated = false;
 // Serial Config Mode //
 ////////////////////////
 #define SERIAL_RX_BUFFER_SIZE 128
-#define NUM_SERIAL_CONFIG_CHARS 5
+#define NUM_SERIAL_CONFIG_CHARS 4
 const char CONFIG_CHAR_WIFI_NETWORK = 'w';
 const char CONFIG_CHAR_WIFI_SCAN = 's';
-const char CONFIG_CHAR_WIFI_PASSWORD = 'p';
 const char CONFIG_CHAR_BLYNK = 'b';
 const char CONFIG_CHAR_HELP = 'h';
 const char CONFIG_CHAR_SUBMIT = '\r';
 const char CONFIG_CHARS[NUM_SERIAL_CONFIG_CHARS] = {
-  CONFIG_CHAR_WIFI_SCAN, CONFIG_CHAR_WIFI_NETWORK, CONFIG_CHAR_WIFI_PASSWORD, 
+  CONFIG_CHAR_WIFI_SCAN, CONFIG_CHAR_WIFI_NETWORK, 
   CONFIG_CHAR_BLYNK, CONFIG_CHAR_HELP
 };
 enum {
@@ -170,18 +169,23 @@ enum {
   SERIAL_CONFIG_WIFI_SCAN,
   SERIAL_CONFIG_WIFI_NETWORK,
   SERIAL_CONFIG_WIFI_PASSWORD,
-  SERIAL_CONFIG_BLYNK
+  SERIAL_CONFIG_BLYNK,
+  SERIAL_CONFIG_BLYNK_HOST,
+  SERIAL_CONFIG_BLYNK_PORT
 } serialConfigMode = SERIAL_CONFIG_WAITING;
-const char SERIAL_MESSAGE_WIFI_NETWORK[] = "Type your WiFi network SSID and hit enter.\r\n";
-const char SERIAL_MESSAGE_WIFI_PASSWORD[] = "Type your WiFi network password and hit enter.\r\n" \
-                                            "(If connecting to an open network, leave blank.)\r\n" ;
-const char SERIAL_MESSAGE_BLYNK[]= "Enter your 32-character Blynk Auth token.\r\n";
-const char SERIAL_MESSAGE_HELP[] = "Blynk Board - ESP8266 Serial Config\r\n" \
+const char SERIAL_MESSAGE_WIFI_NETWORK[] = "\r\nType your WiFi network SSID and hit enter.\r\n> ";
+const char SERIAL_MESSAGE_WIFI_PASSWORD[] = "\r\nType your WiFi network password and hit enter.\r\n" \
+                                            "(If connecting to an open network, leave blank.)\r\n> " ;
+const char SERIAL_MESSAGE_BLYNK_HOST[] = "\r\nType your Blynk Server and hit enter.\r\n" \
+                                         "Leave blank to use default: cloud.blynk.cc\r\n> ";
+const char SERIAL_MESSAGE_BLYNK_PORT[] = "\r\nType your Blynk Port and hit enter.\r\n" \
+                                         "Leave blank to use default: 8442.\r\n> ";
+const char SERIAL_MESSAGE_BLYNK[]= "\r\nEnter your 32-character Blynk Auth token.\r\n> ";
+const char SERIAL_MESSAGE_HELP[] = "\r\nBlynk Board - ESP8266 Serial Config\r\n" \
                                    "  s: Scan for a WiFi network\r\n" \
-                                   "  b: Config Blynk Auth token\r\n" \
-                                   "  w: Config WiFi network\r\n" \
-                                   "  p: Config WiFi password\r\n" \
-                                   "  h: (This) Help menu\r\n";
+                                   "  b: Configure Blynk token, host, and port\r\n" \
+                                   "  w: Configure WiFi network\r\n" \
+                                   "  h: (This) Help menu\r\n\r\n> ";
 
 /////////////////////////
 // Error/Success Codes //

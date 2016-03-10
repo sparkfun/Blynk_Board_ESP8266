@@ -147,6 +147,7 @@ void loop()
       generateSSID(true); // Start the AP with the BlynkMe-CCCC SSID
       setupServer(); // Start the config server up:      
       previousMode = MODE_CONFIG;
+      Serial.print(SERIAL_MESSAGE_HELP);
     }
     break;
   case MODE_CONFIG_DEVICE_CONNECTED: // Config mode - connected device
