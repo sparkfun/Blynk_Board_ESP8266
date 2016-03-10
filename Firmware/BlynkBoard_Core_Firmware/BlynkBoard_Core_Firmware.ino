@@ -84,8 +84,10 @@ uint32_t rgbModeConfig(void);
 uint32_t blinkRGB(uint32_t onColor, uint32_t period);
 uint32_t breatheRGB(uint32_t colorMax, unsigned int breathePeriod);
 
-// If authTokenStr isn't global, Blynk sees the token as invalid
+// If blynk strings aren't global, reconnect's may see them as invalid
 String authTokenStr; 
+String blynkHost;
+uint16_t blynkPort;
 
 bool rgbSetByProject = false;
 
@@ -108,9 +110,9 @@ void setup()
   { // If the flag has been set, 
     authTokenStr = getBlynkAuth(); // read the stored auth token
     BB_DEBUG("Auth token:" + authTokenStr + ".");
-    String blynkHost = getBlynkHost(); // Read the stored host
+    blynkHost = getBlynkHost(); // Read the stored host
     BB_DEBUG("Blynk Host: " + blynkHost + ".");
-    uint16_t blynkPort = getBlynkPort(); // Read the stored port
+    blynkPort = getBlynkPort(); // Read the stored port
     BB_DEBUG("Blynk Port: " + String(blynkPort) + ".");
 
     // As long as the auth token, host, and port aren't null
