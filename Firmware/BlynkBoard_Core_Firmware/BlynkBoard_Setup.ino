@@ -28,8 +28,7 @@ void initHardware(void)
   BB_DEBUG("");
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
   BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
-  randomSeed(millis() - analogRead(A0));
-
+  
   // Initialize RGB LED and turn it off:
   rgb.begin();
   rgb.setPixelColor(0, rgb.Color(0, 0, 0));
@@ -60,7 +59,7 @@ bool checkConfigFlag(void)
   return false;
 }
 
-bool writeBlynkAuth(String authToken)
+bool writeBlynkConfig(String authToken, String host, uint16_t port)
 {
   File authFile = SPIFFS.open(BLYNK_AUTH_SPIFF_FILE, "w");
   if (authFile)
@@ -69,13 +68,42 @@ bool writeBlynkAuth(String authToken)
     authFile.print(authToken);
     authFile.close();
     BB_DEBUG("Wrote file.");
-    return true;
   }
   else
   {
     BB_DEBUG("Failed to open file to write.");
     return false;
   }
+  
+  File hostFile = SPIFFS.open(BLYNK_HOST_SPIFF_FILE, "w");
+  if (hostFile)
+  {
+    BB_DEBUG("Opened " + String(BLYNK_HOST_SPIFF_FILE));
+    hostFile.print(host);
+    hostFile.close();
+    BB_DEBUG("Wrote " + String(BLYNK_HOST_SPIFF_FILE));
+  }
+  else
+  {
+    BB_DEBUG("Failed to open " + String(BLYNK_HOST_SPIFF_FILE));
+    return false;
+  }
+  
+  File portFile = SPIFFS.open(BLYNK_PORT_SPIFF_FILE, "w");
+  if (portFile)
+  {
+    BB_DEBUG("Opened " + String(BLYNK_PORT_SPIFF_FILE));
+    portFile.print(port);
+    portFile.close();
+    BB_DEBUG("Wrote " + String(BLYNK_PORT_SPIFF_FILE));
+  }
+  else
+  {
+    BB_DEBUG("Failed to open " + String(BLYNK_PORT_SPIFF_FILE));
+    return false;
+  }
+  
+  return true;
 }
 
 String getBlynkAuth(void)
@@ -113,7 +141,62 @@ String getBlynkAuth(void)
   return retAuth;
 }
 
-int8_t setupBlynkStation(String network, String psk, String blynk)
+String getBlynkHost(void)
+{
+  String retHost;
+  
+  if (SPIFFS.exists(BLYNK_HOST_SPIFF_FILE))
+  {
+    File hostFile = SPIFFS.open(BLYNK_HOST_SPIFF_FILE, "r");
+    if(hostFile)
+    {
+      BB_DEBUG("Opened" + String(BLYNK_HOST_SPIFF_FILE));
+      while (hostFile.available())
+        retHost += (char)hostFile.read();
+      hostFile.close();
+    }
+    else
+    {
+      BB_DEBUG("Failed to open " + String(BLYNK_HOST_SPIFF_FILE));
+    }
+  }
+  else
+  {
+    BB_DEBUG(String(BLYNK_HOST_SPIFF_FILE) + " does not exist.");
+  }
+
+  return retHost;
+}
+
+int16_t getBlynkPort(void)
+{
+  String retPort;
+  
+  if (SPIFFS.exists(BLYNK_PORT_SPIFF_FILE))
+  {
+    File portFile = SPIFFS.open(BLYNK_PORT_SPIFF_FILE, "r");
+    if(portFile)
+    {
+      BB_DEBUG("Opened" + String(BLYNK_PORT_SPIFF_FILE));
+      while (portFile.available())
+        retPort += (char)portFile.read();
+      portFile.close();
+    }
+    else
+    {
+      BB_DEBUG("Failed to open " + String(BLYNK_PORT_SPIFF_FILE));
+    }
+  }
+  else
+  {
+    BB_DEBUG(String(BLYNK_PORT_SPIFF_FILE) + " does not exist.");
+  }
+
+  return retPort.toInt();
+}
+
+int8_t setupBlynkStation(String network, String psk, String blynkAuth, 
+                         String blynkHost, uint16_t blynkPort)
 {
   WiFi.enableSTA(true);
   WiFi.disconnect();
@@ -129,14 +212,15 @@ int8_t setupBlynkStation(String network, String psk, String blynk)
     return ERROR_CONNECT_WIFI;    
   }
 
-  if (!BlynkConnectWithTimeout(blynk.c_str(), BLYNK_CONNECT_TIMEOUT))
+  if (!BlynkConnectWithTimeout(blynkAuth.c_str(), blynkHost.c_str(), 
+                               blynkPort, BLYNK_CONNECT_TIMEOUT))
   {
     BB_DEBUG("Timed out connecting to Blynk.");
     runMode = MODE_CONFIG; // Back to config LED blink
     return ERROR_CONNECT_BLYNK;
   }
 
-  writeBlynkAuth(blynk); //! TODO: check return value of this
+  writeBlynkConfig(blynkAuth, blynkHost, blynkPort);
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 1);
   EEPROM.commit();
 
@@ -171,13 +255,15 @@ long WiFiConnectWithTimeout(unsigned long timeout)
   return timeIn;
 }
 
-long BlynkConnectWithTimeout(const char * blynkAuth, unsigned long timeout)
+long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer, 
+                             uint16_t blynkPort, unsigned long timeout)
 {
   runMode = MODE_CONNECTING_BLYNK;
   
   long timeIn = timeout;
-  Blynk.config(blynkAuth);
-  
+  //Blynk.config(blynkAuth);
+  //Blynk.config(blynkAuth, "blynk-qa.cloudapp.net", 8442);
+  Blynk.config(blynkAuth, blynkServer, blynkPort);
   while ((!Blynk.connected()) && (--timeIn > 0))
   {
     if (runMode != MODE_CONNECTING_BLYNK)
@@ -199,4 +285,6 @@ void resetEEPROM(void)
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 0);
   EEPROM.commit();
   SPIFFS.remove(BLYNK_AUTH_SPIFF_FILE);
+  SPIFFS.remove(BLYNK_HOST_SPIFF_FILE);
+  SPIFFS.remove(BLYNK_PORT_SPIFF_FILE);
 }

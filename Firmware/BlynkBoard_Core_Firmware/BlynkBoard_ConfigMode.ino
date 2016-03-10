@@ -33,6 +33,9 @@ const String SSIDWebFormBtm = "<p>Enter the <b>password</b> for your network. Le
                               "<input type=\"password\" name=\"pass\" placeholder=\"NetworkPassword\"></p>" \
                               "<p>Enter the <b>Blynk auth token</b> for your Blynk project:<br>" \
                               "<input type=\"text\" name=\"blynk\" length=\"32\" placeholder=\"a0b1c2d3e4f5ghijklmnopqrstuvwxyz\"></p>" \
+                              "<p>If non-default, enter the Blynk <b>host and port</b> for your Blynk project:<br>" \
+                              "<input type=\"text\" name=\"host\" value=\"cloud.blynk.cc\">" \
+                              "<input type=\"number\" name=\"port\" value=\"8442\"></p>" \
                               "<input type=\"submit\" value=\"submit\"></form>" \
                               "</body></html>";
 
@@ -111,6 +114,8 @@ void handleConfig(void) // handler for "/config" server request
   String ssidScan = server.arg("ssid"); // Network name - entered from select list
   String pass = server.arg("pass"); // Network password
   String auth = server.arg("blynk"); // Blynk auth code
+  String host = server.arg("host");
+  uint16_t port = server.arg("port").toInt();
   
   String ssid; // Select between the manually or scan entered
   if (ssidScan != "") // Prefer scan entered
@@ -123,7 +128,11 @@ void handleConfig(void) // handler for "/config" server request
   BB_DEBUG("SSID: " + ssid + ".");
   BB_DEBUG("Pass: " + pass + ".");
   BB_DEBUG("Auth: " + auth + ".");
+  BB_DEBUG("Host: " + host + ".");
+  BB_DEBUG("Port: " + String(port) + ".");
 
+  //! Be more descriptive in this response.
+  //! Tell the user what the board is/should be doing. RGB, etc.
   // Send a response back to the requester
   String rsp = "<!DOCTYPE HTML> <html>";
   rsp += "Connecting to: " + ssid + "<br>";
@@ -131,8 +140,16 @@ void handleConfig(void) // handler for "/config" server request
   rsp += "</html>";
   server.send(200, "text/html", rsp);
 
-  //startBlynk(ssid, pass, auth);
-  setupBlynkStation(ssid, pass, auth);
+  if ((host != "") && (port != 0)) // If host and port are not null/0
+  {
+    BB_DEBUG("Connecting to " + host);
+    setupBlynkStation(ssid, pass, auth, host, port); // Connect using those
+  }
+  else
+  {
+    BB_DEBUG("Connecting to default server");
+    setupBlynkStation(ssid, pass, auth); // Otherwise connect using defaults
+  }
 }
 
 void setupServer(void)

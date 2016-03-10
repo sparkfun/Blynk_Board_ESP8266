@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.7.1"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.7.2"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -67,11 +67,19 @@ runModes runMode, previousMode;
 #define EEPROM_SSID_SUFFX_2           5
 #define EEPROM_SSID_SUFFX_3           6
 const String BLYNK_AUTH_SPIFF_FILE = "/blynk.txt";
+const String BLYNK_HOST_SPIFF_FILE = "/blynk_host.txt";
+const String BLYNK_PORT_SPIFF_FILE = "/blynk_port.txt";
 
 ///////////////////////////////
 // Config Server Definitions //
 ///////////////////////////////
 #define BLYNK_WIFI_CONFIG_PORT 80
+
+//////////////////////////////
+// Blynk Server Definitions //
+//////////////////////////////
+#define BB_BLYNK_HOST_DEFAULT BLYNK_DEFAULT_DOMAIN
+#define BB_BLYNK_PORT_DEFAULT BLYNK_DEFAULT_PORT
 
 ///////////////////
 // WiFi Settings //
