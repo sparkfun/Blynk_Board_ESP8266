@@ -129,6 +129,10 @@ void setup()
         }
       }
     }
+    else
+    {
+      runMode = MODE_CONFIG;
+    }
   }
   else
   {

@@ -1,6 +1,6 @@
 /******************************************************************************
 BlynkBoard_ConfigMode.ino
-BlynkBoard Firmware: Config Mode Source
+Blynk Board Firmware: Config Mode Source
 Jim Lindblom @ SparkFun Electronics
 February 24, 2016
 https://github.com/sparkfun/Blynk_Board_ESP8266/Firmware
@@ -30,8 +30,29 @@ const String SSIDWebFormTop = R"raw_string(
 <html><head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-body { background-color:white; }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+}
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #555;
+}
+body {
+    background-color:white; 
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+}
 input, select {
   border: none;
   padding:7px;
@@ -42,7 +63,12 @@ input, select {
   font-weight: 700;
   -webkit-border-radius:3px;
   -moz-border-radius:3px;
+  -webkit-appearance:none;
   border-radius:3px;
+}
+form {
+  margin: 0 auto;
+  width: 400px;
 }
 input[name=host] { width: 200px; }
 input[name=port] { width: 70px; }
@@ -56,16 +82,17 @@ select { padding:6px; width: 316px; }
   </style>
 </head>
 <body>
-  <h1>SparkFun Blynk Board</h1>
-  <p><form method="get" action="config" id="webconfig">
+  <form method="get" action="config" id="webconfig">
+  <h1>SparkFun Blynk Board Config</h1>
 )raw_string";
 
 const String SSIDWebFormBtm = R"raw_string(
-  <p>Enter the <b>password</b> for your network.<br>(leave it blank if the network is open)<br>
+  <p>Enter the <b>password</b> for your network.<br>(Leave blank if the network is open)<br>
   <input type="password" name="pass" placeholder="WiFi password"></p>
   <p>Enter the <b>Blynk auth token</b> for your project:<br>
   <input type="text" name="blynk" length="32" placeholder="a0b1c2d..."></p>
-  <p>If non-default, enter the Blynk <b>host and port</b> for your Blynk project:<br>
+  <p>Enter the Blynk <b>host and port</b> for your Blynk project:<br>
+  (Leave as-is for defaults:)<br>
   <input type="text" name="host" value="cloud.blynk.cc">
   <input type="number" name="port" value="8442"></p>
   <input type="submit" value="Apply"></form>
@@ -149,10 +176,10 @@ void handleRoot(void) // On root request to server, send form
     webPage += "<input type=\"text\" name=\"ssid\" placeholder=\"Network name\"></p>";  
   }
   webPage += SSIDWebFormBtm;
-  Serial.println("");
   WiFi.enableSTA(false);
   
   server.send(200, "text/html", webPage);
+  BB_DEBUG("Root served.");
 }
 
 void handleReset(void)
