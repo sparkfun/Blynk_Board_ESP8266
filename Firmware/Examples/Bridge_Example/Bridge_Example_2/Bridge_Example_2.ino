@@ -126,8 +126,6 @@ void loop()
 {
   Blynk.run(); // All the Blynk Magic happens here...
 
-// remote led btn doesnt update local on remote app
-  
   if (wasButtonPressed) {
     // This can be seen in the Serial Monitor
     BLYNK_LOG("Physical button was pressed.");
