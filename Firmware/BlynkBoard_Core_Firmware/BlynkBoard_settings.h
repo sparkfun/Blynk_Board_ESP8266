@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.7.4"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.8.0"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -47,6 +47,7 @@ SparkFun BlynkBoard - ESP8266
 enum runModes{
   MODE_WAIT_CONFIG,
   MODE_CONFIG,
+  MODE_BUTTON_HOLD,
   MODE_CONFIG_DEVICE_CONNECTED,
   MODE_CONNECTING_WIFI,
   MODE_CONNECTING_BLYNK,
@@ -96,11 +97,14 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 #define BUTTON_PIN 0
 #define BLUE_LED_PIN 5
 #define ADC_VOLTAGE_DIVIDER 3.2
+// ms time that button should be held down to trigger re-config:
+#define BUTTON_HOLD_TIME_MIN 3000 
 
 ///////////////////////
 // RGB Status Colors //
 ///////////////////////
 #define RGB_STATUS_MODE_WAIT_CONFIG   0x202020 // Light white - Start mode
+#define RGB_STATUS_MODE_BUTTON_HOLD   0x202020 // Light white - breathing
 #define RGB_STATUS_AP_MODE_DEFAULT    0x200000 // Light red - Default AP mode
 #define RGB_STATUS_AP_MODE_DEVICE_ON  0x200020 // Light purple - Device connected to AP
 #define RGB_STATUS_CONNECTING_WIFI    0x000020 // Light blue - Connecting to WiFi
@@ -114,6 +118,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 // RGB Status Blink Period //
 /////////////////////////////
 #define RGB_PERIOD_START        1000
+#define RGB_PERIOD_BUTTON_HOLD  BUTTON_HOLD_TIME_MIN
 #define RGB_PERIOD_AP           1000
 #define RGB_PERIOD_AP_STOP      2000
 #define RGB_PERIOD_AP_DEFAULT   1000
@@ -148,7 +153,6 @@ const char SSID_COLOR_CHAR[WS2812_NUM_COLORS] = {
 const char SSID_PREFIX[] = "BlynkMe";
 uint8_t ssidSuffixIndex[SSID_SUFFIX_LENGTH] = {0, 0, 0, 0};
 char BoardSSID[33];
-bool suffixGenerated = false;
 
 ////////////////////////
 // Serial Config Mode //

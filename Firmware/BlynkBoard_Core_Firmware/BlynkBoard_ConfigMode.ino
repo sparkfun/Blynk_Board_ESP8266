@@ -241,41 +241,38 @@ void setupServer(void)
   BB_DEBUG("HTTP server started");
 }
 
-void generateSSID(bool rgbCode)
-{  
-  strcpy(BoardSSID, SSID_PREFIX);
-  if (rgbCode)
+void generateSSIDSuffix(bool newSuffix)
+{
+  // If asking for a new suffix, or suffix hasn't been generated
+  if ((newSuffix) || (EEPROM.read(EEPROM_SSID_GENERATED_ADDRESS) != 42))
   {
-    // Check if the SSID-generated flag is set:
-    if (EEPROM.read(EEPROM_SSID_GENERATED_ADDRESS) != 42)
-    { // If not, we need to generate a new, unique SSID:
-      // Random seed doesn't actually seed a set of random's
-      // They're psuedorandom no matter what, but just in case:
-      randomSeed(ESP.getChipId());
-      // Create four random numbers, and store them in EEPROM:
-      for (int i=0; i<SSID_SUFFIX_LENGTH; i++)
-      {
-        uint8_t id = random(0, WS2812_NUM_COLORS);
-        EEPROM.write(EEPROM_SSID_SUFFX_0 + i, id);
-      }
-      // Set the flag, so we don't have to do it again.
-      EEPROM.write(EEPROM_SSID_GENERATED_ADDRESS, 42);
-      EEPROM.commit(); // Commit all write's
-    }
-
-    char dash = '-';
-    strncat(BoardSSID, &dash, 1); // Add a dash between BlynkMe and color code
-    // Fill out the ssidSuffixIndex array -- used to index
-    // RGB colors to SSID suffix characters
-    for (int i = 0; i < SSID_SUFFIX_LENGTH; i++)
+    for (int i=0; i<SSID_SUFFIX_LENGTH; i++)
     {
-      ssidSuffixIndex[i] = EEPROM.read(EEPROM_SSID_SUFFX_0 + i);
-      ssidSuffixIndex[i] %= WS2812_NUM_COLORS; // Just in case it was invalid
-      strncat(BoardSSID, &SSID_COLOR_CHAR[ssidSuffixIndex[i]], 1);
+      // Create new random suffix indices
+      ssidSuffixIndex[i] = random(0, WS2812_NUM_COLORS);
+      // Write them to successive EEPROM addresses
+      EEPROM.write(EEPROM_SSID_SUFFX_0 + i, ssidSuffixIndex[i]);
     }
-    BB_DEBUG("New SSID: " + String(BoardSSID));
+    // Set the flag, so we don't have to do it again.
+    EEPROM.write(EEPROM_SSID_GENERATED_ADDRESS, 42);
+    EEPROM.commit(); // Commit all EEPROM write's
   }
-  suffixGenerated = rgbCode;
+  else // Otherwise, if not new and EEPROM flag set
+  {
+    for (int i=0; i<SSID_SUFFIX_LENGTH; i++)
+      ssidSuffixIndex[i] = EEPROM.read(EEPROM_SSID_SUFFX_0 + i);
+  }
+  
+  strcpy(BoardSSID, SSID_PREFIX); // Copy the prefix into boardSSID
+  char dash = '-';
+  strncat(BoardSSID, &dash, 1); // Add a dash between BlynkMe and color code
+  for (int i=0; i < SSID_SUFFIX_LENGTH; i++)
+  {
+    ssidSuffixIndex[i] %= WS2812_NUM_COLORS; // Just in case it was invalid
+    // Add color-code character to the board SSID
+    strncat(BoardSSID, &SSID_COLOR_CHAR[ssidSuffixIndex[i]], 1);
+  }
+  BB_DEBUG("New SSID: " + String(BoardSSID));
 
   setupAP(BoardSSID); // Initialize the access point
   blinkCount = 0; // Reset LED blinker count

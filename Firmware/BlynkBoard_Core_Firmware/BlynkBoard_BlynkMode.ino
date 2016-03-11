@@ -850,7 +850,7 @@ void blynkSetup(void)
   WiFi.enableAP(false); // Disable access point mode
 
   // Setup the Pin 0 button:
-  detachInterrupt(BUTTON_PIN); // detatch the buttonPress interrupt [BlynkBoard_Core_Firmware]
+  detachInterrupt(BUTTON_PIN); // detatch the buttonChange interrupt [BlynkBoard_Core_Firmware]
 
   // Set up the temperature-humidity sensor
   thSense.begin();

@@ -29,6 +29,8 @@ void initHardware(void)
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
   BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
   
+  randomSeed(ESP.getChipId());
+      
   // Initialize RGB LED and turn it off:
   rgb.begin();
   rgb.setPixelColor(0, rgb.Color(0, 0, 0));
@@ -39,7 +41,7 @@ void initHardware(void)
   // Initialize the button, and setup a hardware interrupt
   // Look for RISING - when the button is released.
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-  attachInterrupt(BUTTON_PIN, buttonPress, RISING);
+  attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
 
   // Initialize the LED pin:
   pinMode(BLUE_LED_PIN, OUTPUT);   // Set pin as an output
@@ -261,8 +263,6 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
   runMode = MODE_CONNECTING_BLYNK;
   
   long timeIn = timeout;
-  //Blynk.config(blynkAuth);
-  //Blynk.config(blynkAuth, "blynk-qa.cloudapp.net", 8442);
   Blynk.config(blynkAuth, blynkServer, blynkPort);
   while ((!Blynk.connected()) && (--timeIn > 0))
   {

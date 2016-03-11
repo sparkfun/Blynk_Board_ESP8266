@@ -37,7 +37,6 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
-//#include <ESP.h>
 
 /////////////////////////
 // Function Prototypes //
@@ -48,7 +47,7 @@ void handleReset(void);
 void handleBoardInfo(void);
 void handleConfig(void);
 void setupServer(void);
-void generateSSID(bool rgbCode = true);
+void generateSSIDSuffix(bool newSSID);
 void handleConfigServer(void);
 void checkForStations(void);
 void setupAP(char * ssidName);
@@ -78,7 +77,8 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkDomain = 
                              unsigned long timeout = BLYNK_CONNECT_TIMEOUT);
 
 // BlynkBoard_Core_Firmware functions:
-void buttonPress(void);
+void buttonRelease(void);
+void buttonChange(void);
 void blinkRGBTimer(void);
 void setRGB(uint32_t color);
 uint32_t rgbModeConfig(void);
@@ -147,7 +147,7 @@ void loop()
     checkSerialConfig(); // Check for serial config messages
     if (previousMode != MODE_CONFIG)
     {
-      generateSSID(true); // Start the AP with the BlynkMe-CCCC SSID
+      generateSSIDSuffix(false); // Start the AP with the persistent BlynkMe-CCCC SSID
       setupServer(); // Start the config server up:      
       previousMode = MODE_CONFIG;
       Serial.print(SERIAL_MESSAGE_HELP);
@@ -192,10 +192,9 @@ void loop()
   }
 }
 
-// buttonPress is actually set to be called when the GP0 button is released
-// [BlynkBoard_Setup] configures the interrupt with:
-//    attachInterrupt(BUTTON_PIN, buttonPress, RISING)
-void buttonPress(void)
+// buttonRelease is called when a button has been held
+// for BUTTON_HOLD_TIME_MIN (3s) and released
+void buttonRelease(void)
 {
   // A button press has different effects in different modes:
   switch (runMode)
@@ -205,9 +204,8 @@ void buttonPress(void)
     runMode = MODE_CONFIG; // A button release will switch to config mode
     break;
   case MODE_CONFIG: // If we're in config mode:
-    //BB_DEBUG("Generating a new RGBYP SSID");
-    //generateSSID(true); // Create a new SSID, with RGB suffix
-    blinkCount = 255; // Restart the blink counter
+    BB_DEBUG("Generating a new SSID suffix");
+    generateSSIDSuffix(true); // Create a new SSID suffix
     break;
   case MODE_CONNECTING_WIFI:
   case MODE_CONNECTING_BLYNK:
@@ -215,6 +213,36 @@ void buttonPress(void)
     runMode = MODE_CONFIG;
     break;
   }  
+}
+
+void buttonChange(void)
+{
+  static unsigned long buttonPressTime = 0;
+  if (digitalRead(BUTTON_PIN)) // Button rising - released
+  {
+    runMode = previousMode; // Leave button press mode
+    blinkCount = 0;
+    BB_DEBUG("Button released");
+    unsigned long buttonHoldTime = millis() - buttonPressTime;
+    if (buttonHoldTime >= BUTTON_HOLD_TIME_MIN)
+    {
+      // If the button has been held for minimum time (3s)
+      // execute the button release code:
+      buttonRelease();
+    }
+  }
+  else // Button falling - pressed
+  {
+    BB_DEBUG("Button pressed");
+    buttonPressTime = millis(); // Log the press time
+    if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
+        (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
+    { // If in config, wait-for-config mode, or trying to connect
+      previousMode = runMode; // Store current mode
+      runMode = MODE_BUTTON_HOLD; // set to button-hold mode
+      blinkCount = 0; // Restart LED
+    }
+  }
 }
 
 // This function is tied to the blinker Ticker. It will either blink or
@@ -230,10 +258,10 @@ void blinkRGBTimer(void)
       returnTime = blinkRGB(RGB_STATUS_MODE_WAIT_CONFIG, RGB_PERIOD_START);
       break;
     case MODE_CONFIG:
-      if (suffixGenerated) // If a suffix is generated
-        returnTime = rgbModeConfig(); // Blink the unique RGBYP code
-      else // Otherwise blink red:
-        returnTime = blinkRGB(RGB_STATUS_AP_MODE_DEFAULT, RGB_PERIOD_AP_DEFAULT);
+      returnTime = rgbModeConfig(); // Blink the unique RGBYP code
+      break;
+    case MODE_BUTTON_HOLD:
+      returnTime = breatheRGB(RGB_STATUS_MODE_BUTTON_HOLD, RGB_PERIOD_BUTTON_HOLD);
       break;
     case MODE_CONFIG_DEVICE_CONNECTED: // Device connected in config mode, blink purple:
       returnTime = blinkRGB(RGB_STATUS_AP_MODE_DEVICE_ON, RGB_PERIOD_AP_DEVICE_ON);
