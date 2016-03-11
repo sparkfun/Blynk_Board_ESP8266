@@ -1,40 +1,43 @@
+// Comment next line out to disable serial prints and save space
 #define BLYNK_PRINT Serial // Enables Serial Monitor MUST be before #includes...
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
-char auth[] = "LocalAuthToken"; // Put your Auth Token here
-char remoteAuth[] = "RemoteAuthToken"; // Auth token of device connected via bridge
+char auth[] = "LocalAuthToken";        // Put your Auth Token here
+char remoteAuth[] = "RemoteAuthToken"; // Auth token of bridged device
 
-// 'Global':
-#define BUTTON_PIN     0  // GPIO0
-#define LED_PIN        5  // GPIO5
-// Local:
-#define LOCAL_LED_BUTTON  5 // V5
-#define REMOTE_LED_BUTTON 6 // V6
-#define LOCAL_TERMINAL    7 // V7
-#define LOCAL_BRIDGE      8 // V8
-#define LOCAL_RECEIVE     9 // V9
-// Remote:
-#define REMOTE_LOCAL_LED_BUTTON  0  // V0
-#define REMOTE_REMOTE_LED_BUTTON 1  // V1
-#define REMOTE_TERMINAL          2  // V2
-#define REMOTE_BRIDGE            3  // V3
-#define REMOTE_RECEIVE           4  // V4
+// Physical Pins:
+#define BUTTON_PIN 0  // GPIO0
+#define LED_PIN    5  // GPIO5
 
-bool wasButtonPressed = false;
+// Virtual Pins:
+#define TERMINAL                 0  // V0
+#define LOCAL_LED_BUTTON         1  // V1
+#define REMOTE_LED_BUTTON        2  // V2
+#define TERMINAL_RECEIVE         3  // V3
+#define BRIDGE                   4  // V4
+#define LOCAL_LED_RECIEVE        5  // V5
+#define REMOTE_LED_STATUS_UPDATE 6  // V6
+
+volatile bool wasButtonPressed = false;
+volatile int8_t pressCount = -1;
+bool ledState = LOW;
 bool remoteLedState = LOW;
 
-// Attach virtual serial terminal to LOCAL_TERMINAL Virtual Pin
-WidgetTerminal terminal(LOCAL_TERMINAL);
+// Attach virtual serial terminal to TERMINAL Virtual Pin
+WidgetTerminal terminal(TERMINAL);
 
 // Configure bridge on LOCAL_BRIDGE virtual pin
-WidgetBridge bridge(LOCAL_BRIDGE);
+WidgetBridge bridge(BRIDGE);
 
 void setup()
 {
   Serial.begin(9600); // See the connection status in Serial Monitor
-  Blynk.begin(auth, "SSID", "PASSWORD");  // Here your Arduino connects to the Blynk Cloud.
 
+  // Here your Arduino connects to the Blynk Cloud.
+  Blynk.begin(auth, "SSID", "PASSWORD");
+
+  // TODO: Set defaults after weird state changes
   // Wait until connected
   while (Blynk.connect() == false);
   
@@ -43,7 +46,10 @@ void setup()
   // Setup the onboard button
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   // Attach BUTTON_PIN interrupt to our handler
-  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonPress, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), onButtonPress, FALLING);
+
+  // Setup the onboard blue LED
+  pinMode(LED_PIN, OUTPUT);
 
   // This will print Blynk Software version to the Terminal Widget when
   // your hardware gets connected to Blynk Server
@@ -56,46 +62,83 @@ void setup()
 // Interrupt service routine to capture button press event
 void onButtonPress()
 {
-  wasButtonPressed = !digitalRead(BUTTON_PIN); // Invert state, since button is "Active LOW"
+  // Invert state, since button is "Active LOW"
+  wasButtonPressed = !digitalRead(BUTTON_PIN);
 }
 
-// Virtual button used to change local LED
+// Virtual button on connected app was used to change local LED.
+// Update LED, and tell remote devices about it.
 BLYNK_WRITE(LOCAL_LED_BUTTON)
 {
-  BLYNK_LOG("Local LED was pressed"); // This can be seen in the Serial Monitor
-  digitalWrite(LED_PIN, param.asInt()); // Set state of virtual button to LED
+  ledState = param.asInt();           // Update local state to match app state
+  BLYNK_LOG("LED state is now %s", ledState ? "HIGH" : "LOW");
+  digitalWrite(LED_PIN, ledState);    // Set state of virtual button to LED
+  // Send updated status to remote board.
+  bridge.virtualWrite(REMOTE_LED_STATUS_UPDATE, ledState);
 }
 
-// Virtual button used to change LED on bridge board
+// Virtual button on connected app was used to change remote LED.
+// Tell remote devices about the change.
 BLYNK_WRITE(REMOTE_LED_BUTTON)
 {
-  BLYNK_LOG("Remote LED was pressed");  // This can be seen in the Serial Monitor
-  bridge.virtualWrite(REMOTE_LOCAL_LED_BUTTON, param.asInt()); // Set state of virtual button to remote LED
+  remoteLedState = param.asInt(); // Update state with info from remote
+  BLYNK_LOG("New remote LED state: %s", param.asInt() ? "HIGH" : "LOW");
+  // Send updated status to remote board.
+  bridge.virtualWrite(LOCAL_LED_RECIEVE, remoteLedState);
 }
 
 // You can send commands from Terminal to your hardware. Just use
 // the same Virtual Pin as your Terminal Widget
-BLYNK_WRITE(LOCAL_TERMINAL)
+BLYNK_WRITE(TERMINAL)
 {
-  bridge.virtualWrite(REMOTE_RECEIVE, param.asStr());  // Send from this terminal to remote terminal
+  // Send from this terminal to remote terminal
+  bridge.virtualWrite(TERMINAL_RECEIVE, param.asStr());
 }
 
-// Receive a string on LOCAL_RECEIVE and write that value to the connected phone's terminal
-BLYNK_WRITE(LOCAL_RECEIVE)
+// Receive a string on LOCAL_RECEIVE and write that value to the connected
+// phone's terminal
+BLYNK_WRITE(TERMINAL_RECEIVE)
 {
   terminal.println(param.asStr());  // Write received string to local terminal
   terminal.flush();
 }
 
+// Remote device triggered an LED change. Update the LED and app status.
+BLYNK_WRITE(LOCAL_LED_RECIEVE)
+{
+  // This can be seen in the Serial Monitor
+  BLYNK_LOG("Remote device triggered LED change");
+
+  ledState = param.asInt();
+  // Turn on LED
+  digitalWrite(LED_PIN, ledState);
+  // Set state of virtual button to match remote LED
+  Blynk.virtualWrite(LOCAL_LED_BUTTON, ledState);
+}
+
+// Remote LED status changed. Show this in the app.
+BLYNK_WRITE(REMOTE_LED_STATUS_UPDATE)
+{
+  remoteLedState = param.asInt();
+  Blynk.virtualWrite(REMOTE_LED_BUTTON, remoteLedState);
+}
+
 void loop()
 {
   Blynk.run(); // All the Blynk Magic happens here...
+
+// remote led btn doesnt update local on remote app
   
   if (wasButtonPressed) {
-    BLYNK_LOG("Physical button was pressed.");              // This can be seen in the Serial Monitor
-    remoteLedState ^= HIGH;                                 // Toggle state
-    bridge.digitalWrite(LED_PIN, remoteLedState);           // Send new state to remote board
-    Blynk.virtualWrite(REMOTE_LED_BUTTON, remoteLedState);  // Update state of button on mobile app
-    wasButtonPressed = false;                               // Clear state variable set in ISR
+    // This can be seen in the Serial Monitor
+    BLYNK_LOG("Physical button was pressed.");
+    // Toggle state
+    remoteLedState ^= HIGH;
+    // Send new state to remote board LED
+    bridge.virtualWrite(LOCAL_LED_RECIEVE, remoteLedState);
+    // Update state of button on local mobile app
+    Blynk.virtualWrite(REMOTE_LED_BUTTON, remoteLedState);
+    // Clear state variable set in ISR
+    wasButtonPressed = false;
   }
 }
