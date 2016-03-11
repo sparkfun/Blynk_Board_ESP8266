@@ -37,7 +37,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
-#include <ESP.h>
+//#include <ESP.h>
 
 /////////////////////////
 // Function Prototypes //
@@ -45,6 +45,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 // BlynkBoard_ConfigMode functions:
 void handleRoot(void);
 void handleReset(void);
+void handleBoardInfo(void);
 void handleConfig(void);
 void setupServer(void);
 void generateSSID(bool rgbCode = true);
@@ -107,13 +108,13 @@ void setup()
   // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
   // to determine if the Blynk Board's Blynk auth token has been set.
   if (checkConfigFlag())
-  { // If the flag has been set, 
+  { // If the flag has been set,
     authTokenStr = getBlynkAuth(); // read the stored auth token
-    BB_DEBUG("Auth token:" + authTokenStr + ".");
+    BB_DEBUG("Auth token:" + authTokenStr);
     blynkHost = getBlynkHost(); // Read the stored host
-    BB_DEBUG("Blynk Host: " + blynkHost + ".");
+    BB_DEBUG("Blynk Host: " + blynkHost);
     blynkPort = getBlynkPort(); // Read the stored port
-    BB_DEBUG("Blynk Port: " + String(blynkPort) + ".");
+    BB_DEBUG("Blynk Port: " + String(blynkPort));
 
     // As long as the auth token, host, and port aren't null
     if ((authTokenStr != 0) && (blynkHost != 0) && (blynkPort != 0))

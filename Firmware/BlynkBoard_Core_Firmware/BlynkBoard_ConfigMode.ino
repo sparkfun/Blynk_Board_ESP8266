@@ -25,19 +25,63 @@ SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
 #include "string.h"
 ESP8266WebServer server(BLYNK_WIFI_CONFIG_PORT);
-const String SSIDWebFormTop = "<!DOCTYPE HTML> "\
-                           "<html><body>" \
-                           "<h1>SparkFun Blynk Board Config</h1>" \
-                           "<p><form method='get' action='config' id='webconfig'>";
-const String SSIDWebFormBtm = "<p>Enter the <b>password</b> for your network. Leave it blank if the network is open:<br>" \
-                              "<input type=\"password\" name=\"pass\" placeholder=\"NetworkPassword\"></p>" \
-                              "<p>Enter the <b>Blynk auth token</b> for your Blynk project:<br>" \
-                              "<input type=\"text\" name=\"blynk\" length=\"32\" placeholder=\"a0b1c2d3e4f5ghijklmnopqrstuvwxyz\"></p>" \
-                              "<p>If non-default, enter the Blynk <b>host and port</b> for your Blynk project:<br>" \
-                              "<input type=\"text\" name=\"host\" value=\"cloud.blynk.cc\">" \
-                              "<input type=\"number\" name=\"port\" value=\"8442\"></p>" \
-                              "<input type=\"submit\" value=\"submit\"></form>" \
-                              "</body></html>";
+const String SSIDWebFormTop = R"raw_string(
+<!DOCTYPE HTML>
+<html><head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+body { background-color:white; }
+input, select {
+  border: none;
+  padding:7px;
+  margin: 7px;
+  width: 300px;
+  color: white;
+  background-color: #e0311d;
+  font-weight: 700;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  border-radius:3px;
+}
+input[name=host] { width: 200px; }
+input[name=port] { width: 70px; }
+input[type=submit] { width: 100px; border: 1px solid black }
+select { padding:6px; width: 316px; }
+::-webkit-input-placeholder{color:rgba(255,255,255,0.8)}
+:-moz-placeholder{color:rgba(255,255,255,0.8)}
+::-moz-placeholder{color:rgba(255,255,255,0.8)}
+:-ms-input-placeholder{color:rgba(255,255,255,0.8)}
+:placeholder-shown{color:rgba(255,255,255,0.8)}
+  </style>
+</head>
+<body>
+  <h1>SparkFun Blynk Board</h1>
+  <p><form method="get" action="config" id="webconfig">
+)raw_string";
+
+const String SSIDWebFormBtm = R"raw_string(
+  <p>Enter the <b>password</b> for your network.<br>(leave it blank if the network is open)<br>
+  <input type="password" name="pass" placeholder="WiFi password"></p>
+  <p>Enter the <b>Blynk auth token</b> for your project:<br>
+  <input type="text" name="blynk" length="32" placeholder="a0b1c2d..."></p>
+  <p>If non-default, enter the Blynk <b>host and port</b> for your Blynk project:<br>
+  <input type="text" name="host" value="cloud.blynk.cc">
+  <input type="number" name="port" value="8442"></p>
+  <input type="submit" value="Apply"></form>
+
+  <script type="text/javascript">
+function onNetSelect(){
+  var net; if (net = document.getElementById("net")) {
+    document.getElementById("manual").style.display = (net.options[net.selectedIndex].value==="")?"":"none";
+  }
+}
+window.onload = function(){
+  onNetSelect();
+};
+  </script>
+</body></html>
+)raw_string";
 
 #ifdef CAPTIVE_PORTAL
   #include <DNSServer.h>
@@ -71,23 +115,38 @@ void handleRoot(void) // On root request to server, send form
   {
     BB_DEBUG("Scan found " + String(n) + " networks");
     webPage += "<p>Select your <b>network</b>, or type it in if it's not in the list:<br>";
-    webPage += "<select name=\"ssid\">"; // Begin scrolling selection
-    webPage += "<option value=\"\">&mdash; (Not Listed)</option>"; // Add blank option
+    webPage += "<select name='ssid' id='net' onChange='onNetSelect()' onkeyup='onNetSelect()' >"; // Begin scrolling selection
+
+    // Sort networks
+    int indices[n];
+    for (int i = 0; i < n; i++) {
+      indices[i] = i;
+    }
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        if (WiFi.RSSI(indices[j]) > WiFi.RSSI(indices[i])) {
+          std::swap(indices[i], indices[j]);
+        }
+      }
+    }
+    
     for (int i = 0; i < n; ++i)
     {
-      webPage += "<option value=\"" + WiFi.SSID(i) + "\">";
-      webPage += WiFi.SSID(i) + " (" + String(WiFi.RSSI(i)) + ")";
-      webPage += WiFi.encryptionType(i) == ENC_TYPE_NONE ? " " : "*";
+      int id = indices[i];
+      webPage += "<option value=\"" + WiFi.SSID(id) + "\">";
+      webPage += WiFi.SSID(id) + " (" + String(WiFi.RSSI(id)) + ")";
+      webPage += WiFi.encryptionType(id) == ENC_TYPE_NONE ? " " : "*";
       webPage += "</option>";
     }
-    webPage += "</select>";
-    webPage += "<input type=\"text\" name=\"ssidManual\" placeholder=\"HiddenNetwork\"></p>";
+    webPage += "<option value=\"\">[ Enter manually ... ]</option>"; // Add manual option
+    webPage += "</select><br>";
+    webPage += "<input type=\"text\" name=\"ssidManual\" id='manual' placeholder=\"Network name\"></p>";
   }
   else
   {
     BB_DEBUG("Scan didn't find any networks.");
     webPage += "<p>Type in your <b>network</b> name:<br>";
-    webPage += "<input type=\"text\" name=\"ssid\" placeholder=\"NetworkName\"></p>";  
+    webPage += "<input type=\"text\" name=\"ssid\" placeholder=\"Network name\"></p>";  
   }
   webPage += SSIDWebFormBtm;
   Serial.println("");
@@ -100,6 +159,26 @@ void handleReset(void)
 {
   resetEEPROM();
   server.send(200, "text/html", "<!DOCTYPE HTML><html>EEPROM reset</html>");
+}
+
+void handleBoardInfo(void)
+{
+  char buff[256];
+  const char* fmt =
+R"json({
+  "board": "Blynk Board",
+  "vendor": "SparkFun",
+  "fw_ver": "%s",
+  "hw_ver": "%s",
+  "blynk_ver": "%s"  
+})json";
+
+  snprintf(buff, sizeof(buff), fmt,
+    BLYNKBOARD_FIRMWARE_VERSION,
+    BLYNKBOARD_HARDWARE_VERSION,
+    BLYNK_VERSION
+  );
+  server.send(200, "application/json", buff);
 }
 
 void handleConfig(void) // handler for "/config" server request
@@ -120,11 +199,11 @@ void handleConfig(void) // handler for "/config" server request
   else
     return;
 
-  BB_DEBUG("SSID: " + ssid + ".");
-  BB_DEBUG("Pass: " + pass + ".");
-  BB_DEBUG("Auth: " + auth + ".");
-  BB_DEBUG("Host: " + host + ".");
-  BB_DEBUG("Port: " + String(port) + ".");
+  BB_DEBUG("SSID: " + ssid);
+  BB_DEBUG("Pass: " + pass);
+  BB_DEBUG("Auth: " + auth);
+  BB_DEBUG("Host: " + host);
+  BB_DEBUG("Port: " + String(port));
 
   //! Be more descriptive in this response.
   //! Tell the user what the board is/should be doing. RGB, etc.
@@ -156,6 +235,7 @@ void setupServer(void)
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
   server.on("/reset", handleReset);
+  server.on("/board_info.json", handleBoardInfo);
   server.begin();
 
   BB_DEBUG("HTTP server started");
@@ -222,6 +302,7 @@ bool SerialWiFiScan(void)
   int n = WiFi.scanNetworks();
   if (n != 0)
   {
+
     char index;
     Serial.println("Scan found " + String(n) + " networks:");
     Serial.println("0: Not listed (hidden network)");
