@@ -26,7 +26,8 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 ******************************************************************************/
 
 #define DEBUG_ENABLED
-//#define CAPTIVE_PORTAL
+//#define CAPTIVE_PORTAL_ENABLE
+#define DNS_ENABLE
 
 #include "BlynkBoard_settings.h"
 #include <ESP8266WiFi.h>
@@ -37,6 +38,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
+#include <DNSServer.h>
 
 /////////////////////////
 // Function Prototypes //

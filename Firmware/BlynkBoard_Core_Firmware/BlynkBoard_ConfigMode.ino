@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
 #include "string.h"
 ESP8266WebServer server(BLYNK_WIFI_CONFIG_PORT);
-const String SSIDWebFormTop = R"raw_string(
+const String SSIDWebFormHdr = R"raw_string(
 <!DOCTYPE HTML>
 <html><head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
@@ -45,6 +45,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-weight: 500;
     line-height: 1.1;
     color: #555;
+}
+a {
+    color: #e0311d;
 }
 body {
     background-color:white; 
@@ -82,6 +85,9 @@ select { padding:6px; width: 316px; }
   </style>
 </head>
 <body>
+)raw_string";
+
+const String SSIDWebFormStart = R"raw_string(
   <form method="get" action="config" id="webconfig">
   <h1>SparkFun Blynk Board Config</h1>
 )raw_string";
@@ -110,12 +116,24 @@ window.onload = function(){
 </body></html>
 )raw_string";
 
-#ifdef CAPTIVE_PORTAL
-  #include <DNSServer.h>
-  const byte DNS_PORT = 53;
-  DNSServer dnsServer;
-#endif
+const String SSIDWebRspFtr = R"raw_string(
+  <h2>RGB LED Status</h2>
+  <p><b><span style="color:blue">&#x25cf; Blue</span></b>: Connecting to WiFi<br>
+  <b><span style="color:#1FD695;">&#x25cf; Blynk green (blink)</span></b>: Connecting to blink<br>
+  <b><span style="color:#1FD695;">&#x25cf; Blynk green (fade in/out)</span></b>: Connected to Blynk!<br>
+  <b><span style="color:purple;">&#x25cf; Purple (blink)</span></b>: Failed to connect to WiFi or Blynk. Phone re-connected.<br>
+  <b><span style="color:red;">&#x25cf; R/G/B/Y/P color code</span></b>: Failed to connect to WiFi or Blynk<br>
+  <b><span style="color:#C0C000;">&#x25cf; Yellow (blink)</span></b>: Error connecting to Blynk server.</p>
+  <hr>
+  <p>If the LED is <b>"breathing" Blynk-green</b>, it's connected! Switch to the Blynk app to start blinking!</p>
+  <p>If the LED has reverted back to <b>purple or the R/G/B/Y/P color code</b>, go back to <a href="blynkme.cc">blynkme.cc</a> and try again.</p>
+  <p>If the LED is <b>blinking yellow</b>, the Blynk Board encountered an error. Unplug it, wait a couple seconds, then plug it back in. It should attempt to connect again.</p>  
+  </body></html>
+)raw_string";
 
+DNSServer dnsServer;
+const byte DNS_PORT = 53;
+  
 void setupAP(char * ssidName)
 {
   WiFi.softAP(ssidName);
@@ -131,8 +149,8 @@ void setupAP(char * ssidName)
 
 void handleRoot(void) // On root request to server, send form
 {
-  String webPage = SSIDWebFormTop;
-  
+  String webPage = SSIDWebFormHdr;
+  webPage += SSIDWebFormStart;
   BB_DEBUG("Initiating WiFi network scan.");
   WiFi.enableSTA(true);
 
@@ -235,10 +253,18 @@ void handleConfig(void) // handler for "/config" server request
   //! Be more descriptive in this response.
   //! Tell the user what the board is/should be doing. RGB, etc.
   // Send a response back to the requester
-  String rsp = "<!DOCTYPE HTML> <html>";
+  /*String rsp = "<!DOCTYPE HTML> <html>";
   rsp += "Connecting to: " + ssid + "<br>";
   rsp += "Then using Blynk auth token: " + auth;
   rsp += "</html>";
+  server.send(200, "text/html", rsp);*/
+  String rsp = SSIDWebFormHdr;
+  rsp += "<h2>WiFi/Blynk Connecting...</h2><p>Blynk Board is attempting to connect to <b>";
+  rsp += ssid + "</b></p>";
+  rsp += "<p>Then I'll use the Blynk auth token <b>" + auth + "</b>";
+  rsp += " to connect to " + host + ":" + String(port); + "</p>";
+  rsp += SSIDWebRspFtr;
+
   server.send(200, "text/html", rsp);
 
   if ((host != "") && (port != 0)) // If host and port are not null/0
@@ -255,10 +281,14 @@ void handleConfig(void) // handler for "/config" server request
 
 void setupServer(void)
 {
-#ifdef CAPTIVE_PORTAL
-  dnsServer.start(DNS_PORT, "*", WiFi.softAPIP());
+#ifdef CAPTIVE_PORTAL_ENABLE
   server.onNotFound(handleRoot);
 #endif
+  // Set up DNS Server
+  dnsServer.setTTL(300); // Time-to-live 300s
+  dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure); // Return code for non-accessible domains
+  dnsServer.start(DNS_PORT, BLYNK_BOARD_URL, WiFi.softAPIP()); // Point blynkme.cc to our IP
+
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
   server.on("/reset", handleReset);
@@ -307,10 +337,8 @@ void generateSSIDSuffix(bool newSuffix)
 
 void handleConfigServer(void)
 {
-  server.handleClient();
-#ifdef CAPTIVE_PORTAL
   dnsServer.processNextRequest();
-#endif
+  server.handleClient();
 }
 
 void checkForStations(void)
@@ -326,7 +354,6 @@ bool SerialWiFiScan(void)
   int n = WiFi.scanNetworks();
   if (n != 0)
   {
-
     char index;
     Serial.println("Scan found " + String(n) + " networks:");
     Serial.println("0: Not listed (hidden network)");
