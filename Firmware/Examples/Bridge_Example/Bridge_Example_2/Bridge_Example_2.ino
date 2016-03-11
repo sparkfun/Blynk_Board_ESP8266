@@ -20,7 +20,6 @@ char remoteAuth[] = "RemoteAuthToken"; // Auth token of bridged device
 #define REMOTE_LED_STATUS_UPDATE 6  // V6
 
 volatile bool wasButtonPressed = false;
-volatile int8_t pressCount = -1;
 bool ledState = LOW;
 bool remoteLedState = LOW;
 
