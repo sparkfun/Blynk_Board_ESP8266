@@ -1,13 +1,13 @@
 /******************************************************************************
 Bridge_Example_2.ino
-BlynkBoard Firmware: Blynk Demo Source
 Brent Wilkins @ SparkFun Electronics
 March 11, 2016
 https://github.com/sparkfun/Blynk_Board_ESP8266/Firmware
-This file, part of the BlynkBoard Firmware, implements all "Blynk Mode"
-functions of the BlynkBoard Core Firmware. That includes managing the Blynk
-connection and ~10 example experiments, which can be conducted without
-reprogramming the Blynk Board.
+This file, is example code for the SparkFun Blynk Board which demonstrates the
+functionality of the Bridge widget. Using two of these boards to send signals
+from one board to the other, or from one connected mobile device to either
+Blynk Board or another mobile device if available. Simple wireless buttons and
+a more complex chat app are part of this demo.
 Resources:
 Blynk Arduino Library: https://github.com/blynkkk/blynk-library/releases/tag/v0.3.3
 License:
