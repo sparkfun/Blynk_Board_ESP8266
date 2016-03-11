@@ -1,3 +1,23 @@
+/******************************************************************************
+Bridge_Example_1.ino
+BlynkBoard Firmware: Blynk Demo Source
+Brent Wilkins @ SparkFun Electronics
+March 11, 2016
+https://github.com/sparkfun/Blynk_Board_ESP8266/Firmware
+This file, part of the BlynkBoard Firmware, implements all "Blynk Mode"
+functions of the BlynkBoard Core Firmware. That includes managing the Blynk
+connection and ~10 example experiments, which can be conducted without
+reprogramming the Blynk Board.
+Resources:
+Blynk Arduino Library: https://github.com/blynkkk/blynk-library/releases/tag/v0.3.3
+License:
+This is released under the MIT license (http://opensource.org/licenses/MIT).
+Please see the included LICENSE.md for more information.
+Development environment specifics:
+Arduino IDE 1.6.7
+SparkFun BlynkBoard - ESP8266
+******************************************************************************/
+
 // Comment next line out to disable serial prints and save space
 #define BLYNK_PRINT Serial // Enables Serial Monitor MUST be before #includes...
 #include <ESP8266WiFi.h>
