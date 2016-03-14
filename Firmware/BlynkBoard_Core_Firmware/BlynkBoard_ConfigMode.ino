@@ -30,7 +30,8 @@ const String SSIDWebFormHdr = R"raw_string(
 <html><head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SparkFun Blynk Board Config</title>
   <style>
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -93,12 +94,12 @@ const String SSIDWebFormStart = R"raw_string(
 )raw_string";
 
 const String SSIDWebFormBtm = R"raw_string(
-  <p>Enter the <b>password</b> for your network.<br>(Leave blank if the network is open)<br>
+  <p>Enter the <b>password</b> for your network:<br>(leave blank if the network is open)<br>
   <input type="password" name="pass" placeholder="WiFi password"></p>
   <p>Enter the <b>Blynk auth token</b> for your project:<br>
-  <input type="text" name="blynk" length="32" placeholder="a0b1c2d..."></p>
+  <input type="text" name="blynk" pattern="[a-zA-Z0-9]{32}" maxlength="32" placeholder="a0b1c2d..."></p>
   <p>Enter the Blynk <b>host and port</b> for your Blynk project:<br>
-  (Leave as-is for defaults:)<br>
+  (leave as-is for defaults)<br>
   <input type="text" name="host" value="cloud.blynk.cc">
   <input type="number" name="port" value="8442"></p>
   <input type="submit" value="Apply"></form>
@@ -159,7 +160,7 @@ void handleRoot(void) // On root request to server, send form
   if (n != 0)
   {
     BB_DEBUG("Scan found " + String(n) + " networks");
-    webPage += "<p>Select your <b>network</b>, or type it in if it's not in the list:<br>";
+    webPage += "<p>Select your <b>WiFi network</b>:<br>";
     webPage += "<select name='ssid' id='net' onChange='onNetSelect()' onkeyup='onNetSelect()' >"; // Begin scrolling selection
 
     // Sort networks
