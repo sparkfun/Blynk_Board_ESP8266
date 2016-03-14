@@ -106,6 +106,12 @@ BLYNK_CONNECTED()
 bool firstRGBWrite = true; // On startup
 BLYNK_WRITE(RGB_VIRTUAL)
 {
+  // RGB widget may send invalid buffer data. If we try to read those in
+  // the ESP8266 crashes. At a minimum, for valid data, the buffer 
+  // length should be >=5. ("0,0,0" ?)
+  if (param.getLength() < 5)
+    return;
+  
   int redParam = param[0].asInt();
   int greenParam = param[1].asInt();
   int blueParam = param[2].asInt();
@@ -863,7 +869,9 @@ void blynkSetup(void)
   {
     BB_DEBUG("Luminosity sensor connected.");
     luxInit(); // If it's there, initialize it
-  }  
+  }
+
+  BB_DEBUG("Done initializing Blynk demo");
 }
 
 void blynkLoop(void)

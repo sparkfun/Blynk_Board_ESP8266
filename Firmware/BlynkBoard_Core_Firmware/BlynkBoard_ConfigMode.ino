@@ -135,17 +135,21 @@ const String SSIDWebRspFtr = R"raw_string(
 DNSServer dnsServer;
 const byte DNS_PORT = 53;
   
-void setupAP(char * ssidName)
+bool setupAP(char * ssidName)
 {
+  WiFi.mode(WIFI_AP);
+  WiFi.softAPConfig(defaultAPIP, defaultAPIP, defaultAPSub);
   WiFi.softAP(ssidName);
 
   IPAddress myIP = WiFi.softAPIP();
   BB_DEBUG("AP IP address: " + String(myIP[0]) + "." + 
        String(myIP[1]) + "." + String(myIP[2]) + "." + String(myIP[3]));
+       
   //! ESP8266 bug: IP may be 0 -- makes AP un-connectable
-  //! Need to find out _why_ it's 0,but resetting and trying again usually works
   if (myIP == (uint32_t)0)
-    ESP.reset();
+    return false;
+  else
+    return true;
 }
 
 void handleRoot(void) // On root request to server, send form
@@ -233,9 +237,9 @@ void handleConfig(void) // handler for "/config" server request
   String ssidManual = server.arg("ssidManual"); // Network name - entered manually
   String ssidScan = server.arg("ssid"); // Network name - entered from select list
   String pass = server.arg("pass"); // Network password
-  String auth = server.arg("blynk"); // Blynk auth code
-  String host = server.arg("host");
-  uint16_t port = server.arg("port").toInt();
+  g_blynkAuthStr = server.arg("blynk"); // Blynk auth code
+  g_blynkHostStr = server.arg("host");
+  g_blynkPort = server.arg("port").toInt();
   
   String ssid; // Select between the manually or scan entered
   if (ssidScan != "") // Prefer scan entered
@@ -247,9 +251,9 @@ void handleConfig(void) // handler for "/config" server request
 
   BB_DEBUG("SSID: " + ssid);
   BB_DEBUG("Pass: " + pass);
-  BB_DEBUG("Auth: " + auth);
-  BB_DEBUG("Host: " + host);
-  BB_DEBUG("Port: " + String(port));
+  BB_DEBUG("Auth: " + g_blynkAuthStr);
+  BB_DEBUG("Host: " + g_blynkHostStr);
+  BB_DEBUG("Port: " + String(g_blynkPort));
 
   //! Be more descriptive in this response.
   //! Tell the user what the board is/should be doing. RGB, etc.
@@ -262,21 +266,21 @@ void handleConfig(void) // handler for "/config" server request
   String rsp = SSIDWebFormHdr;
   rsp += "<h2>WiFi/Blynk Connecting...</h2><p>Blynk Board is attempting to connect to <b>";
   rsp += ssid + "</b></p>";
-  rsp += "<p>Then I'll use the Blynk auth token <b>" + auth + "</b>";
-  rsp += " to connect to " + host + ":" + String(port); + "</p>";
+  rsp += "<p>Then I'll use the Blynk auth token <b>" + g_blynkAuthStr + "</b>";
+  rsp += " to connect to " + g_blynkHostStr + ":" + String(g_blynkPort); + "</p>";
   rsp += SSIDWebRspFtr;
 
   server.send(200, "text/html", rsp);
 
-  if ((host != "") && (port != 0)) // If host and port are not null/0
+  if ((g_blynkHostStr != "") && (g_blynkPort != 0)) // If host and port are not null/0
   {
-    BB_DEBUG("Connecting to " + host);
-    setupBlynkStation(ssid, pass, auth, host, port); // Connect using those
+    BB_DEBUG("Connecting to " + g_blynkHostStr);
+    setupBlynkStation(ssid, pass, g_blynkAuthStr, g_blynkHostStr, g_blynkPort); // Connect using those
   }
   else
   {
     BB_DEBUG("Connecting to default server");
-    setupBlynkStation(ssid, pass, auth); // Otherwise connect using defaults
+    setupBlynkStation(ssid, pass, g_blynkAuthStr); // Otherwise connect using defaults
   }
 }
 
@@ -332,7 +336,8 @@ void generateSSIDSuffix(bool newSuffix)
   }
   BB_DEBUG("New SSID: " + String(BoardSSID));
 
-  setupAP(BoardSSID); // Initialize the access point
+  if (!setupAP(BoardSSID))
+    ESP.reset();
   blinkCount = 0; // Reset LED blinker count
 }
 
@@ -539,6 +544,12 @@ void executeSerialCommand(void)
         serialConfigWiFiSSID = "";
         serialConfigWiFiPSK = "";
       }
+    }
+    else
+    {
+      g_blynkAuthStr = serialConfigBlynkAuth;
+      g_blynkHostStr = serialConfigBlynkHost;
+      g_blynkPort = serialConfigBlynkPort;
     }
   }
   serialConfigBuffer = "";
