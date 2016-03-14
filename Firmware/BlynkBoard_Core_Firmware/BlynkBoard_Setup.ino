@@ -261,13 +261,22 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
                              uint16_t blynkPort, unsigned long timeout)
 {
   runMode = MODE_CONNECTING_BLYNK;
+  // Button interrupt is interfering with something. If the ISR is entered
+  // during this loop, an exception occurs. Disable interrupt:
+  detachInterrupt(BUTTON_PIN);
   
   long timeIn = timeout;
+  
   Blynk.config(blynkAuth, blynkServer, blynkPort);
+  
   while ((!Blynk.connected()) && (--timeIn > 0))
   {
     if (runMode != MODE_CONNECTING_BLYNK)
+    {
+      attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
       return 0;
+    }
+      
     Blynk.run();
     delay(1);
   }
@@ -277,6 +286,7 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
     runMode = MODE_WAIT_CONFIG;
   }
   
+  attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
   return timeIn;
 }
 

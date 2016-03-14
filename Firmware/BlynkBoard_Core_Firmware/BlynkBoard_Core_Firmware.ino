@@ -52,7 +52,7 @@ void setupServer(void);
 void generateSSIDSuffix(bool newSSID);
 void handleConfigServer(void);
 void checkForStations(void);
-void setupAP(char * ssidName);
+bool setupAP(char * ssidName);
 void checkSerialConfig(void);
 void executeSerialCommand(void);
 
@@ -87,13 +87,6 @@ uint32_t rgbModeConfig(void);
 uint32_t blinkRGB(uint32_t onColor, uint32_t period);
 uint32_t breatheRGB(uint32_t colorMax, unsigned int breathePeriod);
 
-// If blynk strings aren't global, reconnect's may see them as invalid
-String authTokenStr; 
-String blynkHost;
-uint16_t blynkPort;
-
-bool rgbSetByProject = false;
-
 void setup()
 {
   // runMode keeps track of the Blynk Board's current operating mode.
@@ -111,21 +104,21 @@ void setup()
   // to determine if the Blynk Board's Blynk auth token has been set.
   if (checkConfigFlag())
   { // If the flag has been set,
-    authTokenStr = getBlynkAuth(); // read the stored auth token
-    BB_DEBUG("Auth token:" + authTokenStr);
-    blynkHost = getBlynkHost(); // Read the stored host
-    BB_DEBUG("Blynk Host: " + blynkHost);
-    blynkPort = getBlynkPort(); // Read the stored port
-    BB_DEBUG("Blynk Port: " + String(blynkPort));
+    g_blynkAuthStr = getBlynkAuth(); // read the stored auth token
+    BB_DEBUG("Auth token:" + g_blynkAuthStr);
+    g_blynkHostStr = getBlynkHost(); // Read the stored host
+    BB_DEBUG("Blynk Host: " + g_blynkHostStr);
+    g_blynkPort = getBlynkPort(); // Read the stored port
+    BB_DEBUG("Blynk Port: " + String(g_blynkPort));
 
     // As long as the auth token, host, and port aren't null
-    if ((authTokenStr != 0) && (blynkHost != 0) && (blynkPort != 0))
+    if ((g_blynkAuthStr != 0) && (g_blynkHostStr != 0) && (g_blynkPort != 0))
     {
       // Connect to WiFi network stored in ESP8266's persistent flash
       if (WiFiConnectWithTimeout(WIFI_STA_CONNECT_TIMEOUT))
       { // If we successfully connect to WiFi, connect to Blynk
-        if (BlynkConnectWithTimeout(authTokenStr.c_str(), blynkHost.c_str(), 
-                                    blynkPort, BLYNK_CONNECT_TIMEOUT));
+        if (BlynkConnectWithTimeout(g_blynkAuthStr.c_str(), g_blynkHostStr.c_str(), 
+                                    g_blynkPort, BLYNK_CONNECT_TIMEOUT))
         { // If we successfully connect to Blynk
           blynkSetup(); // Run the Blynk setup function [BlynkBoard_BlynkMode]
         }
@@ -183,6 +176,7 @@ void loop()
   case MODE_BLYNK_ERROR: // Error connecting to Blynk
     if (previousMode != MODE_BLYNK_ERROR) // If we just got here
     {
+      Blynk.config(g_blynkAuthStr.c_str(), g_blynkHostStr.c_str(), g_blynkPort);
       blinker.attach_ms(1, blinkRGBTimer); // Turn on the RGB blink timer
       previousMode = MODE_BLYNK_ERROR; // Update previousMode so blink timer isn't re-called
     }
@@ -207,6 +201,7 @@ void buttonRelease(void)
   {
   case MODE_WAIT_CONFIG: // If we're in "wait for config mode"
     BB_DEBUG("Switching to config mode");
+    previousMode = runMode;
     runMode = MODE_CONFIG; // A button release will switch to config mode
     break;
   case MODE_CONFIG: // If we're in config mode:

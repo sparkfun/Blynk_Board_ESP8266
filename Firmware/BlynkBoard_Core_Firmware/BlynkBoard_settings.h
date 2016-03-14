@@ -24,8 +24,9 @@ SparkFun BlynkBoard - ESP8266
 
 #include <Ticker.h>
 #include <Adafruit_NeoPixel.h>
+#include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.8.2"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.8.3"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -34,7 +35,7 @@ SparkFun BlynkBoard - ESP8266
 #define BLYNK_PRINT Serial
 #define BB_DEBUG(msg) {\
   Serial.print("[" + String(millis()) + "] "); \
-  Serial.println(msg);}
+  Serial.println(msg); }
 #else
 #define BB_DEBUG(msg)
 #endif
@@ -82,12 +83,18 @@ const String BLYNK_PORT_SPIFF_FILE = "/blynk_port.txt";
 //////////////////////////////
 #define BB_BLYNK_HOST_DEFAULT BLYNK_DEFAULT_DOMAIN
 #define BB_BLYNK_PORT_DEFAULT BLYNK_DEFAULT_PORT
+// If blynk strings aren't global, reconnect's may see them as invalid
+static String g_blynkAuthStr;
+static String g_blynkHostStr;
+uint16_t g_blynkPort;
 
 ///////////////////
 // WiFi Settings //
 ///////////////////
-#define WIFI_STA_CONNECT_TIMEOUT 30
-#define BLYNK_CONNECT_TIMEOUT    15000
+#define WIFI_STA_CONNECT_TIMEOUT 30 // WiFi connection timeout (in seconds)
+#define BLYNK_CONNECT_TIMEOUT    15000 // Blynk connection timeout (in ms)
+IPAddress defaultAPIP(192, 168, 4, 1);
+IPAddress defaultAPSub(255, 255, 255, 0);
 
 //////////////////////////
 // Hardware Definitions //
@@ -134,6 +141,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 ///////////////////
 Ticker blinker; // Timer to blink LED
 uint8_t blinkCount = 0; // Timer iteration counter
+bool rgbSetByProject = false;
 
 #define WS2812_OFF 0x000000
 #define WS2812_RED 0x200000
@@ -185,7 +193,7 @@ const char SERIAL_MESSAGE_BLYNK_HOST[] = "\r\nType your Blynk Server and hit ent
                                          "Leave blank to use default: cloud.blynk.cc\r\n> ";
 const char SERIAL_MESSAGE_BLYNK_PORT[] = "\r\nType your Blynk Port and hit enter.\r\n" \
                                          "Leave blank to use default: 8442.\r\n> ";
-const char SERIAL_MESSAGE_BLYNK[]= "\r\nEnter your 32-character Blynk Auth token.\r\n> ";
+const char SERIAL_MESSAGE_BLYNK[] = "\r\nEnter your 32-character Blynk Auth token.\r\n> ";
 const char SERIAL_MESSAGE_HELP[] = "\r\nBlynk Board - ESP8266 Serial Config\r\n" \
                                    "  s: Scan for a WiFi network\r\n" \
                                    "  b: Configure Blynk token, host, and port\r\n" \
