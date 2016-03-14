@@ -99,7 +99,14 @@ void setup()
   // initHardware() initializes: Serial terminal, randomSeed, WS2812 RGB LED,
   // GP0 button, GP5 LED, SPIFFS (flash storage), and EEPROM.
   initHardware();
-  
+
+#ifdef DEBUG_ENABLED
+  if (0 == digitalRead(BUTTON_PIN)) {
+    BB_DEBUG("Button pressed => reset config");
+    resetEEPROM();
+  }
+#endif
+
   // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
   // to determine if the Blynk Board's Blynk auth token has been set.
   if (checkConfigFlag())
