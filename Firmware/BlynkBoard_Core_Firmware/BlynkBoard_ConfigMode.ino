@@ -99,7 +99,7 @@ const String SSIDWebFormBtm = R"raw_string(
   <input type="text" name="blynk" length="32" placeholder="a0b1c2d..."></p>
   <p>Enter the Blynk <b>host and port</b> for your Blynk project:<br>
   (Leave as-is for defaults:)<br>
-  <input type="text" name="host" value="cloud.blynk.cc">
+  <input type="text" name="host" value="blynk-cloud.com">
   <input type="number" name="port" value="8442"></p>
   <input type="submit" value="Apply"></form>
 
@@ -131,8 +131,10 @@ const String SSIDWebRspFtr = R"raw_string(
   </body></html>
 )raw_string";
 
-DNSServer dnsServer;
-const byte DNS_PORT = 53;
+#ifdef DNS_ENABLE
+  DNSServer dnsServer;
+  const byte DNS_PORT = 53;
+#endif
   
 bool setupAP(char * ssidName)
 {
@@ -254,19 +256,12 @@ void handleConfig(void) // handler for "/config" server request
   BB_DEBUG("Host: " + g_blynkHostStr);
   BB_DEBUG("Port: " + String(g_blynkPort));
 
-  //! Be more descriptive in this response.
-  //! Tell the user what the board is/should be doing. RGB, etc.
   // Send a response back to the requester
-  /*String rsp = "<!DOCTYPE HTML> <html>";
-  rsp += "Connecting to: " + ssid + "<br>";
-  rsp += "Then using Blynk auth token: " + auth;
-  rsp += "</html>";
-  server.send(200, "text/html", rsp);*/
   String rsp = SSIDWebFormHdr;
-  rsp += "<h2>WiFi/Blynk Connecting...</h2><p>Blynk Board is attempting to connect to <b>";
+  rsp += "<h2>WiFi/Blynk Connecting...</h2><p>Your Blynk Board is attempting to connect to <b>";
   rsp += ssid + "</b></p>";
-  rsp += "<p>Then I'll use the Blynk auth token <b>" + g_blynkAuthStr + "</b>";
-  rsp += " to connect to " + g_blynkHostStr + ":" + String(g_blynkPort); + "</p>";
+  rsp += "<p>Then it'll use the Blynk auth token <b>" + g_blynkAuthStr + "</b>";
+  rsp += " to connect to " + g_blynkHostStr + ":" + String(g_blynkPort); + ".</p>";
   rsp += SSIDWebRspFtr;
 
   server.send(200, "text/html", rsp);
@@ -288,11 +283,12 @@ void setupServer(void)
 #ifdef CAPTIVE_PORTAL_ENABLE
   server.onNotFound(handleRoot);
 #endif
+#ifdef DNS_ENABLE
   // Set up DNS Server
   dnsServer.setTTL(300); // Time-to-live 300s
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure); // Return code for non-accessible domains
   dnsServer.start(DNS_PORT, BLYNK_BOARD_URL, WiFi.softAPIP()); // Point blynkme.cc to our IP
-
+#endif
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
   server.on("/reset", handleReset);
@@ -342,7 +338,9 @@ void generateSSIDSuffix(bool newSuffix)
 
 void handleConfigServer(void)
 {
+#ifdef DNS_ENABLE
   dnsServer.processNextRequest();
+#endif
   server.handleClient();
 }
 

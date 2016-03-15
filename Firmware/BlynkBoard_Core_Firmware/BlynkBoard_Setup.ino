@@ -21,7 +21,7 @@ Arduino IDE 1.6.7
 SparkFun BlynkBoard - ESP8266
 ******************************************************************************/
 
-void initHardware(void)
+bool initHardware(void)
 {
   delay(1000);
   Serial.begin(SERIAL_TERMINAL_BAUD);
@@ -35,11 +35,11 @@ void initHardware(void)
   rgb.begin();
   rgb.setPixelColor(0, rgb.Color(0, 0, 0));
   rgb.show();
-  // Attach a timer to the RGB LED, begin by calling it
+  // Attach a timer to the RGB LED:
   blinker.attach_ms(RGB_PERIOD_AP, blinkRGBTimer);
 
   // Initialize the button, and setup a hardware interrupt
-  // Look for RISING - when the button is released.
+  // Look for CHANGE - when the button is pressed or released.
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
 
@@ -48,8 +48,13 @@ void initHardware(void)
   digitalWrite(BLUE_LED_PIN, LOW); // Turn the LED off
 
   if (!SPIFFS.begin())
-    BB_DEBUG("Failed to initialize SPIFFS"); //! TODO: consider returning error if this fails.
+  {
+    BB_DEBUG("Failed to initialize SPIFFS");
+    return false;
+  }
+  
   EEPROM.begin(EEPROM_SIZE);
+  return true;
 }
 
 bool checkConfigFlag(void)
@@ -226,8 +231,7 @@ int8_t setupBlynkStation(String network, String psk, String blynkAuth,
   EEPROM.write(EEPROM_CONFIG_FLAG_ADDRESS, 1);
   EEPROM.commit();
 
-  //! TODO: Consider changing mode to an intermediary
-  //  MODE_BLYNK_SETUP, where blynkSetup is called.
+  // Initialize hardware to get it ready for Blynk mode:
   blynkSetup();
   
   return WIFI_BLYNK_SUCCESS;
@@ -288,6 +292,136 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
   
   attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
   return timeIn;
+}
+
+bool checkSelfTestFlag(void)
+{
+  if (EEPROM.read(EEPROM_SELF_TEST_ADDRESS) == 0x42)
+    return true;
+  return false;
+}
+
+void performSelfTest(void)
+{
+  uint8_t testResult = 0;
+  pinMode(BLUE_LED_PIN, OUTPUT);
+  digitalWrite(BLUE_LED_PIN, HIGH); // Turn blue LED on
+  rgb.updateLength(2); // Connect to testbed LED
+  rgb.setPixelColor(0, 0);
+  rgb.setPixelColor(1, 0);
+  rgb.show(); // Turn both WS2812's off
+  
+  //////////////////////////
+  // WiFi connection test //
+  //////////////////////////
+  WiFi.disconnect();
+  WiFi.begin("sparkfun-guest","sparkfun6333");
+  unsigned timeout = 10000;
+  while ((WiFi.status() != WL_CONNECTED) && (--timeout))
+    delay(1);
+  if (timeout > 0)
+  {
+    Serial.println("Connected to test network");
+    testResult |= (1<<0);
+  }
+  else
+  {
+    Serial.println("Failed to connect to WiFi");
+  }
+
+  /////////////////
+  // Si7021 Test //
+  /////////////////
+  thSense.begin();
+  if (scanI2C(0x40))
+  {
+    Serial.println("Si7021 test succeeded");
+    testResult |= (1<<1);
+  }
+  else
+  {
+    Serial.println("Si7021 test failed");    
+  }
+
+  //////////////
+  // ADC Test //
+  //////////////
+  float adcRaw = analogRead(A0); // Read in A0
+  float voltage = ((float)adcRaw / 1024.0) * ADC_VOLTAGE_DIVIDER;
+  if((voltage < 2.5) && (voltage > 1.5))
+  {
+    Serial.println("ADC test passed");   
+    testResult |= (1<<2);
+  }
+  else
+  {
+    Serial.println("ADC test failed: " + String(voltage));       
+  }
+
+  /////////////
+  // IO test //
+  /////////////
+  // Pins 16, 12, and 13 should be tied together.
+  // Pin 16 will be written high/low, and pins 12/13 will be read.
+  uint8_t ioTest = 0;
+  timeout = 1000; // 1s timeout
+  pinMode(16, OUTPUT);
+  pinMode(12, INPUT);
+  pinMode(13, INPUT);
+  
+  // High test:
+  digitalWrite(16, HIGH);
+  delay(100);
+  while ((--timeout))
+  {
+    if ((digitalRead(12) == HIGH) && (digitalRead(13) == HIGH))
+      break;
+  }
+  if (timeout > 0)
+    ioTest |= (1<<0);
+  
+  // Low test:
+  digitalWrite(16, LOW);
+  timeout = 1000;
+  delay(100);
+  while ((--timeout))
+  {
+    if ((digitalRead(12) == LOW) && (digitalRead(13) == LOW))
+      break;
+  }
+  if (timeout > 0)
+    ioTest |= (1<<1);
+
+  if (ioTest == 3)
+  {
+    Serial.println("IO test passed");  
+    testResult |= (1<<3);
+  }
+  else
+  {
+    Serial.println("IO test failed");  
+  }
+
+  if (testResult == 0xF)
+  {
+    while (1)
+    {
+      rgb.setPixelColor(1, 0x008000);
+      delay(1000);
+      rgb.setPixelColor(1, 0x000080);
+      delay(1000);
+    }
+  }
+  else
+  {
+    while (1)
+    {
+      rgb.setPixelColor(1, 0x200000);
+      delay(1000);
+      rgb.setPixelColor(1, 0);
+      delay(1000);
+    }
+  }
 }
 
 void resetEEPROM(void)

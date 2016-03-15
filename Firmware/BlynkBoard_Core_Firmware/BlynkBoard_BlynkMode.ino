@@ -179,8 +179,6 @@ void buttonUpdate(void)
  3  - Slider: Blue, V4, 0-255          3
  3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 */
 // GP5 variables not necessary - directly controlled
-//! RGB values are synced on connect, but GP5 is not.
-//  Is there any way to fix that?
 byte blynkRed = 0; // Keeps track of red value
 byte blynkGreen = 0; // Keeps track of green value
 byte blynkBlue = 0; // Keeps track of blue value
@@ -361,8 +359,6 @@ BLYNK_WRITE(RGB_STRIP_NUM_VIRTUAL)
  8  - Button: Stats, V12               8
  8  - Button: Runtime, V13             8
  8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 */
- //! This experiment may be causing random exceptions
-
 BLYNK_WRITE(LCD_TEMPHUMID_VIRTUAL)
 {
   if (param.asInt() > 0)
@@ -576,10 +572,9 @@ BLYNK_WRITE(SERIAL_VIRTUAL)
     String emailAdd = incoming.substring(1, incoming.length());
     for (int i=0; i<emailAdd.length(); i++)
     {
-      if (emailAdd.charAt(i) == ' ') //! TODO check for ANY invalid character
+      if (emailAdd.charAt(i) == ' ')
         emailAdd.remove(i, 1);
     }
-    //! TODO: Check if valid email - look for @, etc.
     terminal.println("Your email is:" + emailAdd + ".");
     emailAddress = emailAdd;
     terminal.flush();
@@ -724,8 +719,6 @@ BLYNK_READ(DOOR_STATE_VIRTUAL)
   }  
 }
 
-//! This may not be all that necessary.
-//  Push can be enabled/disabled by adding/removing it from app
 BLYNK_WRITE(PUSH_ENABLE_VIRTUAL)
 {
   uint8_t state = param.asInt(); // Read in handler parameter
@@ -766,8 +759,8 @@ void emailUpdate(void)
   emailMessage += "Humidity: " + String(thSense.readHumidity()) + "%\r\n"; // Add humidity sensor
   emailMessage += "\r\n"; // Empty line
   emailMessage += "Runtime: " + String(millis() / 1000) + "s\r\n";
-  //! May have been running into an issue with a too-long emailMessage.
-  //  Be careful adding anything else to this String.
+  // May have been running into an issue with a too-long emailMessage.
+  // Be careful adding anything else to this String.
   BB_DEBUG("email: " + emailAddress);
   BB_DEBUG("subject: " + emailSubject);
   BB_DEBUG("message: " + emailMessage);
@@ -825,7 +818,6 @@ BLYNK_READ(RUNTIME_VIRTUAL)
       runTime /= 60.0; // Convert to hours
       if (runTime >= 1000) // 1000 hours = 41.67 days
         runTime /= 24.0;
-      //! Years!?! 999 days = 2.7 years
     }
   }
   Blynk.virtualWrite(RUNTIME_VIRTUAL, runTime);

@@ -27,7 +27,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 
 #define DEBUG_ENABLED
 //#define CAPTIVE_PORTAL_ENABLE
-#define DNS_ENABLE
+//#define DNS_ENABLE
 
 #include "BlynkBoard_settings.h"
 #include <ESP8266WiFi.h>
@@ -38,7 +38,9 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
-#include <DNSServer.h>
+#ifdef DNS_ENABLE
+  #include <DNSServer.h>
+#endif
 
 /////////////////////////
 // Function Prototypes //
@@ -55,6 +57,7 @@ void checkForStations(void);
 bool setupAP(char * ssidName);
 void checkSerialConfig(void);
 void executeSerialCommand(void);
+uint32_t rgbModeSelfTest(void);
 
 // BlynkBoard_BlynkMode functions:
 void buttonUpdate(void);
@@ -62,7 +65,7 @@ void blynkSetup(void);
 void blynkLoop(void);
 
 // BlynkBoard_setup functions:
-void initHardware(void);
+bool initHardware(void);
 bool checkConfigFlag(void);
 bool writeBlynkConfig(String authToken, String host, uint16_t port);
 String getBlynkAuth(void);
@@ -77,6 +80,8 @@ long WiFiConnectWithTimeout(unsigned long timeout);
 long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkDomain = BB_BLYNK_HOST_DEFAULT,
                              uint16_t blynkPort = BB_BLYNK_PORT_DEFAULT,
                              unsigned long timeout = BLYNK_CONNECT_TIMEOUT);
+bool checkSelfTestFlag(void);
+void performSelfTest(void);
 
 // BlynkBoard_Core_Firmware functions:
 void buttonRelease(void);
@@ -93,12 +98,22 @@ void setup()
   // It may be either MODE_WAIT_CONFIG, MODE_CONFIG, MODE_CONFIG_DEVICE_CONNECTED,
   // MODE_CONNECTING_WIFI, MODE_CONNECTING_BLYNK, MODE_BLYNK_RUN,
   // or MODE_BLYNK_ERROR.
-  runMode = MODE_WAIT_CONFIG;
-  previousMode = runMode; // Previous mode keeps track of the previous runMode
   
-  // initHardware() initializes: Serial terminal, randomSeed, WS2812 RGB LED,
+  // Initializes: Serial terminal, randomSeed, WS2812 RGB LED,
   // GP0 button, GP5 LED, SPIFFS (flash storage), and EEPROM.
   initHardware();
+
+  /*if (!checkSelfTestFlag())
+  {
+    BB_DEBUG("Performing self test");
+    runMode = MODE_SELF_TEST;
+    performSelfTest();
+  }
+  else
+  {
+    runMode = MODE_WAIT_CONFIG;
+    previousMode = runMode; // Previous mode keeps track of the previous runMode
+  }*/
   
   // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
   // to determine if the Blynk Board's Blynk auth token has been set.
@@ -139,6 +154,8 @@ void loop()
 {
   switch (runMode)
   {
+  case BUTTON_HOLD_TIME_MIN:
+    break;
   case MODE_WAIT_CONFIG: // Do nothing, wait for GP0 button
     break;
   case MODE_CONFIG: // Config mode - no connected device
@@ -235,13 +252,21 @@ void buttonChange(void)
   else // Button falling - pressed
   {
     BB_DEBUG("Button pressed");
-    buttonPressTime = millis(); // Log the press time
-    if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
-        (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
-    { // If in config, wait-for-config mode, or trying to connect
-      previousMode = runMode; // Store current mode
-      runMode = MODE_BUTTON_HOLD; // set to button-hold mode
-      blinkCount = 0; // Restart LED
+    if (runMode == MODE_SELF_TEST)
+    {
+      // Set selftest flag
+      ESP.reset();
+    }
+    else
+    {
+      buttonPressTime = millis(); // Log the press time
+      if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
+          (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
+      { // If in config, wait-for-config mode, or trying to connect
+        previousMode = runMode; // Store current mode
+        runMode = MODE_BUTTON_HOLD; // set to button-hold mode
+        blinkCount = 0; // Restart LED
+      }      
     }
   }
 }
@@ -255,8 +280,11 @@ void blinkRGBTimer(void)
   rgbSetByProject = false;
   switch (runMode)
   {
+    case MODE_SELF_TEST:
+      returnTime = rgbModeSelfTest();
+      break;
     case MODE_WAIT_CONFIG: // Waiting for config mode, blink white:
-      returnTime = blinkRGB(RGB_STATUS_MODE_WAIT_CONFIG, RGB_PERIOD_START);
+      returnTime = blinkRGB(RGB_STATUS_MODE_WAIT_CONFIG, RGB_PERIOD_SELF_TEST);
       break;
     case MODE_CONFIG:
       returnTime = rgbModeConfig(); // Blink the unique RGBYP code
@@ -308,6 +336,20 @@ uint32_t rgbModeConfig(void)
   }
 
   return retVal; // Return the blink time
+}
+
+// Continuously blink through r/g/b
+uint32_t rgbModeSelfTest(void)
+{
+  if (blinkCount > 2) blinkCount = 0;
+  
+  if (blinkCount == 0) setRGB(0x200000); // Red
+  else if (blinkCount == 1) setRGB(0x002000); // Green
+  else if (blinkCount == 2) setRGB(0x000020); // Blue
+    
+  blinkCount++; // Increment blinkCount
+  blinkCount %= 3; // Limit blinkCount range to 0-2
+  return RGB_PERIOD_START;
 }
 
 // Blink the LED a specific color with a set period.

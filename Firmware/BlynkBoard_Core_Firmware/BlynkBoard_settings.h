@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.8.3"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.8.4"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -46,6 +46,7 @@ SparkFun BlynkBoard - ESP8266
 // Run Modes //
 ///////////////
 enum runModes{
+  MODE_SELF_TEST,
   MODE_WAIT_CONFIG,
   MODE_CONFIG,
   MODE_BUTTON_HOLD,
@@ -76,7 +77,9 @@ const String BLYNK_PORT_SPIFF_FILE = "/blynk_port.txt";
 // Config Server Definitions //
 ///////////////////////////////
 #define BLYNK_WIFI_CONFIG_PORT 80
-#define BLYNK_BOARD_URL "blynkme.cc"
+#ifdef DNS_ENABLE
+  #define BLYNK_BOARD_URL "blynkme.cc"
+#endif
 
 //////////////////////////////
 // Blynk Server Definitions //
@@ -125,6 +128,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 /////////////////////////////
 // RGB Status Blink Period //
 /////////////////////////////
+#define RGB_PERIOD_SELF_TEST    500
 #define RGB_PERIOD_START        1000
 #define RGB_PERIOD_BUTTON_HOLD  BUTTON_HOLD_TIME_MIN
 #define RGB_PERIOD_AP           1000
