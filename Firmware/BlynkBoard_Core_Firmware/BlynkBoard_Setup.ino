@@ -205,6 +205,7 @@ int16_t getBlynkPort(void)
 int8_t setupBlynkStation(String network, String psk, String blynkAuth, 
                          String blynkHost, uint16_t blynkPort)
 {
+  WiFi.disconnect();
   WiFi.enableSTA(true);
   WiFi.disconnect();
   
@@ -270,6 +271,7 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
   detachInterrupt(BUTTON_PIN);
   
   long timeIn = timeout;
+  timeIn /= 100;
   
   Blynk.config(blynkAuth, blynkServer, blynkPort);
   
@@ -282,14 +284,16 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
     }
       
     Blynk.run();
-    delay(1);
+    delay(100);
+    BB_DEBUG("Blynk connect: " + String(timeIn));
   }
   
   if (timeIn <= 0)
   {
     runMode = MODE_WAIT_CONFIG;
   }
-  
+
+  BB_DEBUG("Blynk connect time: " + String(timeIn));
   attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
   return timeIn;
 }
