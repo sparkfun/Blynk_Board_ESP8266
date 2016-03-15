@@ -224,7 +224,7 @@ R"json({
   "vendor": "SparkFun",
   "fw_ver": "%s",
   "hw_ver": "%s",
-  "blynk_ver": "%s"  
+  "blynk_ver": "%s"
 })json";
 
   snprintf(buff, sizeof(buff), fmt,
@@ -290,13 +290,15 @@ void handleConfig(void) // handler for "/config" server request
 
 void setupServer(void)
 {
-#ifdef CAPTIVE_PORTAL_ENABLE
-  server.onNotFound(handleRoot);
-#endif
   // Set up DNS Server
   dnsServer.setTTL(300); // Time-to-live 300s
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure); // Return code for non-accessible domains
+#ifdef CAPTIVE_PORTAL_ENABLE
+  dnsServer.start(DNS_PORT, "*", WiFi.softAPIP()); // Point all to our IP
+  server.onNotFound(handleRoot);
+#else
   dnsServer.start(DNS_PORT, BLYNK_BOARD_URL, WiFi.softAPIP()); // Point blynkme.cc to our IP
+#endif
 
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
