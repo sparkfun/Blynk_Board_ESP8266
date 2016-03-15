@@ -27,7 +27,6 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 
 #define DEBUG_ENABLED
 //#define CAPTIVE_PORTAL_ENABLE
-//#define DNS_ENABLE
 
 #include "BlynkBoard_settings.h"
 #include <ESP8266WiFi.h>
@@ -38,9 +37,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <BlynkSimpleEsp8266.h>
 #include <EEPROM.h>
 #include "FS.h"
-#ifdef DNS_ENABLE
-  #include <DNSServer.h>
-#endif
+#include <DNSServer.h>
 
 /////////////////////////
 // Function Prototypes //
@@ -201,6 +198,9 @@ void loop()
   case MODE_BLYNK_ERROR: // Error connecting to Blynk
     if (previousMode != MODE_BLYNK_ERROR) // If we just got here
     {
+      g_blynkAuthStr = getBlynkAuth(); // read the stored auth token
+      g_blynkHostStr = getBlynkHost(); // Read the stored host
+      g_blynkPort = getBlynkPort(); // Read the stored port
       Blynk.config(g_blynkAuthStr.c_str(), g_blynkHostStr.c_str(), g_blynkPort);
       blinker.attach_ms(1, blinkRGBTimer); // Turn on the RGB blink timer
       previousMode = MODE_BLYNK_ERROR; // Update previousMode so blink timer isn't re-called

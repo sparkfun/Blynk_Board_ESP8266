@@ -136,10 +136,9 @@ const String SSIDWebRspFtr = R"raw_string(
   </body></html>
 )raw_string";
 
-#ifdef DNS_ENABLE
-  DNSServer dnsServer;
-  const byte DNS_PORT = 53;
-#endif
+
+DNSServer dnsServer;
+const byte DNS_PORT = 53;
   
 bool setupAP(char * ssidName)
 {
@@ -344,9 +343,7 @@ void generateSSIDSuffix(bool newSuffix)
 
 void handleConfigServer(void)
 {
-#ifdef DNS_ENABLE
   dnsServer.processNextRequest();
-#endif
   server.handleClient();
 }
 

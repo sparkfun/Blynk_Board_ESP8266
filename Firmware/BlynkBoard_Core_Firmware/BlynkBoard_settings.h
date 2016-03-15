@@ -77,9 +77,7 @@ const String BLYNK_PORT_SPIFF_FILE = "/blynk_port.txt";
 // Config Server Definitions //
 ///////////////////////////////
 #define BLYNK_WIFI_CONFIG_PORT 80
-#ifdef DNS_ENABLE
-  #define BLYNK_BOARD_URL "blynkme.cc"
-#endif
+#define BLYNK_BOARD_URL "blynkme.cc"
 
 //////////////////////////////
 // Blynk Server Definitions //
