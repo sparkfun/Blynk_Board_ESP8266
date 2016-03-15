@@ -115,6 +115,14 @@ void setup()
     previousMode = runMode; // Previous mode keeps track of the previous runMode
   }*/
   
+#ifdef DEBUG_ENABLED
+  if (0 == digitalRead(BUTTON_PIN)) 
+  {
+    BB_DEBUG("Button pressed => reset config");
+    resetEEPROM();
+  }
+#endif
+
   // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
   // to determine if the Blynk Board's Blynk auth token has been set.
   if (checkConfigFlag())

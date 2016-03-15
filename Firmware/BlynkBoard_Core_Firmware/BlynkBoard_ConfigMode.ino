@@ -30,8 +30,10 @@ const String SSIDWebFormHdr = R"raw_string(
 <html><head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SparkFun Blynk Board Config</title>
   <style>
+* { box-sizing: border-box }
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 400;
@@ -60,7 +62,7 @@ input, select {
   border: none;
   padding:7px;
   margin: 7px;
-  width: 300px;
+  width: calc(100% - 2*7px);
   color: white;
   background-color: #e0311d;
   font-weight: 700;
@@ -73,10 +75,14 @@ form {
   margin: 0 auto;
   width: 400px;
 }
-input[name=host] { width: 200px; }
-input[name=port] { width: 70px; }
+
+@media all and (max-width: 768px){
+  form { width:100% }
+}
+input[name=host] { width: calc(70% - 2*7px); }
+input[name=port] { width: calc(30% - 2*7px); float:right; }
 input[type=submit] { width: 100px; border: 1px solid black }
-select { padding:6px; width: 316px; }
+select { padding:6px }
 ::-webkit-input-placeholder{color:rgba(255,255,255,0.8)}
 :-moz-placeholder{color:rgba(255,255,255,0.8)}
 ::-moz-placeholder{color:rgba(255,255,255,0.8)}
@@ -93,19 +99,18 @@ const String SSIDWebFormStart = R"raw_string(
 )raw_string";
 
 const String SSIDWebFormBtm = R"raw_string(
-  <p>Enter the <b>password</b> for your network.<br>(Leave blank if the network is open)<br>
+  <p>Enter the <b>password</b> for your network:<br>(leave blank if the network is open)<br>
   <input type="password" name="pass" placeholder="WiFi password"></p>
   <p>Enter the <b>Blynk auth token</b> for your project:<br>
-  <input type="text" name="blynk" length="32" placeholder="a0b1c2d..."></p>
+  <input type="text" name="blynk" placeholder="a0b1c2d..." pattern="[a-zA-Z0-9]{32}" maxlength="32" required="required"></p>
   <p>Enter the Blynk <b>host and port</b> for your Blynk project:<br>
-  (Leave as-is for defaults:)<br>
-  <input type="text" name="host" value="blynk-cloud.com">
-  <input type="number" name="port" value="8442"></p>
+  (leave as-is for defaults)<br>
+  <input type="text" name="host" value="blynk-cloud.com"><input type="number" name="port" value="8442" min="1" max="65535"></p>
   <input type="submit" value="Apply"></form>
 
   <script type="text/javascript">
 function onNetSelect(){
-  var net; if (net = document.getElementById("net")) {
+  var net; if(net = document.getElementById("net")){
     document.getElementById("manual").style.display = (net.options[net.selectedIndex].value==="")?"":"none";
   }
 }
@@ -165,7 +170,7 @@ void handleRoot(void) // On root request to server, send form
   if (n != 0)
   {
     BB_DEBUG("Scan found " + String(n) + " networks");
-    webPage += "<p>Select your <b>network</b>, or type it in if it's not in the list:<br>";
+    webPage += "<p>Select your <b>WiFi network</b>:<br>";
     webPage += "<select name='ssid' id='net' onChange='onNetSelect()' onkeyup='onNetSelect()' >"; // Begin scrolling selection
 
     // Sort networks
@@ -221,7 +226,7 @@ R"json({
   "vendor": "SparkFun",
   "fw_ver": "%s",
   "hw_ver": "%s",
-  "blynk_ver": "%s"  
+  "blynk_ver": "%s"
 })json";
 
   snprintf(buff, sizeof(buff), fmt,
@@ -280,15 +285,16 @@ void handleConfig(void) // handler for "/config" server request
 
 void setupServer(void)
 {
-#ifdef CAPTIVE_PORTAL_ENABLE
-  server.onNotFound(handleRoot);
-#endif
-#ifdef DNS_ENABLE
   // Set up DNS Server
   dnsServer.setTTL(300); // Time-to-live 300s
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure); // Return code for non-accessible domains
+#ifdef CAPTIVE_PORTAL_ENABLE
+  dnsServer.start(DNS_PORT, "*", WiFi.softAPIP()); // Point all to our IP
+  server.onNotFound(handleRoot);
+#else
   dnsServer.start(DNS_PORT, BLYNK_BOARD_URL, WiFi.softAPIP()); // Point blynkme.cc to our IP
 #endif
+
   server.on("/", handleRoot);
   server.on("/config", handleConfig);
   server.on("/reset", handleReset);
