@@ -90,8 +90,8 @@ BLYNK_CONNECTED()
   if (firstConnect)
   {
     // Print a message to the LCD the first time connecting.
-    thLCD.print(0, 0, " SparkFun Blynk ");
-    thLCD.print(0, 1, "Board FW v" + String(BLYNKBOARD_FIRMWARE_VERSION));
+    thLCD.print(0, 0, "sfe.io/blynk");
+    thLCD.print(0, 1, "       for more!");
     
     firstConnect = false;
   }
