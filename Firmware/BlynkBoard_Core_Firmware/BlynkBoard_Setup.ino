@@ -23,7 +23,6 @@ SparkFun BlynkBoard - ESP8266
 
 bool initHardware(void)
 {
-  delay(1000);
   Serial.begin(SERIAL_TERMINAL_BAUD);
   BB_DEBUG("");
   BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
@@ -270,12 +269,12 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
   // during this loop, an exception occurs. Disable interrupt:
   detachInterrupt(BUTTON_PIN);
   
-  long timeIn = timeout;
-  timeIn /= 100;
+  long retVal = 1;
+  unsigned long timeoutMs = millis() + timeout;
   
   Blynk.config(blynkAuth, blynkServer, blynkPort);
   
-  while ((!Blynk.connected()) && (--timeIn > 0))
+  while ((!Blynk.connected()) && (timeoutMs > millis()))
   {
     if (runMode != MODE_CONNECTING_BLYNK)
     {
@@ -284,18 +283,17 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
     }
       
     Blynk.run();
-    delay(100);
-    BB_DEBUG("Blynk connect: " + String(timeIn));
   }
   
-  if (timeIn <= 0)
+  if (millis() > timeoutMs) // If we' timed out
   {
+    retVal = 0;
+    BB_DEBUG("Timed out connecting to Blynk");
     runMode = MODE_WAIT_CONFIG;
   }
 
-  BB_DEBUG("Blynk connect time: " + String(timeIn));
   attachInterrupt(BUTTON_PIN, buttonChange, CHANGE);
-  return timeIn;
+  return retVal;
 }
 
 bool checkSelfTestFlag(void)
