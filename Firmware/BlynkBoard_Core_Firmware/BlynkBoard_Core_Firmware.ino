@@ -257,7 +257,9 @@ void buttonChange(void)
     {
       // Set selftest flag
       setSelfTestFlag();
-      ESP.reset();
+      previousMode = runMode;
+      runMode = MODE_CONFIG;
+      generateSSIDSuffix(true); // Create a new SSID suffix
     }
     else
     {

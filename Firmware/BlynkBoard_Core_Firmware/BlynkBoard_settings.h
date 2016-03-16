@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.9.0"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.9.1"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -108,7 +108,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 #define ADC_VOLTAGE_DIVIDER 3.2
 // ms time that button should be held down to trigger re-config:
 #define BUTTON_HOLD_TIME_MIN 3000
-#define SELF_TEST_FLAG_VALUE 0x24
+#define SELF_TEST_FLAG_VALUE 0x27
 
 ///////////////////////
 // RGB Status Colors //
@@ -120,8 +120,8 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 #define RGB_STATUS_CONNECTING_WIFI    0x000020 // Light blue - Connecting to WiFi
 #define RGB_STATUS_CONNECTED_WIFI     0x000080 // Dark blue - connected to WiFi
 #define RGB_STATUS_CANT_CONNECT       0x200000 // Light red - failed to connect to WiFi
-#define RGB_STATUS_CONNECTING_BLYNK   0x116926 // Blynk Green - connecting to Blynk cloud
-#define RGB_STATUS_CONNECTED_BLYNK    0x116926 // Blynk Green - Connected to Blynk cloud
+#define RGB_STATUS_CONNECTING_BLYNK   0x00270C // Blynk Green - connecting to Blynk cloud
+#define RGB_STATUS_CONNECTED_BLYNK    0x00270C // Blynk Green - Connected to Blynk cloud
 #define RGB_STATUS_CANT_CONNECT_BLYNK 0x202000 // Light yellow - Failed to connect to Blynk
 
 /////////////////////////////
