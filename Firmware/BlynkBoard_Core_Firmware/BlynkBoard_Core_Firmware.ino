@@ -26,6 +26,7 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 ******************************************************************************/
 
 #define DEBUG_ENABLED
+#define SELF_TEST_ENABLED
 //#define CAPTIVE_PORTAL_ENABLE
 
 #include "BlynkBoard_settings.h"
@@ -78,6 +79,7 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkDomain = 
                              uint16_t blynkPort = BB_BLYNK_PORT_DEFAULT,
                              unsigned long timeout = BLYNK_CONNECT_TIMEOUT);
 bool checkSelfTestFlag(void);
+bool setSelfTestFlag(void);
 void performSelfTest(void);
 
 // BlynkBoard_Core_Firmware functions:
@@ -99,18 +101,19 @@ void setup()
   // Initializes: Serial terminal, randomSeed, WS2812 RGB LED,
   // GP0 button, GP5 LED, SPIFFS (flash storage), and EEPROM.
   initHardware();
-
-  /*if (!checkSelfTestFlag())
+  
+#ifdef SELF_TEST_ENABLED
+  if (!checkSelfTestFlag())
   {
     BB_DEBUG("Performing self test");
-    runMode = MODE_SELF_TEST;
+    runMode = MODE_SELF_TEST; // Set mode to control RGB LED
+    // Self-test Will end in an infinite loop on either success or fail
     performSelfTest();
   }
-  else
-  {
-    runMode = MODE_WAIT_CONFIG;
-    previousMode = runMode; // Previous mode keeps track of the previous runMode
-  }*/
+#endif
+
+  runMode = MODE_WAIT_CONFIG;
+  previousMode = runMode; // Previous mode keeps track of the previous runMode
   
 #ifdef DEBUG_ENABLED
   if (0 == digitalRead(BUTTON_PIN)) 
@@ -249,33 +252,35 @@ void buttonChange(void)
     runMode = previousMode; // Leave button press mode
     blinkCount = 0;
     BB_DEBUG("Button released");
-    unsigned long buttonHoldTime = millis() - buttonPressTime;
-    if (buttonHoldTime >= BUTTON_HOLD_TIME_MIN)
+    
+    if (runMode == MODE_SELF_TEST)
     {
-      // If the button has been held for minimum time (3s)
-      // execute the button release code:
-      buttonRelease();
+      // Set selftest flag
+      setSelfTestFlag();
+      ESP.reset();
+    }
+    else
+    {
+      unsigned long buttonHoldTime = millis() - buttonPressTime;
+      if (buttonHoldTime >= BUTTON_HOLD_TIME_MIN)
+      {
+        // If the button has been held for minimum time (3s)
+        // execute the button release code:
+        buttonRelease();
+      }
     }
   }
   else // Button falling - pressed
   {
     BB_DEBUG("Button pressed");
-    if (runMode == MODE_SELF_TEST)
-    {
-      // Set selftest flag
-      ESP.reset();
-    }
-    else
-    {
-      buttonPressTime = millis(); // Log the press time
-      if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
-          (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
-      { // If in config, wait-for-config mode, or trying to connect
-        previousMode = runMode; // Store current mode
-        runMode = MODE_BUTTON_HOLD; // set to button-hold mode
-        blinkCount = 0; // Restart LED
-      }      
-    }
+    buttonPressTime = millis(); // Log the press time
+    if ((runMode == MODE_WAIT_CONFIG) || (runMode == MODE_CONFIG) ||
+        (runMode == MODE_CONNECTING_WIFI) || (runMode == MODE_CONNECTING_BLYNK))
+    { // If in config, wait-for-config mode, or trying to connect
+      previousMode = runMode; // Store current mode
+      runMode = MODE_BUTTON_HOLD; // set to button-hold mode
+      blinkCount = 0; // Restart LED
+    } 
   }
 }
 

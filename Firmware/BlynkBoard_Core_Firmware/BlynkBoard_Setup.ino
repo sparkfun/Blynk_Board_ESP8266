@@ -298,9 +298,16 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
 
 bool checkSelfTestFlag(void)
 {
-  if (EEPROM.read(EEPROM_SELF_TEST_ADDRESS) == 0x42)
+  if (EEPROM.read(EEPROM_SELF_TEST_ADDRESS) == SELF_TEST_FLAG_VALUE)
     return true;
   return false;
+}
+
+bool setSelfTestFlag(void)
+{
+  EEPROM.write(EEPROM_SELF_TEST_ADDRESS, SELF_TEST_FLAG_VALUE);
+  EEPROM.commit();
+  return true;
 }
 
 void performSelfTest(void)
@@ -316,7 +323,9 @@ void performSelfTest(void)
   //////////////////////////
   // WiFi connection test //
   //////////////////////////
+  WiFi.enableSTA(true);
   WiFi.disconnect();
+  WiFi.enableSTA(true);
   WiFi.begin("sparkfun-guest","sparkfun6333");
   unsigned timeout = 10000;
   while ((WiFi.status() != WL_CONNECTED) && (--timeout))
@@ -335,7 +344,7 @@ void performSelfTest(void)
   // Si7021 Test //
   /////////////////
   thSense.begin();
-  if (scanI2C(0x40))
+  if (scanI2C(0x40)) // Si7021 is i2c address 0x40
   {
     Serial.println("Si7021 test succeeded");
     testResult |= (1<<1);
@@ -350,9 +359,9 @@ void performSelfTest(void)
   //////////////
   float adcRaw = analogRead(A0); // Read in A0
   float voltage = ((float)adcRaw / 1024.0) * ADC_VOLTAGE_DIVIDER;
-  if((voltage < 2.5) && (voltage > 1.5))
+  if((voltage < 2.25) && (voltage > 1.75))
   {
-    Serial.println("ADC test passed");   
+    Serial.println("ADC test passed" + String(voltage));   
     testResult |= (1<<2);
   }
   else
@@ -404,23 +413,52 @@ void performSelfTest(void)
     Serial.println("IO test failed");  
   }
 
-  if (testResult == 0xF)
+  if (testResult == 0xF) // If it passed
   {
     while (1)
     {
       rgb.setPixelColor(1, 0x008000);
       delay(1000);
-      rgb.setPixelColor(1, 0x000080);
+      rgb.setPixelColor(1, 0);
       delay(1000);
     }
   }
-  else
+  else // if it failed
   {
     while (1)
     {
-      rgb.setPixelColor(1, 0x200000);
-      delay(1000);
+      // WiFi failed - purple
+      if (!(testResult & (1<<0)))
+      {
+        rgb.setPixelColor(1, 0x800080);
+        rgb.show();
+        delay(1000);        
+      }
+      // Si7021 failed - yellow
+      if (!(testResult & (1<<1)))
+      {
+        rgb.setPixelColor(1, 0x802000);
+        rgb.show();
+        delay(1000);        
+      }
+      // ADC failed - red
+      if (!(testResult & (1<<2)))
+      {
+        rgb.setPixelColor(1, 0x800000);
+        rgb.show();
+        delay(1000);        
+      }
+      // IO test failed - orange
+      if (!(testResult & (1<<3)))
+      {
+        rgb.setPixelColor(1, 0x806000);
+        rgb.show();
+        delay(1000);        
+      }
+
+      // Blink off
       rgb.setPixelColor(1, 0);
+      rgb.show();
       delay(1000);
     }
   }
