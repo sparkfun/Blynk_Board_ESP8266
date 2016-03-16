@@ -285,7 +285,7 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
     Blynk.run();
   }
   
-  if (millis() > timeoutMs) // If we' timed out
+  if (millis() >= timeoutMs) // If we' timed out
   {
     retVal = 0;
     BB_DEBUG("Timed out connecting to Blynk");
