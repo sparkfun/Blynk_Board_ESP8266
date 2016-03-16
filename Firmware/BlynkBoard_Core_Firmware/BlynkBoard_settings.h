@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.9.1"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.9.2"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -109,6 +109,7 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 // ms time that button should be held down to trigger re-config:
 #define BUTTON_HOLD_TIME_MIN 3000
 #define SELF_TEST_FLAG_VALUE 0x27
+#define DEFAULT_MAX_BRIGHTNESS 32
 
 ///////////////////////
 // RGB Status Colors //

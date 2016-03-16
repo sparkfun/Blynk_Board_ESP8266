@@ -62,7 +62,7 @@ bool scanI2C(uint8_t address);
 #define LCD_STATS_VIRTUAL         V12 // 8
 #define LCD_RUNTIME_VIRTUAL       V13 // 8
 #define SERVO_XY_VIRTUAL          V14
-//! V15 available
+#define RGB_MAX_BRIGHTNESS_VIRTUAL V15// 0, 6
 #define SERVO_MAX_VIRTUAL         V16 // 9
 #define SERVO_ANGLE_VIRUTAL       V17 // 9
 #define LUX_VIRTUAL               V18 // 10
@@ -87,10 +87,12 @@ WidgetLCD thLCD(LCD_VIRTUAL); // LCD widget, updated in blynkLoop
 bool firstConnect = true;
 BLYNK_CONNECTED() 
 {
+  BB_DEBUG("Connected.");
   if (firstConnect)
   {
+    BB_DEBUG("First connect.");
     // Print a message to the LCD the first time connecting.
-    thLCD.print(0, 0, "sfe.io/blynk");
+    thLCD.print(0, 0, "sfe.io/blynk    ");
     thLCD.print(0, 1, "       for more!");
     
     firstConnect = false;
@@ -103,6 +105,26 @@ BLYNK_CONNECTED()
  0 Widget(s):                          0
  0  - zeRGBa: Merge, V0                0
  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 */
+byte blynkRed = 0; // Keeps track of red value
+byte blynkGreen = 0; // Keeps track of green value
+byte blynkBlue = 0; // Keeps track of blue value
+unsigned int rgbMaxBrightness = DEFAULT_MAX_BRIGHTNESS;
+
+void updateBlynkRGB(void)
+{
+  if (!rgbSetByProject) // If the setByProject flag isn't set
+  { // The LED should still be pulsing
+    blinker.detach(); // Detach the rgbBlink timer
+    rgbSetByProject = true; // Set the flag
+  }
+  // Show the new LED color:  
+  for (int i=0; i<rgb.numPixels(); i++)
+    rgb.setPixelColor(i, rgb.Color(map(blynkRed, 0, 255, 0, rgbMaxBrightness), 
+                                   map(blynkGreen, 0, 255, 0, rgbMaxBrightness),
+                                   map(blynkBlue, 0, 255, 0, rgbMaxBrightness)));
+  rgb.show();
+}
+
 bool firstRGBWrite = true; // On startup
 BLYNK_WRITE(RGB_VIRTUAL)
 {
@@ -112,11 +134,13 @@ BLYNK_WRITE(RGB_VIRTUAL)
   if (param.getLength() < 5)
     return;
   
-  int redParam = param[0].asInt();
-  int greenParam = param[1].asInt();
-  int blueParam = param[2].asInt();
-  BB_DEBUG("Blynk Write RGB: " + String(redParam) + ", " + 
-          String(greenParam) + ", " + String(blueParam));
+  blynkRed = param[0].asInt();
+  blynkGreen = param[1].asInt();
+  blynkBlue = param[2].asInt();
+
+  BB_DEBUG("Blynk Write RGB: " + String(blynkRed) + ", " + 
+          String(blynkGreen) + ", " + String(blynkBlue) + 
+          " (Max: " + String(rgbMaxBrightness) + ")");
   // Don't update the RGB if this is the first time. syncAll
   // will call this function initially. We want to breathe
   // the status LED instead.
@@ -128,9 +152,7 @@ BLYNK_WRITE(RGB_VIRTUAL)
       rgbSetByProject = true;
     }
     // Set all attached pixels (usually it'll only be 1)
-    for (int i=0; i<rgb.numPixels(); i++)
-      rgb.setPixelColor(i, rgb.Color(redParam, greenParam, blueParam));
-    rgb.show();
+    updateBlynkRGB();
   }
   else
   {
@@ -179,20 +201,6 @@ void buttonUpdate(void)
  3  - Slider: Blue, V4, 0-255          3
  3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 */
 // GP5 variables not necessary - directly controlled
-byte blynkRed = 0; // Keeps track of red value
-byte blynkGreen = 0; // Keeps track of green value
-byte blynkBlue = 0; // Keeps track of blue value
-
-void updateBlynkRGB(void)
-{
-  if (!rgbSetByProject) // If the setByProject flag isn't set
-  { // The LED should still be pulsing
-    blinker.detach(); // Detach the rgbBlink timer
-    rgbSetByProject = true; // Set the flag
-  }
-  // Show the new LED color:
-  setRGB(rgb.Color(blynkRed, blynkGreen, blynkBlue));  
-}
 
 BLYNK_WRITE(RED_VIRTUAL)
 {
@@ -218,6 +226,15 @@ BLYNK_WRITE(BLUE_VIRTUAL)
   BB_DEBUG("Blynk Write blue: " + String(blueIn));
   blueIn = constrain(blueIn, 0, 255); // Keep it between 0-255
   blynkBlue = blueIn; // Update the global variable
+  updateBlynkRGB(); // Show the color on the LED
+}
+
+BLYNK_WRITE(RGB_MAX_BRIGHTNESS_VIRTUAL)
+{
+  int brightnessIn = param.asInt();
+  brightnessIn = constrain(brightnessIn, 1, 255);
+  BB_DEBUG("Setting RGB max brightness to: " + String(rgbMaxBrightness));
+  rgbMaxBrightness = brightnessIn;
   updateBlynkRGB(); // Show the color on the LED
 }
 
@@ -290,26 +307,36 @@ void rgbRainbow(void)
 {
   static byte rainbowCounter = 0; // cycles from 0-255
   // From Wheel function in Adafruit_Neopixel strand example:
-  uint32_t rainbowColor;
+  //uint32_t rainbowColor;
+  uint8_t rainbowRed, rainbowGreen, rainbowBlue;
   for (int i=0; i<rgb.numPixels(); i++) // numPixels may just be 1
   {
     byte colorPos = i + rainbowCounter; 
     if (colorPos < 85)
     {
-      rainbowColor = rgb.Color(255 - colorPos * 3, 0, colorPos * 3);
+      rainbowRed = 255 - colorPos * 3;
+      rainbowGreen = 0;
+      rainbowBlue = colorPos * 3;
     }
     else if (colorPos < 170)
     {
       colorPos -= 85;
-      rainbowColor = rgb.Color(0, colorPos * 3, 255 - colorPos * 3);
+      rainbowRed = 0;
+      rainbowGreen = colorPos * 3;
+      rainbowBlue = 255 - colorPos *3;
     }
     else
     {
       colorPos -= 170;
-      rainbowColor = rgb.Color(colorPos * 3, 255 - colorPos * 3, 0);
+      rainbowRed = colorPos * 3;
+      rainbowGreen = 255 - colorPos *3;
+      rainbowBlue = 0;
     }
+    rainbowRed = map(rainbowRed, 0, 255, 0, rgbMaxBrightness);
+    rainbowGreen = map(rainbowGreen, 0, 255, 0, rgbMaxBrightness);
+    rainbowBlue = map(rainbowBlue, 0, 255, 0, rgbMaxBrightness);
     
-    rgb.setPixelColor(i, rainbowColor); // Set the pixel color
+    rgb.setPixelColor(i, rgb.Color(rainbowRed, rainbowGreen, rainbowBlue)); // Set the pixel color
   }
   rgb.show(); // Actually set the LED
   rainbowCounter++; // IncremenBUTTONt counter, may roll over to 0
@@ -371,7 +398,7 @@ BLYNK_WRITE(LCD_TEMPHUMID_VIRTUAL)
     thLCD.clear(); // Clear the LCD
     thLCD.print(0, 0, tempLine.c_str());
     thLCD.print(0, 1, humidityLine.c_str());
-  }  
+  }
 }
 BLYNK_WRITE(LCD_STATS_VIRTUAL)
 {
