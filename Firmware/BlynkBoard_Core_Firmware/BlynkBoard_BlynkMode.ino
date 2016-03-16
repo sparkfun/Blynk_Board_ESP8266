@@ -81,6 +81,8 @@ bool scanI2C(uint8_t address);
 #define RESET_VIRTUAL             V31 // Utility
 
 WidgetLCD thLCD(LCD_VIRTUAL); // LCD widget, updated in blynkLoop
+#define LCD_SPLASH_UPDATE_RATE 10000
+unsigned long lastLCDSplashUpdate = 0;
 
 // BLYNK_CONNECTED is called the first time the Blynk Board
 // connects to Blynk. Then any time it reconnects later on.
@@ -386,10 +388,13 @@ BLYNK_WRITE(RGB_STRIP_NUM_VIRTUAL)
  8  - Button: Stats, V12               8
  8  - Button: Runtime, V13             8
  8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 */
+bool lcdSetByProject = false;
 BLYNK_WRITE(LCD_TEMPHUMID_VIRTUAL)
 {
   if (param.asInt() > 0)
   {
+    BB_DEBUG("Updating LCD");
+    if (!lcdSetByProject) lcdSetByProject = true;
     float humd = thSense.readHumidity(); // Read humidity
     float tempC = thSense.readTemperature(); // Read temperature
     float tempF = tempC * 9.0 / 5.0 + 32.0; // Calculate farenheit
@@ -404,6 +409,7 @@ BLYNK_WRITE(LCD_STATS_VIRTUAL)
 {
   if (param.asInt() > 0)
   {
+    if (!lcdSetByProject) lcdSetByProject = true;
     String firstLine = "GP0: ";
     if (digitalRead(BUTTON_PIN))
       firstLine += "HIGH";
@@ -420,6 +426,7 @@ BLYNK_WRITE(LCD_RUNTIME_VIRTUAL)
 {
   if (param.asInt() > 0)
   {
+    if (!lcdSetByProject) lcdSetByProject = true;
     String topLine = "RunTime-HH:MM:SS";
     String botLine = "    ";
     float seconds, minutes, hours;
@@ -915,6 +922,17 @@ void blynkLoop(void)
   {
     twitterUpdate(); // Send a tweet
     lastTweetUpdate = millis(); // Update the last tweet time
+  }
+
+  if (!lcdSetByProject)
+  {
+    if (lastLCDSplashUpdate + LCD_SPLASH_UPDATE_RATE < millis())
+    {
+      thLCD.print(0, 0, "sfe.io/blynk    ");
+      thLCD.print(0, 1, "       for more!");
+  
+      lastLCDSplashUpdate = millis();
+    }
   }
 
   if (Serial.available()) // If serial is available
