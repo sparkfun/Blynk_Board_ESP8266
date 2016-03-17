@@ -69,7 +69,7 @@ bool scanI2C(uint8_t address);
 //! V19 available
 #define ADC_BATT_VIRTUAL          V20 // 11
 #define SERIAL_VIRTUAL            V21 // 12, 15
-#define TWEET_ENABLE_VIRTUAL      V22 // 13
+//! V22 available
 #define TWITTER_THRESHOLD_VIRTUAL V23 // 13
 #define TWITTER_RATE_VIRTUAL      V24 // 13
 #define DOOR_STATE_VIRTUAL        V25 // 14
@@ -393,7 +393,6 @@ BLYNK_WRITE(LCD_TEMPHUMID_VIRTUAL)
 {
   if (param.asInt() > 0)
   {
-    BB_DEBUG("Updating LCD");
     if (!lcdSetByProject) lcdSetByProject = true;
     float humd = thSense.readHumidity(); // Read humidity
     float tempC = thSense.readTemperature(); // Read temperature
@@ -633,33 +632,13 @@ BLYNK_WRITE(SERIAL_VIRTUAL)
  13 13 13 13 13 13 13 13 13 13 13 13 13 */
 // Tweets are sent in blynkLoop. These functions set enable
 // flags and other twitter-controlling parameters.
-bool tweetEnabled = false; // Twitter enabled flag
 unsigned long tweetUpdateRate = 60000; // Default tweet rate (ms)
 unsigned long lastTweetUpdate = 0; // Last tweet flag
 unsigned int moistureThreshold = 512; // Low-moisture setting
 
-// A button attached to V22 enables or disables tweeting
-BLYNK_WRITE(TWEET_ENABLE_VIRTUAL) 
-{
-  uint8_t state = param.asInt();
-  BB_DEBUG("Tweet enable: " + String(state));
-  if (state) // If the param is >=1
-  {
-    tweetEnabled = true; // Enable tweeting
-    BB_DEBUG("Tweet enabled.");
-  }
-  else
-  {
-    tweetEnabled = false; // Disable tweeting
-    BB_DEBUG("Tweet disabled.");    
-  }
-}
-
 BLYNK_WRITE(TWITTER_THRESHOLD_VIRTUAL)
 {
   moistureThreshold = param.asInt();
-  if (analogRead(A0) < moistureThreshold)
-    lastTweetUpdate = 0; // Force twitter update
   BB_DEBUG("Tweet threshold set to: " + String(moistureThreshold));
 }
 
@@ -671,7 +650,7 @@ BLYNK_WRITE(TWITTER_RATE_VIRTUAL)
   tweetUpdateRate = tweetRate * 60 * 1000;
 }
 
-void twitterUpdate(void)
+bool twitterUpdate(void)
 {
   unsigned int moisture = analogRead(A0);
   if (moisture < moistureThreshold)
@@ -680,7 +659,9 @@ void twitterUpdate(void)
     msg += "[" + String(millis()) + "]";
     BB_DEBUG("Tweeting: " + msg);
     Blynk.tweet(msg); 
+    return true;
   }
+  return false;
 }
 
 /* 14 14 14 14 14 14 14 14 14 14 14 14 14
@@ -757,7 +738,6 @@ BLYNK_READ(DOOR_STATE_VIRTUAL)
 BLYNK_WRITE(PUSH_ENABLE_VIRTUAL)
 {
   uint8_t state = param.asInt(); // Read in handler parameter
-  BB_DEBUG("Push enable: " + String(state));
   if (state) // If it's >= 1
   {
     pushEnabled = true; // enable push
@@ -863,7 +843,6 @@ BLYNK_READ(RUNTIME_VIRTUAL)
 BLYNK_WRITE(RESET_VIRTUAL)
 {
   int resetIn = param.asInt();
-  BB_DEBUG("Blynk Reset: " + String(resetIn));
   if (resetIn)
   {
     BB_DEBUG("Factory resetting");
@@ -916,10 +895,10 @@ void blynkLoop(void)
   }
 
   // If twitter is enabled, and it's been long enough since the last tweet
-  if (tweetEnabled && ((lastTweetUpdate == 0) || (lastTweetUpdate + tweetUpdateRate < millis())))
+  if ((lastTweetUpdate == 0) || (lastTweetUpdate + tweetUpdateRate < millis()))
   {
-    twitterUpdate(); // Send a tweet
-    lastTweetUpdate = millis(); // Update the last tweet time
+    if (twitterUpdate()) // Send a tweet
+      lastTweetUpdate = millis(); // Update the last tweet time if tweet successful
   }
 
   if (!lcdSetByProject)
