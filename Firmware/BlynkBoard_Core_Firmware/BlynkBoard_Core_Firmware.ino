@@ -107,7 +107,7 @@ void setup()
 #ifdef SELF_TEST_ENABLED
   if (!checkSelfTestFlag())
   {
-    BB_DEBUG("Performing self test");
+    BB_PRINT("Performing self test");
     runMode = MODE_SELF_TEST; // Set mode to control RGB LED
     // Self-test Will end in an infinite loop on either success or fail
     performSelfTest();

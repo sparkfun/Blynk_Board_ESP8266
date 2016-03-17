@@ -147,7 +147,7 @@ bool setupAP(char * ssidName)
   WiFi.softAP(ssidName);
 
   IPAddress myIP = WiFi.softAPIP();
-  BB_DEBUG("AP IP address: " + String(myIP[0]) + "." + 
+  BB_PRINT("AP IP address: " + String(myIP[0]) + "." + 
        String(myIP[1]) + "." + String(myIP[2]) + "." + String(myIP[3]));
        
   //! ESP8266 bug: IP may be 0 -- makes AP un-connectable
@@ -260,11 +260,11 @@ void handleConfig(void) // handler for "/config" server request
   else
     return;
 
-  BB_DEBUG("SSID: " + ssid);
-  BB_DEBUG("Pass: " + pass);
-  BB_DEBUG("Auth: " + g_blynkAuthStr);
-  BB_DEBUG("Host: " + g_blynkHostStr);
-  BB_DEBUG("Port: " + String(g_blynkPort));
+  BB_PRINT("SSID: " + ssid);
+  BB_PRINT("Pass: " + pass);
+  BB_PRINT("Auth: " + g_blynkAuthStr);
+  BB_PRINT("Host: " + g_blynkHostStr);
+  BB_PRINT("Port: " + String(g_blynkPort));
 
   // Send a response back to the requester
   String rsp = SSIDWebFormHdr;
@@ -340,7 +340,7 @@ void generateSSIDSuffix(bool newSuffix)
     // Add color-code character to the board SSID
     strncat(BoardSSID, &SSID_COLOR_CHAR[ssidSuffixIndex[i]], 1);
   }
-  BB_DEBUG("New SSID: " + String(BoardSSID));
+  BB_PRINT("\r\nNew SSID: " + String(BoardSSID));
 
   if (!setupAP(BoardSSID))
     ESP.reset();
@@ -532,21 +532,21 @@ void executeSerialCommand(void)
   if ((serialConfigWiFiSSID != "") && (passwordEntered) && (serialConfigBlynkAuth != "") &&
       (serialConfigBlynkHost != "") && (serialConfigBlynkPort != 0))
   {
-    BB_DEBUG("Connecting to WiFi.");
+    Serial.println("Connecting to " + String(serialConfigWiFiSSID));
     int8_t ret = setupBlynkStation(serialConfigWiFiSSID, serialConfigWiFiPSK, serialConfigBlynkAuth,
                                    serialConfigBlynkHost, serialConfigBlynkPort);
     if (ret < 0)
     {
       if (ret == ERROR_CONNECT_BLYNK)
       {
-        BB_DEBUG("Serial error connecting to Blynk.");
+        Serial.println("Error connecting to Blynk. Re-enter Blynk auth token.");
         serialConfigBlynkAuth = "";
         serialConfigBlynkHost = "";
         serialConfigBlynkPort = 0;
       }
       else if (ret == ERROR_CONNECT_WIFI)
       {
-        BB_DEBUG("Serial error connecting to WiFi.");
+        Serial.println("Error connecting to WiFi. Re-enter WiFi credentials");
         serialConfigWiFiSSID = "";
         serialConfigWiFiPSK = "";
       }

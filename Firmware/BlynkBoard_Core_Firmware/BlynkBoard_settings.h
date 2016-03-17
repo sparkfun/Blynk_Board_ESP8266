@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.9.3"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.9.4"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -98,7 +98,7 @@ uint16_t g_blynkPort;
 // WiFi Settings //
 ///////////////////
 #define WIFI_STA_CONNECT_TIMEOUT 30 // WiFi connection timeout (in seconds)
-#define BLYNK_CONNECT_TIMEOUT    10000 // Blynk connection timeout (in ms)
+#define BLYNK_CONNECT_TIMEOUT    15000 // Blynk connection timeout (15 s)
 IPAddress defaultAPIP(192, 168, 4, 1);
 IPAddress defaultAPSub(255, 255, 255, 0);
 
