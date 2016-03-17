@@ -263,11 +263,14 @@ void buttonChange(void)
     
     if (runMode == MODE_SELF_TEST)
     {
-      // Set selftest flag
-      setSelfTestFlag();
-      previousMode = runMode;
-      runMode = MODE_CONFIG;
-      generateSSIDSuffix(true); // Create a new SSID suffix
+      if (selfTestResult == SELF_TEST_SUCCESS_VALUE)
+      {
+        // Set selftest flag
+        setSelfTestFlag();
+        previousMode = runMode;
+        runMode = MODE_CONFIG;
+        generateSSIDSuffix(true); // Create a new SSID suffix
+      }
     }
     else
     {

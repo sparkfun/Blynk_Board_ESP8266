@@ -116,6 +116,8 @@ Adafruit_NeoPixel rgb = Adafruit_NeoPixel(NUMRGB, WS2812_PIN, NEO_GRB + NEO_KHZ8
 #define SELF_TEST_FLAG_VALUE 0x27
 #define AP_SETUP_FAIL_FLAG_VALUE 0x42
 #define DEFAULT_MAX_BRIGHTNESS 32
+uint8_t selfTestResult = 0;
+#define SELF_TEST_SUCCESS_VALUE 0xF
 
 ///////////////////////
 // RGB Status Colors //

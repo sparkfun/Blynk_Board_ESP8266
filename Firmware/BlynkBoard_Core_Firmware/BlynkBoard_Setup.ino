@@ -329,7 +329,6 @@ bool setSelfTestFlag(void)
 
 void performSelfTest(void)
 {
-  uint8_t testResult = 0;
   pinMode(BLUE_LED_PIN, OUTPUT);
   digitalWrite(BLUE_LED_PIN, HIGH); // Turn blue LED on
   rgb.updateLength(2); // Connect to testbed LED
@@ -350,7 +349,7 @@ void performSelfTest(void)
   if (timeout > 0)
   {
     Serial.println("Connected to test network");
-    testResult |= (1<<0);
+    selfTestResult |= (1<<0);
   }
   else
   {
@@ -364,7 +363,7 @@ void performSelfTest(void)
   if (scanI2C(0x40)) // Si7021 is i2c address 0x40
   {
     Serial.println("Si7021 test succeeded");
-    testResult |= (1<<1);
+    selfTestResult |= (1<<1);
   }
   else
   {
@@ -379,7 +378,7 @@ void performSelfTest(void)
   if((voltage < 2.25) && (voltage > 1.75))
   {
     Serial.println("ADC test passed" + String(voltage));   
-    testResult |= (1<<2);
+    selfTestResult |= (1<<2);
   }
   else
   {
@@ -423,14 +422,14 @@ void performSelfTest(void)
   if (ioTest == 3)
   {
     Serial.println("IO test passed");  
-    testResult |= (1<<3);
+    selfTestResult |= (1<<3);
   }
   else
   {
     Serial.println("IO test failed");  
   }
 
-  if (testResult == 0xF) // If it passed
+  if (selfTestResult == 0xF) // If it passed
   {
     while (1)
     {
@@ -445,28 +444,28 @@ void performSelfTest(void)
     while (1)
     {
       // WiFi failed - purple
-      if (!(testResult & (1<<0)))
+      if (!(selfTestResult & (1<<0)))
       {
         rgb.setPixelColor(1, 0x800080);
         rgb.show();
         delay(1000);        
       }
       // Si7021 failed - yellow
-      if (!(testResult & (1<<1)))
+      if (!(selfTestResult & (1<<1)))
       {
         rgb.setPixelColor(1, 0x802000);
         rgb.show();
         delay(1000);        
       }
       // ADC failed - red
-      if (!(testResult & (1<<2)))
+      if (!(selfTestResult & (1<<2)))
       {
         rgb.setPixelColor(1, 0x800000);
         rgb.show();
         delay(1000);        
       }
       // IO test failed - orange
-      if (!(testResult & (1<<3)))
+      if (!(selfTestResult & (1<<3)))
       {
         rgb.setPixelColor(1, 0x806000);
         rgb.show();
