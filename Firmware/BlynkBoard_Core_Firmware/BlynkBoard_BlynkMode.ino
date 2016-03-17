@@ -73,7 +73,7 @@ bool scanI2C(uint8_t address);
 #define TWITTER_THRESHOLD_VIRTUAL V23 // 13
 #define TWITTER_RATE_VIRTUAL      V24 // 13
 #define DOOR_STATE_VIRTUAL        V25 // 14
-#define PUSH_ENABLE_VIRTUAL       V26 // 14
+//! V26 available
 #define EMAIL_ENABLED_VIRTUAL     V27 // 15
 #define TEMP_OFFSET_VIRTUAL       V28 // 4
 #define RGB_STRIP_NUM_VIRTUAL     V29 // 6
@@ -693,61 +693,44 @@ BLYNK_READ(DOOR_STATE_VIRTUAL)
   {
     if (switchState) // If the switch is closed (door shut)
     {
-      if (pushEnabled)
+      BB_DEBUG("Notified closed.");
+      
+      if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
       {
-        BB_DEBUG("Notified closed.");
-        
-        if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
-        {
-          int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
-          BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
-          terminal.println("Door closed. Can't notify for " + String(timeLeft) + "s");
-          terminal.flush();
-        }
-        else
-        {
-          Blynk.notify("Door closed\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
-          lastDoorSwitchNotification = millis();
-        }
+        int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
+        BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
+        terminal.println("Door closed. Can't notify for " + String(timeLeft) + "s");
+        terminal.flush();
+      }
+      else
+      {
+        Blynk.notify("Door closed\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
+        terminal.println("Door closed!");
+        terminal.flush();
+        lastDoorSwitchNotification = millis();
       }
     }
     else
     { 
-      if (pushEnabled)
+      BB_DEBUG("Notified opened.");
+      // Send the notification
+      if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
       {
-        BB_DEBUG("Notified opened.");
-        // Send the notification
-        if (lastDoorSwitchNotification && (lastDoorSwitchNotification + NOTIFICATION_LIMIT > millis()))
-        {
-          int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
-          BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
-          terminal.println("Door open. Can't notify for " + String(timeLeft) + "s");
-          terminal.flush();
-        }
-        else
-        {
-          Blynk.notify("Door open\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
-          lastDoorSwitchNotification = millis();
-        }
+        int timeLeft = (lastDoorSwitchNotification + NOTIFICATION_LIMIT - millis()) / 1000;
+        BB_DEBUG("Can't notify for " + String(timeLeft) + "s");
+        terminal.println("Door open. Can't notify for " + String(timeLeft) + "s");
+        terminal.flush();
+      }
+      else
+      {
+        Blynk.notify("Door open\r\nFrom: " + boardName + "\r\n[" + String(millis()) + "]");
+        terminal.println("Door opened!");
+        terminal.flush();
+        lastDoorSwitchNotification = millis();
       }
     }
     lastSwitchState = switchState;
   }  
-}
-
-BLYNK_WRITE(PUSH_ENABLE_VIRTUAL)
-{
-  uint8_t state = param.asInt(); // Read in handler parameter
-  if (state) // If it's >= 1
-  {
-    pushEnabled = true; // enable push
-    BB_DEBUG("Push enabled.");
-  }
-  else
-  {
-    pushEnabled = false; // disable push
-    BB_DEBUG("Push disabled.");    
-  }
 }
 
 /* 15 15 15 15 15 15 15 15 15 15 15 15 15

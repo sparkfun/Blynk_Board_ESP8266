@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.9.4"
+#define BLYNKBOARD_FIRMWARE_VERSION "0.9.5"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600
@@ -200,7 +200,7 @@ const char SERIAL_MESSAGE_WIFI_NETWORK[] = "\r\nType your WiFi network SSID and 
 const char SERIAL_MESSAGE_WIFI_PASSWORD[] = "\r\nType your WiFi network password and hit enter.\r\n" \
                                             "(If connecting to an open network, leave blank.)\r\n> " ;
 const char SERIAL_MESSAGE_BLYNK_HOST[] = "\r\nType your Blynk Server and hit enter.\r\n" \
-                                         "Leave blank to use default: cloud.blynk.cc\r\n> ";
+                                         "Leave blank to use default: blynk-cloud.com\r\n> ";
 const char SERIAL_MESSAGE_BLYNK_PORT[] = "\r\nType your Blynk Port and hit enter.\r\n" \
                                          "Leave blank to use default: 8442.\r\n> ";
 const char SERIAL_MESSAGE_BLYNK[] = "\r\nEnter your 32-character Blynk Auth token.\r\n> ";
