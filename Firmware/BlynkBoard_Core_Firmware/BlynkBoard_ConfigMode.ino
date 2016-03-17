@@ -271,7 +271,7 @@ void handleConfig(void) // handler for "/config" server request
   rsp += "<h2>WiFi/Blynk Connecting...</h2><p>Your Blynk Board is attempting to connect to <b>";
   rsp += ssid + "</b></p>";
   rsp += "<p>Then it'll use the Blynk auth token <b>" + g_blynkAuthStr + "</b>";
-  rsp += " to connect to " + g_blynkHostStr + ":" + String(g_blynkPort); + ".</p>";
+  rsp += " to connect to " + g_blynkHostStr + ":" + String(g_blynkPort) + ".</p>";
   rsp += SSIDWebRspFtr;
 
   server.send(200, "text/html", rsp);

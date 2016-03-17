@@ -170,7 +170,7 @@ void loop()
 {
   switch (runMode)
   {
-  case BUTTON_HOLD_TIME_MIN:
+  case MODE_SELF_TEST:
     break;
   case MODE_WAIT_CONFIG: // Do nothing, wait for GP0 button
     break;

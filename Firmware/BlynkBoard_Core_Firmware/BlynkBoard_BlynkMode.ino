@@ -674,7 +674,6 @@ bool twitterUpdate(void)
 #define DOOR_SWITCH_PIN 16
 #define NOTIFICATION_LIMIT 60000
 unsigned long lastDoorSwitchNotification = 0;
-bool pushEnabled = false;
 uint8_t lastSwitchState = 255;
 
 BLYNK_READ(DOOR_STATE_VIRTUAL)

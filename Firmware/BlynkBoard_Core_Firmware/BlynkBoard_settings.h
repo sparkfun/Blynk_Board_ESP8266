@@ -26,7 +26,7 @@ SparkFun BlynkBoard - ESP8266
 #include <Adafruit_NeoPixel.h>
 #include <ESP8266WiFi.h>
 
-#define BLYNKBOARD_FIRMWARE_VERSION "0.9.5"
+#define BLYNKBOARD_FIRMWARE_VERSION "1.0.0"
 #define BLYNKBOARD_HARDWARE_VERSION "1.0.0"
 
 #define SERIAL_TERMINAL_BAUD 9600

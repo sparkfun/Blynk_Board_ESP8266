@@ -69,6 +69,8 @@ bool checkFailAPSetupFlag(void)
 {
   if (EEPROM.read(EEPROM_AP_SETUP_FAIL_FLAG) != AP_SETUP_FAIL_FLAG_VALUE)
     return false;
+    
+  return true;
 }
 
 void writeAPSetupFlag(bool pass)
