@@ -24,9 +24,9 @@ SparkFun BlynkBoard - ESP8266
 bool initHardware(void)
 {
   Serial.begin(SERIAL_TERMINAL_BAUD);
-  BB_DEBUG("");
-  BB_DEBUG("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
-  BB_DEBUG("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
+  BB_PRINT("");
+  BB_PRINT("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
+  BB_PRINT("SparkFun Blynk Board Firmware v" + String(BLYNKBOARD_FIRMWARE_VERSION));
   
   randomSeed(ESP.getChipId());
       
@@ -63,6 +63,21 @@ bool checkConfigFlag(void)
     return true;
     
   return false;
+}
+
+bool checkFailAPSetupFlag(void)
+{
+  if (EEPROM.read(EEPROM_AP_SETUP_FAIL_FLAG) != AP_SETUP_FAIL_FLAG_VALUE)
+    return false;
+}
+
+void writeAPSetupFlag(bool pass)
+{
+  uint8_t apSetupFlag;
+  if (pass) apSetupFlag = AP_SETUP_FAIL_FLAG_VALUE;
+  else apSetupFlag = 0;
+  EEPROM.write(EEPROM_AP_SETUP_FAIL_FLAG, apSetupFlag);
+  EEPROM.commit();
 }
 
 bool writeBlynkConfig(String authToken, String host, uint16_t port)
@@ -243,7 +258,7 @@ long WiFiConnectWithTimeout(unsigned long timeout)
   
   long timeIn = timeout;
   // Relying on persistent ESP8266 WiFi credentials.
-  Serial.println("Connecting to: " + WiFi.SSID());
+  BB_PRINT("Connecting to: " + WiFi.SSID());
   while ((WiFi.status() != WL_CONNECTED) && (--timeIn > 0))
   {
     if (runMode != MODE_CONNECTING_WIFI)
@@ -267,7 +282,7 @@ long BlynkConnectWithTimeout(const char * blynkAuth, const char * blynkServer,
   runMode = MODE_CONNECTING_BLYNK;
   // Button interrupt is interfering with something. If the ISR is entered
   // during this loop, an exception occurs. Disable interrupt:
-  detachInterrupt(BUTTON_PIN);
+  //detachInterrupt(BUTTON_PIN);
   
   long retVal = 1;
   unsigned long timeoutMs = millis() + timeout;

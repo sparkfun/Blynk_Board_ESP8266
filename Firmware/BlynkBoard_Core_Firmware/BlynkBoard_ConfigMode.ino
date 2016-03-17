@@ -152,9 +152,15 @@ bool setupAP(char * ssidName)
        
   //! ESP8266 bug: IP may be 0 -- makes AP un-connectable
   if (myIP == (uint32_t)0)
+  {
+    writeAPSetupFlag(false);
     return false;
+  }
   else
+  {
+    writeAPSetupFlag(true);
     return true;
+  }
 }
 
 void handleRoot(void) // On root request to server, send form

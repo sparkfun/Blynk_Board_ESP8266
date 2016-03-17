@@ -25,7 +25,7 @@ SparkFun BlynkBoard - ESP8266
 ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 ******************************************************************************/
 
-#define DEBUG_ENABLED
+//#define DEBUG_ENABLED
 #define SELF_TEST_ENABLED
 //#define CAPTIVE_PORTAL_ENABLE
 
@@ -65,6 +65,8 @@ void blynkLoop(void);
 // BlynkBoard_setup functions:
 bool initHardware(void);
 bool checkConfigFlag(void);
+bool checkFailAPSetupFlag(void);
+void writeAPSetupFlag(bool pass);
 bool writeBlynkConfig(String authToken, String host, uint16_t port);
 String getBlynkAuth(void);
 String getBlynkHost(void);
@@ -123,16 +125,20 @@ void setup()
   }
 #endif
 
-  // checkConfigFlag() [BlynkBoard_Setup] checks a byte in EEPROM
-  // to determine if the Blynk Board's Blynk auth token has been set.
-  if (checkConfigFlag())
+  // Check if we're coming back from a 
+  if (!checkFailAPSetupFlag())
+  {
+    BB_DEBUG("Failed to setup AP last time");
+    runMode = MODE_CONFIG;
+  }
+  else if (checkConfigFlag()) // Checks EEPROM to determine if the Blynk/WiFi are configured
   { // If the flag has been set,
     g_blynkAuthStr = getBlynkAuth(); // read the stored auth token
-    BB_DEBUG("Auth token:" + g_blynkAuthStr);
+    BB_PRINT("Auth token: " + g_blynkAuthStr);
     g_blynkHostStr = getBlynkHost(); // Read the stored host
-    BB_DEBUG("Blynk Host: " + g_blynkHostStr);
+    BB_PRINT("Blynk Host: " + g_blynkHostStr);
     g_blynkPort = getBlynkPort(); // Read the stored port
-    BB_DEBUG("Blynk Port: " + String(g_blynkPort));
+    BB_PRINT("Blynk Port: " + String(g_blynkPort));
 
     // As long as the auth token, host, and port aren't null
     if ((g_blynkAuthStr != 0) && (g_blynkHostStr != 0) && (g_blynkPort != 0))
@@ -140,9 +146,11 @@ void setup()
       // Connect to WiFi network stored in ESP8266's persistent flash
       if (WiFiConnectWithTimeout(WIFI_STA_CONNECT_TIMEOUT))
       { // If we successfully connect to WiFi, connect to Blynk
+        BB_PRINT("Connected to WiFi!");
         if (BlynkConnectWithTimeout(g_blynkAuthStr.c_str(), g_blynkHostStr.c_str(), 
                                     g_blynkPort, BLYNK_CONNECT_TIMEOUT))
         { // If we successfully connect to Blynk
+          BB_PRINT("Connected to Blynk!");
           blynkSetup(); // Run the Blynk setup function [BlynkBoard_BlynkMode]
         }
       }
