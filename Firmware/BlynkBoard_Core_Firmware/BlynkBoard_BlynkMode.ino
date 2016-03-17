@@ -658,6 +658,8 @@ BLYNK_WRITE(TWEET_ENABLE_VIRTUAL)
 BLYNK_WRITE(TWITTER_THRESHOLD_VIRTUAL)
 {
   moistureThreshold = param.asInt();
+  if (analogRead(A0) < moistureThreshold)
+    lastTweetUpdate = 0; // Force twitter update
   BB_DEBUG("Tweet threshold set to: " + String(moistureThreshold));
 }
 
@@ -672,14 +674,13 @@ BLYNK_WRITE(TWITTER_RATE_VIRTUAL)
 void twitterUpdate(void)
 {
   unsigned int moisture = analogRead(A0);
-  String msg = boardName + "\r\nSoil Moisture reading: " + String(moisture) + "\r\n";
   if (moisture < moistureThreshold)
   {
-    msg += "FEED ME!\r\n";
+    String msg = boardName + " thirsty!\r\nSoil reading: " + String(moisture) + "\r\n";
+    msg += "[" + String(millis()) + "]";
+    BB_DEBUG("Tweeting: " + msg);
+    Blynk.tweet(msg); 
   }
-  msg += "[" + String(millis()) + "]";
-  BB_DEBUG("Tweeting: " + msg);
-  Blynk.tweet(msg);  
 }
 
 /* 14 14 14 14 14 14 14 14 14 14 14 14 14
@@ -859,8 +860,6 @@ BLYNK_READ(RUNTIME_VIRTUAL)
 
 // Reset WiFi and Blynk auth token 
 // Utility function. 
-//! Not to be included in release firmware!
-#ifdef DEBUG_ENABLED
 BLYNK_WRITE(RESET_VIRTUAL)
 {
   int resetIn = param.asInt();
@@ -872,11 +871,10 @@ BLYNK_WRITE(RESET_VIRTUAL)
     ESP.reset();
   }
 }
-#endif
 
 void blynkSetup(void)
 {
-  BB_DEBUG("Initializing Blynk Demo");
+  BB_PRINT("Initializing Blynk Board Projects");
   runMode = MODE_BLYNK_RUN; // Set to Blynk Run mode
   
   WiFi.enableAP(false); // Disable access point mode
