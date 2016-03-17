@@ -23,6 +23,9 @@ SparkFun BlynkBoard - ESP8266
 
 bool initHardware(void)
 {
+  // Short delay at the start avoids intermittent Microsoft Serial 
+  // Ballpoint driver from showing up.
+  delay(1000); 
   Serial.begin(SERIAL_TERMINAL_BAUD);
   BB_PRINT("");
   BB_PRINT("SparkFun Blynk Board Hardware v" + String(BLYNKBOARD_HARDWARE_VERSION));
