@@ -1,6 +1,6 @@
 # SparkFun Blynk Board - ESP8266 Core Firmware
 
-The [SparkFun Blynk Board - ESP8266]() firmware allows you to configure a Blynk Board's WiFi network and Blynk auth token. Then, once the board is equipped with network access and a connection to the Blynk Cloud, the firmware is equipped with ten Blynk experiments, which all you to test out the Blynk Board and the Blynk app without ever bothering to re-program the board's ESP8266 WiFi/microcontroller.
+The [SparkFun Blynk Board - ESP8266](https://www.sparkfun.com/products/13794) firmware allows you to configure a Blynk Board's WiFi network and Blynk auth token. Then, once the board is equipped with network access and a connection to the Blynk Cloud, the firmware is equipped with ten Blynk experiments, which all you to test out the Blynk Board and the Blynk app without ever bothering to re-program the board's ESP8266 WiFi/microcontroller.
 
 ### Firmware Contents
 
@@ -20,8 +20,7 @@ You can install the board definitions using the **Arduino Board Manager**. Just 
 
 	https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
 
-
-After installing the Arduino ESP8266 board definitions, you'll find a Board optino for "SparkFun Blynk Board" - select that!
+After installing the Arduino ESP8266 board definitions, you'll find a option for "SparkFun Blynk Board" under the **Tools** > **Board** menu - select that, and upload some code!
 
 ### Custom Libraries Used
 
