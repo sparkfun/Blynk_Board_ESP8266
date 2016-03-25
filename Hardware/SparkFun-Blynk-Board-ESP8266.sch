@@ -22163,7 +22163,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND31" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND30" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="F1" library="SparkFun-PowerIC" deviceset="PTC" device="SMD" value="500mA"/>
-<part name="JP15" library="SparkFun-Connectors" deviceset="USB_MICROB_PLUG" device="CONN-11752"/>
+<part name="JP15" library="SparkFun-Connectors" deviceset="USB_MICROB_PLUG" device="CONN-11752" value="USB"/>
 <part name="R19" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="SUPPLY20" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="STANDOFF3" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
@@ -22174,19 +22174,19 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="Q3" library="SparkFun-DiscreteSemi" deviceset="TRANSISTOR_NPN" device="MMBT2222A" value="MMBT2222A"/>
 <part name="R17" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="R18" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
-<part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
-<part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
+<part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2" value="FIDUCIAL1X2"/>
+<part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2" value="FIDUCIAL1X2"/>
 <part name="C15" library="SparkFun-Capacitors" deviceset="4.7UF-6.3V-10%(0603)" device="0603" value="4.7uF"/>
-<part name="JP16" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP18" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP22" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP24" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP12" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP20" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP4" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP6" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
+<part name="JP16" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP18" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP22" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP24" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP12" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP20" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP4" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP6" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
 <part name="D4" library="SparkFun-LED" deviceset="WS2812B" device="" value="WS2812"/>
-<part name="JP14" library="SparkFun-Connectors" deviceset="M03" device="JST-PTH-VERT">
+<part name="JP14" library="SparkFun-Connectors" deviceset="M03" device="JST-PTH-VERT" value="JST-3">
 <attribute name="PROD_ID" value="CONN-13230"/>
 </part>
 <part name="U6" library="SparkFun-Sensors" deviceset="SI7021" device=""/>
@@ -22213,16 +22213,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND8" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="GND24" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY12" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="SMD-REDUNDANT" value=""/>
+<part name="S1" library="SparkFun-Electromechanical" deviceset="SWITCH-MOMENTARY-2" device="SMD-REDUNDANT" value="GP0"/>
 <part name="GND34" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP13" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP21" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP5" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP7" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP25" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP23" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP19" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP17" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP13" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP21" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP5" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP7" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP25" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP23" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP19" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP17" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
 <part name="D3" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="BLUE"/>
 <part name="R11" library="SparkFun-Resistors" deviceset="330OHM1/10W1%(0603)" device="" value="330"/>
 <part name="GND18" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
@@ -22241,7 +22241,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R7" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
-<part name="JP1" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="LiPo"/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="JST-2"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="D1" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow"/>
 <part name="R2" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>
@@ -22255,24 +22255,24 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R6" library="SparkFun-Resistors" deviceset="2.0KOHM1/10W5%(0603)" device="" value="2.0k"/>
 <part name="SJ2" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value="PWRLED"/>
 <part name="FRAME1" library="SparkFun-Aesthetics" deviceset="FRAME-LEDGER" device=""/>
-<part name="JP28" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP28" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
 <part name="R5" library="SparkFun-Passives" deviceset="RESISTOR" device="PTH-1/6W" value="DNP"/>
 <part name="GND10" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP10" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP11" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP8" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP9" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="JP10" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP11" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP8" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP9" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
 <part name="SUPPLY18" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
-<part name="SJ1" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value=""/>
-<part name="JP26" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP27" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
-<part name="JP2" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value=""/>
-<part name="JP3" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP"/>
+<part name="SJ1" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value="DNP"/>
+<part name="JP26" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP27" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
+<part name="JP2" library="blynk-thing-temp" deviceset="M01" device="ALLIGATOR_HALF" value="DNP"/>
+<part name="JP3" library="SparkFun-Connectors" deviceset="M01" device="PTH_NO_SILK_YES_STOP" value="DNP"/>
 <part name="SUPPLY11" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
 <part name="SUPPLY14" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
-<part name="SJ4" library="SparkFun-Passives" deviceset="JUMPER-PAD-3-NC_BY_TRACE" device=""/>
+<part name="SJ4" library="SparkFun-Passives" deviceset="JUMPER-PAD-3-NC_BY_TRACE" device="" value="DNP"/>
 <part name="SJ3" library="SparkFun-Passives" deviceset="JUMPER-PAD-2-NC_BY_TRACE" device="" value="WS2812-VCC"/>
-<part name="JP30" library="SparkFun-Connectors" deviceset="I2C_STANDARD" device="_NO_SILK"/>
+<part name="JP30" library="SparkFun-Connectors" deviceset="I2C_STANDARD" device="_NO_SILK" value="DNP"/>
 <part name="GND40" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY21" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="SUPPLY22" library="SparkFun-Aesthetics" deviceset="V_USB" device=""/>
@@ -22284,7 +22284,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND41" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY1" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND6" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="JP29" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT"/>
+<part name="JP29" library="SparkFun-Connectors" deviceset="M04" device="JST-PTH-VERT" value="JST-4"/>
 <part name="SUPPLY3" library="SparkFun-Aesthetics" deviceset="VCC" device=""/>
 <part name="GND42" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="LOGO3" library="SparkFun-Aesthetics" deviceset="SFE_LOGO_NAME" device=".3_INCH" value="SFE_LOGO_NAME.3_INCH"/>
@@ -22463,17 +22463,33 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="FID2" gate="G$1" x="419.1" y="27.94"/>
 <instance part="FID1" gate="G$1" x="416.56" y="25.4"/>
 <instance part="C15" gate="G$1" x="347.98" y="231.14" rot="MR0"/>
-<instance part="JP16" gate="G$1" x="198.12" y="121.92"/>
-<instance part="JP18" gate="G$1" x="198.12" y="101.6"/>
-<instance part="JP22" gate="G$1" x="198.12" y="58.42"/>
-<instance part="JP24" gate="G$1" x="198.12" y="38.1"/>
-<instance part="JP12" gate="G$1" x="165.1" y="17.78"/>
-<instance part="JP20" gate="G$1" x="198.12" y="81.28"/>
-<instance part="JP4" gate="G$1" x="165.1" y="101.6"/>
-<instance part="JP6" gate="G$1" x="165.1" y="81.28"/>
+<instance part="JP16" gate="G$1" x="198.12" y="121.92" smashed="yes">
+<attribute name="NAME" x="195.58" y="125.222" size="1.778" layer="95"/>
+</instance>
+<instance part="JP18" gate="G$1" x="198.12" y="101.6" smashed="yes">
+<attribute name="NAME" x="195.58" y="104.902" size="1.778" layer="95"/>
+</instance>
+<instance part="JP22" gate="G$1" x="198.12" y="58.42" smashed="yes">
+<attribute name="NAME" x="195.58" y="61.722" size="1.778" layer="95"/>
+</instance>
+<instance part="JP24" gate="G$1" x="198.12" y="38.1" smashed="yes">
+<attribute name="NAME" x="195.58" y="41.402" size="1.778" layer="95"/>
+</instance>
+<instance part="JP12" gate="G$1" x="165.1" y="17.78" smashed="yes">
+<attribute name="NAME" x="162.56" y="21.082" size="1.778" layer="95"/>
+</instance>
+<instance part="JP20" gate="G$1" x="198.12" y="81.28" smashed="yes">
+<attribute name="NAME" x="195.58" y="84.582" size="1.778" layer="95"/>
+</instance>
+<instance part="JP4" gate="G$1" x="165.1" y="101.6" smashed="yes">
+<attribute name="NAME" x="162.56" y="104.902" size="1.778" layer="95"/>
+</instance>
+<instance part="JP6" gate="G$1" x="165.1" y="81.28" smashed="yes">
+<attribute name="NAME" x="162.56" y="84.582" size="1.778" layer="95"/>
+</instance>
 <instance part="D4" gate="G$1" x="121.92" y="160.02" rot="MR0"/>
 <instance part="JP14" gate="J$1" x="149.86" y="160.02" smashed="yes" rot="R180">
-<attribute name="VALUE" x="152.4" y="167.64" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="145.796" y="165.608" size="1.778" layer="96"/>
 <attribute name="NAME" x="152.4" y="154.178" size="1.778" layer="95" rot="R180"/>
 <attribute name="PROD_ID" x="149.86" y="160.02" size="1.27" layer="96" rot="R180" display="off"/>
 </instance>
@@ -22508,14 +22524,30 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="SUPPLY12" gate="G$1" x="175.26" y="104.14"/>
 <instance part="S1" gate="G$1" x="254" y="175.26"/>
 <instance part="GND34" gate="1" x="261.62" y="170.18"/>
-<instance part="JP13" gate="G$1" x="165.1" y="7.62"/>
-<instance part="JP21" gate="G$1" x="198.12" y="71.12"/>
-<instance part="JP5" gate="G$1" x="165.1" y="91.44"/>
-<instance part="JP7" gate="G$1" x="165.1" y="71.12"/>
-<instance part="JP25" gate="G$1" x="198.12" y="27.94"/>
-<instance part="JP23" gate="G$1" x="198.12" y="48.26"/>
-<instance part="JP19" gate="G$1" x="198.12" y="91.44"/>
-<instance part="JP17" gate="G$1" x="198.12" y="111.76"/>
+<instance part="JP13" gate="G$1" x="165.1" y="7.62" smashed="yes">
+<attribute name="NAME" x="162.56" y="10.922" size="1.778" layer="95"/>
+</instance>
+<instance part="JP21" gate="G$1" x="198.12" y="71.12" smashed="yes">
+<attribute name="NAME" x="195.58" y="74.422" size="1.778" layer="95"/>
+</instance>
+<instance part="JP5" gate="G$1" x="165.1" y="91.44" smashed="yes">
+<attribute name="NAME" x="162.56" y="94.742" size="1.778" layer="95"/>
+</instance>
+<instance part="JP7" gate="G$1" x="165.1" y="71.12" smashed="yes">
+<attribute name="NAME" x="162.56" y="74.422" size="1.778" layer="95"/>
+</instance>
+<instance part="JP25" gate="G$1" x="198.12" y="27.94" smashed="yes">
+<attribute name="NAME" x="195.58" y="31.242" size="1.778" layer="95"/>
+</instance>
+<instance part="JP23" gate="G$1" x="198.12" y="48.26" smashed="yes">
+<attribute name="NAME" x="195.58" y="51.562" size="1.778" layer="95"/>
+</instance>
+<instance part="JP19" gate="G$1" x="198.12" y="91.44" smashed="yes">
+<attribute name="NAME" x="195.58" y="94.742" size="1.778" layer="95"/>
+</instance>
+<instance part="JP17" gate="G$1" x="198.12" y="111.76" smashed="yes">
+<attribute name="NAME" x="195.58" y="115.062" size="1.778" layer="95"/>
+</instance>
 <instance part="D3" gate="G$1" x="101.6" y="45.72"/>
 <instance part="R11" gate="G$1" x="101.6" y="33.02" rot="R270"/>
 <instance part="GND18" gate="1" x="101.6" y="22.86"/>
@@ -22557,24 +22589,48 @@ e.g.: 3.3V in : 1.03 out</text>
 <instance part="SJ2" gate="G$1" x="210.82" y="157.48" rot="R90"/>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
 <instance part="FRAME1" gate="G$2" x="330.2" y="0"/>
-<instance part="JP28" gate="G$1" x="228.6" y="33.02"/>
+<instance part="JP28" gate="G$1" x="228.6" y="33.02" smashed="yes">
+<attribute name="NAME" x="226.06" y="36.322" size="1.778" layer="95"/>
+</instance>
 <instance part="R5" gate="G$1" x="185.42" y="243.84" rot="MR90"/>
 <instance part="GND10" gate="1" x="185.42" y="233.68" rot="MR0"/>
-<instance part="JP10" gate="G$1" x="165.1" y="38.1"/>
-<instance part="JP11" gate="G$1" x="165.1" y="27.94"/>
-<instance part="JP8" gate="G$1" x="165.1" y="58.42"/>
-<instance part="JP9" gate="G$1" x="165.1" y="48.26"/>
+<instance part="JP10" gate="G$1" x="165.1" y="38.1" smashed="yes">
+<attribute name="NAME" x="162.56" y="41.402" size="1.778" layer="95"/>
+</instance>
+<instance part="JP11" gate="G$1" x="165.1" y="27.94" smashed="yes">
+<attribute name="NAME" x="162.56" y="31.242" size="1.778" layer="95"/>
+</instance>
+<instance part="JP8" gate="G$1" x="165.1" y="58.42" smashed="yes">
+<attribute name="NAME" x="162.56" y="61.722" size="1.778" layer="95"/>
+</instance>
+<instance part="JP9" gate="G$1" x="165.1" y="48.26" smashed="yes">
+<attribute name="NAME" x="162.56" y="51.562" size="1.778" layer="95"/>
+</instance>
 <instance part="SUPPLY18" gate="G$1" x="345.44" y="185.42"/>
-<instance part="SJ1" gate="G$1" x="180.34" y="243.84" rot="R90"/>
-<instance part="JP26" gate="G$1" x="198.12" y="17.78"/>
-<instance part="JP27" gate="G$1" x="198.12" y="7.62"/>
-<instance part="JP2" gate="G$1" x="165.1" y="121.92"/>
-<instance part="JP3" gate="G$1" x="165.1" y="111.76"/>
+<instance part="SJ1" gate="G$1" x="180.34" y="243.84" smashed="yes" rot="R90">
+<attribute name="NAME" x="177.8" y="241.3" size="1.778" layer="95" rot="R90"/>
+</instance>
+<instance part="JP26" gate="G$1" x="198.12" y="17.78" smashed="yes">
+<attribute name="NAME" x="195.58" y="21.082" size="1.778" layer="95"/>
+</instance>
+<instance part="JP27" gate="G$1" x="198.12" y="7.62" smashed="yes">
+<attribute name="NAME" x="195.58" y="10.922" size="1.778" layer="95"/>
+</instance>
+<instance part="JP2" gate="G$1" x="165.1" y="121.92" smashed="yes">
+<attribute name="NAME" x="162.56" y="125.222" size="1.778" layer="95"/>
+</instance>
+<instance part="JP3" gate="G$1" x="165.1" y="111.76" smashed="yes">
+<attribute name="NAME" x="162.56" y="115.062" size="1.778" layer="95"/>
+</instance>
 <instance part="SUPPLY11" gate="G$1" x="175.26" y="124.46"/>
 <instance part="SUPPLY14" gate="G$1" x="322.58" y="259.08"/>
-<instance part="SJ4" gate="G$1" x="345.44" y="177.8" rot="R270"/>
+<instance part="SJ4" gate="G$1" x="345.44" y="177.8" smashed="yes" rot="R270">
+<attribute name="NAME" x="345.821" y="175.26" size="1.778" layer="95" rot="R270"/>
+</instance>
 <instance part="SJ3" gate="G$1" x="139.7" y="170.18" rot="R90"/>
-<instance part="JP30" gate="G$1" x="403.86" y="154.94"/>
+<instance part="JP30" gate="G$1" x="403.86" y="154.94" smashed="yes">
+<attribute name="NAME" x="401.32" y="168.402" size="1.778" layer="95"/>
+</instance>
 <instance part="GND40" gate="1" x="416.56" y="152.4"/>
 <instance part="SUPPLY21" gate="G$1" x="416.56" y="170.18"/>
 <instance part="SUPPLY22" gate="G$1" x="30.48" y="256.54" smashed="yes">
