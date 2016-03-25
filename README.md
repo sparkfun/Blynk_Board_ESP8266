@@ -32,7 +32,7 @@ Product Versions
 
 Version History
 ---------------
-* [v1.0](https://github.com/sparkfun/Blynk_Board_ESP8266/releases/tag/v1.0) - Initial release of the SparkFun Blynk Board
+* [HW v1.0, FW v1.0.2](https://github.com/sparkfun/Blynk_Board_ESP8266/releases/tag/HW_v1.0-FW_v1.0.2) - Initial release of the SparkFun Blynk Board hardware and firmware.
 
 License Information
 -------------------
