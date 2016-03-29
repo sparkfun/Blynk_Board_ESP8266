@@ -22241,7 +22241,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R7" library="SparkFun-Resistors" deviceset="10KOHM1/10W1%(0603)" device="0603" value="10K"/>
 <part name="GND13" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="SparkFun-Aesthetics" deviceset="VIN" device=""/>
-<part name="JP1" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="JST-2"/>
+<part name="JP1" library="SparkFun-Connectors" deviceset="M02" device="JST-PTH-2" value="JST_2"/>
 <part name="GND4" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
 <part name="D1" library="SparkFun-LED" deviceset="LED-YELLOW" device="0603" value="Yellow"/>
 <part name="R2" library="SparkFun-Resistors" deviceset="1KOHM-1/10W-1%(0603)" device="" value="1K"/>

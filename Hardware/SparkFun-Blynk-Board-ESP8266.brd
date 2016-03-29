@@ -3379,7 +3379,7 @@ These rules have been curated by SparkFuns DFM commitee. After doing much resear
 <element name="R7" library="SparkFun-Resistors" package="0603-RES@1" value="10K" x="9.525" y="15.24" rot="R180">
 <attribute name="PROD_ID" value="RES-00824" x="32.385" y="5.08" size="1.778" layer="27" font="vector" ratio="15" rot="R180" display="off"/>
 </element>
-<element name="JP1" library="SparkFun-Connectors" package="JST-2-PTH" value="JST-2" x="6.35" y="12.7" rot="R90">
+<element name="JP1" library="SparkFun-Connectors" package="JST-2-PTH" value="JST_2" x="6.35" y="12.7" rot="R90">
 <attribute name="SKU" value="PRT-09914" x="7.62" y="-5.08" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
 <attribute name="PROD_ID" value="CONN-09863" x="7.62" y="-5.08" size="1.778" layer="27" font="vector" ratio="15" rot="R90" display="off"/>
 </element>
