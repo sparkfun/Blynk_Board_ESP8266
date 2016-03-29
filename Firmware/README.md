@@ -24,7 +24,7 @@ After installing the Arduino ESP8266 board definitions, you'll find a option for
 
 ### Custom Libraries Used
 
-* [Blynk Arduino Library](https://github.com/blynkkk/blynk-library/releases/tag/v0.3.1)
+* [Blynk Arduino Library](https://github.com/blynkkk/blynk-library/releases/tag/v0.3.4)
 * [SparkFun HTU21D](https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library/releases/tag/V_1.1.1)
 * [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel)
 * [SparkFun TSL2561 Library](https://github.com/sparkfun/SparkFun_TSL2561_Arduino_Library/releases/tag/V_1.1.0)
