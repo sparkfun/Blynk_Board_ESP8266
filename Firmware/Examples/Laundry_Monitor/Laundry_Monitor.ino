@@ -12,8 +12,6 @@ Resources:
 SparkFun MMA8452Q Accelerometer Library - https://github.com/sparkfun/SparkFun_MMA8452Q_Arduino_Library
 Blynk Arduino Library - https://github.com/blynkkk/blynk-library
 ESP8266WiFi Library (included with ESP8266 Arduino board definitions)
-ESP8266WiFiClient Library (included with ESP8266 Arduino board definitions)
-ESP8266WebServer Library (included with ESP8266 Arduino board definitions)
 Adafruit_NeoPixel Library - https://github.com/adafruit/Adafruit_NeoPixel
 
 License:
@@ -32,14 +30,14 @@ SparkFun BlynkBoard - ESP8266
 
 //////////
 // WiFi //
-//////////
-const char WiFiSSID[] = "YourWiFiNetwork";
-const char WiFiPSWD[] = "YourWiFiPassword";
+////////// // Enter your WiFi credentials here:
+const char WiFiSSID[] = "";
+const char WiFiPSWD[] = "";
 
 ///////////
 // Blynk //
-///////////
-const char BlynkAuth[] = "YourBlynkToken";
+///////////             // Your Blynk auth token here
+const char BlynkAuth[] = "";
 bool notifyFlag = false;
 #define VIRTUAL_ENABLE_PUSH     V0
 #define VIRTUAL_SHAKE_THRESHOLD V1
@@ -55,8 +53,8 @@ void printLaundryTime(void);
 // Shake Detection //
 /////////////////////
 unsigned int shakeThreshold = 50;
-unsigned int shakeStopTimeHysteresis = 10;
 unsigned int shakeStartTimeHysteresis = 1000;
+unsigned int shakeStopTimeHysteresis = 10;
 unsigned long shakeStateChangeTime = 0;
 unsigned long shakeStartTime = 0;
 
@@ -68,6 +66,7 @@ enum {
   POST_SHAKING // Stopped shaking, pre-hysteresis
 } shakingState = NO_SHAKING;
 
+// Possible return values from the shake sensor
 enum sensorShakeReturn {
   SENSOR_SHAKING,
   SENSOR_NOT_SHAKING,
@@ -96,27 +95,30 @@ void setup()
   Serial.begin(9600);
   
   pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, LOW);
-  rgb.begin();  
-  initAccel();
-  setLED(0, 0, 32);
-  
+  digitalWrite(LED_PIN, LOW); // Turn off blue LED
+  rgb.begin(); // Set up WS2812
+  initAccel(); // Set up accelerometer
+  setLED(0, 0, 32); // LED blue
+
+  // Initialize Blynk, and wait for a connection before doing anything else
+  Serial.println("Connecting to WiFi and Blynk");
   Blynk.begin(BlynkAuth, WiFiSSID, WiFiPSWD);
   while (!Blynk.connected())
     Blynk.run();
-  setLED(0, 32, 0);
+  Serial.println("Blynk connected! Laundry monitor starting.");
+  setLED(0, 32, 0); // LED green
 }
 
 void loop()
 {
-  shakeLoop();
-  Blynk.run();
+  shakeLoop(); // Check if we're shaking, and update variables accordingly
+  Blynk.run(); // Blynk run as much as possible
 }
 
 bool firstConnect = true;
 BLYNK_CONNECTED()
 {
-  if (firstConnect)
+  if (firstConnect) // When we first connect to Blynk
   {
     // Two options here. Either sync values from phone to Blynk Board:
     //Blynk.syncAll(); // Uncomment to enable.
@@ -125,7 +127,8 @@ BLYNK_CONNECTED()
     Blynk.virtualWrite(VIRTUAL_STOP_TIME, shakeStopTimeHysteresis);
     Blynk.virtualWrite(VIRTUAL_START_TIME, shakeStartTimeHysteresis);
     Blynk.virtualWrite(VIRTUAL_ENABLE_PUSH, pushEnabled);
-    
+
+    // Print a splash screen:
     lcd.clear();
     lcd.print(0, 0, "Laundry Monitor ");
     lcd.print(0, 1, "     Ready      ");
@@ -182,11 +185,12 @@ void printLaundryTime(void)
   int runSeconds = (runTime / 1000) % 60;
   int runMinutes = ((runTime / 1000) / 60) % 60;
   int runHours = ((runTime / 1000) / 60 ) / 60;
-  
+
+  // Create a string like HHHH:MM:SS
   String runTimeString = "   " + String(runHours) + ":";
-  if (runMinutes < 10) runTimeString += "0";
+  if (runMinutes < 10) runTimeString += "0"; // Leading 0 minutes
   runTimeString += String(runMinutes) + ":";
-  if (runSeconds < 10) runTimeString += "0";
+  if (runSeconds < 10) runTimeString += "0"; // Leading 0 seconds
   runTimeString += String(runSeconds);
   
   // Fill out the rest of the string to 16 chars
@@ -200,9 +204,9 @@ void printLaundryTime(void)
     lcd.print(0, 0, "Laundry starting");
   else if (shakingState == SHAKING)
     lcd.print(0, 0, "Laundry running ");
-  else if (shakingState == POST_SHAKING)
+  else if (shakingState == NO_SHAKING)
     lcd.print(0, 0, "Laundry stopping");
-  else if ((shakingState == NO_SHAKING) || (shakingState == NO_SHAKING_LONG))
+  else if (shakingState == NO_SHAKING_LONG)
     lcd.print(0, 0, "Laundry done!   ");
   lcd.print(0, 1, runTimeString);
 }
@@ -216,24 +220,24 @@ void shakeLoop(void)
     {
     case NO_SHAKING_LONG:
     case NO_SHAKING: // If we haven't been shaking
-      setLED(32, 0, 32);
+      setLED(32, 0, 32); // LED purple
       shakingState = PRE_SHAKING; // Set mode to pre-shaking
-      shakeStateChangeTime = millis();
-      shakeStartTime = millis();
+      shakeStateChangeTime = millis(); // Log state change time
+      shakeStartTime = millis(); // Log time we started shaking
       printLaundryTime();
       break;
     case PRE_SHAKING: // If we're pre-hysteresis shaking
       if (millis() - shakeStateChangeTime >= shakeStartTimeHysteresis)
-      { // If we've passed hysteresis trigger
+      { // If we've passed hysteresis time
         shakingState = SHAKING; // Set mode to shaking
-        digitalWrite(LED_PIN, HIGH); // Turn LED on
+        digitalWrite(LED_PIN, HIGH); // Turn blue LED on
         Serial.println("Shaking!");
-        notifyFlag = true;
-        setLED(32, 0, 0);
+        notifyFlag = true; // Flag that we need to notify when shaking stops
+        setLED(32, 0, 0); // LED red
       }
       break;
     case SHAKING: // If we're already shaking
-      printLaundryTime();
+      printLaundryTime(); // Update laundry timer
       break; // Do nothing
     case POST_SHAKING: // If we didn't stop shaking before hysteresis
       shakingState = SHAKING; // Go back to shaking
@@ -244,19 +248,19 @@ void shakeLoop(void)
   {
     switch (shakingState)
     {
-    case NO_SHAKING_LONG:
+    case NO_SHAKING_LONG: // If we haven't been shaking for a long time
       break; // Do nothing
     case NO_SHAKING: // If we haven't been shaking
       if (millis() - shakeStateChangeTime >= (shakeStopTimeHysteresis * 1000))
-      {
-        setLED(0, 32, 0);
+      { // Check if it's been a long time
+        setLED(0, 32, 0); // Turn LED green
         shakingState = NO_SHAKING_LONG;
-        if (notifyFlag == true)
+        if (notifyFlag == true) // If notify flag was set during shaking
         {
-          printLaundryTime();
-          notifyFlag = false;
-          if (pushEnabled)
-            Blynk.notify("Washer/dryer is done!");
+          printLaundryTime(); // Update LCD
+          notifyFlag = false; // Clear notify flag
+          if (pushEnabled) // If push is enabled
+            Blynk.notify("Washer/dryer is done!"); // Notify!
         }
       }
       break;
@@ -267,13 +271,13 @@ void shakeLoop(void)
     case SHAKING: // If we're already shaking
       shakingState = POST_SHAKING; // Go to hysteresis cooldown
       shakeStateChangeTime = millis();
-      printLaundryTime();
       break; // Do nothing
     case POST_SHAKING: // If we're in the shake cooldown state
       if (millis() - shakeStateChangeTime >= shakeStartTimeHysteresis)
       {
         digitalWrite(5, LOW); // LED off
         shakingState = NO_SHAKING;
+        printLaundryTime();
         setLED(32, 16, 0);
         Serial.println("Stopped.");
       }
@@ -286,44 +290,51 @@ sensorShakeReturn checkShake(void)
 {
   static unsigned long lastShakeCheck = 0;
   float shake = 0;
-  if (accel.available())
+  if (accel.available()) // If new accel data is available
   {
     int16_t x, y, z;
 
-    accel.read();
+    accel.read(); // read the data in
     x = accel.x;
     y = accel.y;
     z = accel.z;
-    
+
+    // To determine if we're shaking, compare the sum of
+    // x,y,z accels to the sum of the previous accels.
     shake = abs(x + y + z - lastX - lastY - lastZ);
-    
+
+    // Write the value to Blynk:
     Blynk.virtualWrite(VIRTUAL_SHAKE_VALUE, shake);
-    
+
+    // Update previous values:
     lastX = x;
     lastY = y;
     lastZ = z;
   }
-  else
-  {
+  else // If sensore didn't have new data
+  { // Return not ready
     return SENSOR_NOT_READY;
   }
+  // If shake value exceeded threshold
   if (shake >= shakeThreshold)
-    return SENSOR_SHAKING;
-  else
-    return SENSOR_NOT_SHAKING;
+    return SENSOR_SHAKING; // Return "shaking"
+  else 
+    return SENSOR_NOT_SHAKING; // Or return "not shaking"
 }
 
 void initAccel(void)
 {
+  // Use a slow update rate to throttle the shake sensor.
+  // ODR_6 will set the accelerometer's update rate to 6Hz
+  // Use +/-2g scale -- the lowest -- to get most sensitivity
   accel.init(SCALE_2G, ODR_6); // Initialize accelerometer
 
   while (!accel.available()) // Wait for data to be available
-    yield();
-  accel.read();
-  lastX = accel.x;
+    yield(); // Let the system do other things
+  accel.read(); // Read data from accel
+  lastX = accel.x; // Initialize last values
   lastY = accel.y;
   lastZ = accel.z;
-  Serial.println("Accelerometer initialized");
 }
 
 void setLED(uint8_t red, uint8_t green, uint8_t blue)
