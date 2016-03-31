@@ -31,13 +31,13 @@ SparkFun BlynkBoard - ESP8266
 //////////
 // WiFi //
 ////////// // Enter your WiFi credentials here:
-const char WiFiSSID[] = "";
-const char WiFiPSWD[] = "";
+const char WiFiSSID[] = "WiFiNetworkName";
+const char WiFiPSWD[] = "WiFiPassword";
 
 ///////////
 // Blynk //
 ///////////             // Your Blynk auth token here
-const char BlynkAuth[] = "";
+const char BlynkAuth[] = "0a1b2c3d4e5f";
 bool notifyFlag = false;
 #define VIRTUAL_ENABLE_PUSH     V0
 #define VIRTUAL_SHAKE_THRESHOLD V1
@@ -57,6 +57,7 @@ unsigned int shakeStartTimeHysteresis = 1000;
 unsigned int shakeStopTimeHysteresis = 10;
 unsigned long shakeStateChangeTime = 0;
 unsigned long shakeStartTime = 0;
+bool loadTimer = true;
 
 enum {
   NO_SHAKING_LONG, // Haven't been shaking for a long time
@@ -223,7 +224,11 @@ void shakeLoop(void)
       setLED(32, 0, 32); // LED purple
       shakingState = PRE_SHAKING; // Set mode to pre-shaking
       shakeStateChangeTime = millis(); // Log state change time
-      shakeStartTime = millis(); // Log time we started shaking
+      if (loadTimer)
+      {
+        loadTimer = false;
+        shakeStartTime = millis(); // Log time we started shaking
+      }
       printLaundryTime();
       break;
     case PRE_SHAKING: // If we're pre-hysteresis shaking
@@ -257,6 +262,7 @@ void shakeLoop(void)
         shakingState = NO_SHAKING_LONG;
         if (notifyFlag == true) // If notify flag was set during shaking
         {
+          loadTimer = true;
           printLaundryTime(); // Update LCD
           notifyFlag = false; // Clear notify flag
           if (pushEnabled) // If push is enabled
@@ -342,4 +348,3 @@ void setLED(uint8_t red, uint8_t green, uint8_t blue)
   rgb.setPixelColor(0, rgb.Color(red, green, blue));
   rgb.show();
 }
-
