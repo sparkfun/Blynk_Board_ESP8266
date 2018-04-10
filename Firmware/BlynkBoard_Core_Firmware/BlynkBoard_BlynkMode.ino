@@ -452,8 +452,8 @@ BLYNK_WRITE(LCD_RUNTIME_VIRTUAL)
 /* 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
  9 Experiment 9: Joystick              9
  9 Widget(s):                          9
- 9  - Joystick: ServoPos, V14, 0-255,  9
- 9     V15, 0-255, Off, Off            9
+ 9  - Joystick: ServoPos, V14, Merge,  9
+ 9     0-255, 0-255, Off, Off          9
  9  - Slider: ServoMax, V16, 0-360     9
  9  - Gauge: ServoAngle, V17, 0-360    9
  9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 */
