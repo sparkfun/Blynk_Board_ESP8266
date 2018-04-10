@@ -64,7 +64,7 @@ bool scanI2C(uint8_t address);
 #define SERVO_XY_VIRTUAL          V14
 #define RGB_MAX_BRIGHTNESS_VIRTUAL V15// 0, 6
 #define SERVO_MAX_VIRTUAL         V16 // 9
-#define SERVO_ANGLE_VIRUTAL       V17 // 9
+#define SERVO_ANGLE_VIRTUAL       V17 // 9
 #define LUX_VIRTUAL               V18 // 10
 //! V19 available
 #define ADC_BATT_VIRTUAL          V20 // 11
@@ -493,7 +493,7 @@ BLYNK_WRITE(SERVO_XY_VIRTUAL)
   int servoPos = map(pos, 0, 360, SERVO_MINIMUM, servoMax);
   
   // Write the newly calculated angle to a virtual variable:
-  Blynk.virtualWrite(SERVO_ANGLE_VIRUTAL, servoPos);
+  Blynk.virtualWrite(SERVO_ANGLE_VIRTUAL, servoPos);
 
   // Constrain the angle between min/max:
   myServo.write(servoPos); // And set the servo position
