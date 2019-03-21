@@ -28,7 +28,9 @@ Documentation
 Product Versions
 ----------------
 * [SparkFun Blynk Board - ESP8266 (v1.0) (WRL-13794)](https://www.sparkfun.com/products/13794)- Initial release of the SparkFun Blynk Board - ESP8266.
-* [IoT Starter Kit with Blynk Board (KIT-13865)](https://www.sparkfun.com/products/13865) - A parts kit including the SparkFun Blynk Board.
+* IoT Starter Kit with Blynk Board
+  * [(KIT-14682)](https://www.sparkfun.com/products/14682) - Updated parts kit with thicker resistor leads.
+  * [(KIT-13865)](https://www.sparkfun.com/products/13865) - A parts kit including the SparkFun Blynk Board.
 
 Version History
 ---------------
