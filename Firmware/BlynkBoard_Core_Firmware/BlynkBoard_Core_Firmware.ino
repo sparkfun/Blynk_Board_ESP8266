@@ -22,7 +22,7 @@ Please see the included LICENSE.md for more information.
 Development environment specifics:
 Arduino IDE 1.6.7
 SparkFun BlynkBoard - ESP8266
-ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
+ESP8266 Arduino Core - version 2.6.0 and above <- Critical, must be up-to-date
 ******************************************************************************/
 
 //#define DEBUG_ENABLED
@@ -33,9 +33,9 @@ ESP8266 Arduino Core - version 2.1.0-rc2 <- Critical, must be up-to-date
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-#include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h>   // http://librarymanager/All#neopixel
 #include <Ticker.h>
-#include <BlynkSimpleEsp8266.h>
+#include <BlynkSimpleEsp8266.h>  // http://librarymanager/All#blynk
 #include <EEPROM.h>
 #include "FS.h"
 #include <DNSServer.h>
@@ -252,7 +252,13 @@ void buttonRelease(void)
   }  
 }
 
-void buttonChange(void)
+/* Note: The SparkFun Blynk board add-on is now supported by 
+ the ESP8266 Community! If you are installing the ESP8266
+ board add-on v2.6.0+ and using an interrupt service routine,
+ you must include `ICACHE_RAM_ATTR` before the function
+ definition. In this case, buttonChange() is the ISR. */
+
+ICACHE_RAM_ATTR void buttonChange(void)
 {
   static unsigned long buttonPressTime = 0;
   if (digitalRead(BUTTON_PIN)) // Button rising - released
@@ -434,4 +440,3 @@ void setRGB(uint32_t color)
   rgb.setPixelColor(0, color);
   rgb.show();
 }
-

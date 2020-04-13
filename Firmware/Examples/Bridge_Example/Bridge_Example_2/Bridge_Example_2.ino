@@ -21,7 +21,7 @@ SparkFun BlynkBoard - ESP8266
 // Comment next line out to disable serial prints and save space
 #define BLYNK_PRINT Serial // Enables Serial Monitor MUST be before #includes...
 #include <ESP8266WiFi.h>
-#include <BlynkSimpleEsp8266.h>
+#include <BlynkSimpleEsp8266.h> // http://librarymanager/All#blynk
 
 char auth[] = "LocalAuthToken";        // Put your Auth Token here
 char remoteAuth[] = "RemoteAuthToken"; // Auth token of bridged device
@@ -78,8 +78,14 @@ void setup()
   terminal.flush();
 }
 
+/* Note: The SparkFun Blynk board add-on is now supported by 
+ the ESP8266 Community! If you are installing the ESP8266
+ board add-on v2.6.0+ and using an interrupt service routine,
+ you must include `ICACHE_RAM_ATTR` before the function
+ definition. In this case, onButtonPress() is the ISR. */
+
 // Interrupt service routine to capture button press event
-void onButtonPress()
+ICACHE_RAM_ATTR void onButtonPress()
 {
   // Invert state, since button is "Active LOW"
   wasButtonPressed = !digitalRead(BUTTON_PIN);
