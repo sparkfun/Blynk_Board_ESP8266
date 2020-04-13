@@ -34,7 +34,7 @@ Product Versions
 
 Version History
 ---------------
-* [HW v1.0, FW v1.0.3](https://github.com/sparkfun/Blynk_Board_ESP8266/releases/tag/HW_v1.0-FW_v1.0.3) - Minor update for ESP8266 Coommunity board add on (v2.6.0 and above) when using interrupts.
+* [HW v1.0, FW v1.0.3](https://github.com/sparkfun/Blynk_Board_ESP8266/releases/tag/HW_v1.0-FW_v1.0.3) - Minor update for ESP8266 Community board add on (v2.6.0 and above) when using interrupts.
 * [HW v1.0, FW v1.0.2](https://github.com/sparkfun/Blynk_Board_ESP8266/releases/tag/HW_v1.0-FW_v1.0.2) - Initial release of the SparkFun Blynk Board hardware and firmware.
 
 License Information
